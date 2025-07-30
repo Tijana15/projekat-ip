@@ -33,7 +33,6 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-
   invalidCredentials: boolean = false;
 
   constructor(
@@ -43,9 +42,6 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Inicijalizujemo loginForm u ngOnInit lifecycle hooku
-    // 'username' i 'password' su FormControl-i unutar FormGroup-a
-    // Validators.required osigurava da polja ne mogu biti prazna
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -61,20 +57,36 @@ export class LoginComponent implements OnInit {
 
       this.authService.login(loginDto).subscribe({
         next: (employee: Employee) => {
-          console.log('Prijava uspešna! Prijavljen zaposlenik:', employee);
+          console.log('Successfull. Logged in employee: ', employee);
           this.invalidCredentials = false;
-
-          //this.router.navigate(['/dashboard']);
+          this.navigateBasedOnRole(employee.role);
         },
         error: (error) => {
-          console.error('Greška pri prijavi:', error);
-
+          console.error('Error:', error);
           this.invalidCredentials = true;
         },
       });
     } else {
-      console.log('Forma nije validna. Molimo popunite sva obavezna polja.');
+      console.log('Invalid form. Please fill all required fields.');
       this.loginForm.markAllAsTouched();
+    }
+  }
+
+  private navigateBasedOnRole(role: string): void {
+    switch (role) {
+      case 'ADMIN':
+        this.router.navigate(['/admin-dashboard']);
+        break;
+      case 'OPERATOR':
+        this.router.navigate(['/operator-dashboard']);
+        break;
+      case 'MANAGEMENT':
+        this.router.navigate(['/management-dashboard']);
+        break;
+      default:
+        console.error('Client cannot login on employee app.');
+        this.router.navigate(['/login']);
+        break;
     }
   }
 }

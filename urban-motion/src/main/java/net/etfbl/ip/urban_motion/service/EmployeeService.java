@@ -6,6 +6,7 @@ import net.etfbl.ip.urban_motion.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -28,7 +29,7 @@ public class EmployeeService {
             return null;
         }
         return employeeRepository.save(new Employee(
-                addEmployeeDTO.getFirstName(), addEmployeeDTO.getLastName(),
+                addEmployeeDTO.getFirstname(), addEmployeeDTO.getLastname(),
                 addEmployeeDTO.getUsername(), addEmployeeDTO.getPassword(), addEmployeeDTO.getRole()
         ));
     }
@@ -39,6 +40,25 @@ public class EmployeeService {
             this.employeeRepository.delete(employee);
         }
         return employee != null;
+    }
+
+    public Employee updateEmployeeById(Long id, AddEmployeeDTO updateEmployeeDTO) {
+        Optional<Employee> existingEmployeeOptional = employeeRepository.findById(id);
+
+        if (existingEmployeeOptional.isPresent()) {
+            Employee existingEmployee = existingEmployeeOptional.get();
+
+            existingEmployee.setFirstname(updateEmployeeDTO.getFirstname());
+            existingEmployee.setLastname(updateEmployeeDTO.getLastname());
+            existingEmployee.setUsername(updateEmployeeDTO.getUsername());
+            existingEmployee.setPassword(updateEmployeeDTO.getPassword());
+            existingEmployee.setRole(updateEmployeeDTO.getRole());
+
+            return employeeRepository.save(existingEmployee);
+        } else {
+            throw new RuntimeException("Employee with id: "+id+" not found.");
+        }
+
     }
 
 }

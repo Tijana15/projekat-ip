@@ -15,10 +15,8 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(loginDto: LoginDTO): Observable<Employee> {
-    
     return this.http.post<Employee>(this.apiUrl, loginDto).pipe(
       map((employee) => {
-        console.log('Sucessfull, employee:', employee);
         return employee;
       }),
       catchError((error) => {

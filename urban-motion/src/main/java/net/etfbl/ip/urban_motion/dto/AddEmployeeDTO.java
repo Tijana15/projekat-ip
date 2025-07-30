@@ -10,8 +10,8 @@ import net.etfbl.ip.urban_motion.model.Role;
 @NoArgsConstructor
 
 public class AddEmployeeDTO {
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private String username;
     private String password;
     private Role role;

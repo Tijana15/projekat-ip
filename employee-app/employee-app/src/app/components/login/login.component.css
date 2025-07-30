@@ -1,149 +1,164 @@
-/* login.component.css */
-
-/* Osnovni reset za box model i font */
-* {
+*{
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Osnovni stilovi za body ili glavni kontejner */
 body, html {
   height: 100%;
-  font-family: 'Roboto', sans-serif; /* Preporučuje se Roboto za Material Design */
-  background-color: #f0f2f5;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-/* Glavni omotač za login formu - centriranje i pozadina */
 .login-wrapper {
   display: flex;
-  justify-content: center; /* Centriranje horizontalno */
-  align-items: center;   /* Centriranje vertikalno */
-  min-height: 100vh;     /* Zauzima celu visinu ekrana */
-  background-color: #f0f2f5; /* Blaga siva pozadina */
-  padding: 20px;         /* Unutrašnji razmak oko kartice */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
-/* Stilovi za login karticu (mat-card) */
 .login-card {
   width: 100%;
-  max-width: 400px; /* Maksimalna širina kartice za desktop */
-  border-radius: 12px; /* Zaobljenije ivice kartice */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Izražena senka za 3D efekat */
-  overflow: hidden; /* Osigurava da se sadržaj ne prelije preko zaobljenih ivica */
-  background-color: #ffffff; /* Bela pozadina kartice */
+  max-width: 420px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: #ffffff;
+  backdrop-filter: blur(10px);
 }
 
-/* Stilovi za zaglavlje kartice (mat-card-header) */
 .custom-card-header {
-  background-color: #007bff; /* Primarna boja za zaglavlje (plava) */
-  color: white;             /* Beli tekst u zaglavlju */
-  padding: 20px 24px;       /* Gornji/donji i levi/desni padding */
-  text-align: center;       /* Centriranje teksta */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Blaga senka ispod zaglavlja */
-  margin-bottom: 20px;      /* Razmak između zaglavlja i sadržaja kartice */
+  background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%);
+  color: white;
+  padding: 30px 24px;
+  text-align: center;
+  position: relative;
 }
 
-/* Stilovi za naslov kartice (mat-card-title) */
+.custom-card-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
 .card-title-text {
-  font-size: 2em; /* Povećana veličina naslova */
-  font-weight: 600; /* Deblji font */
-  margin-bottom: 5px; /* Razmak između naslova i podnaslova */
+  font-size: 2.2em;
+  font-weight: 700;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
 }
 
-/* Stilovi za podnaslov kartice (mat-card-subtitle) */
 .card-subtitle-text {
-  font-size: 1em;   /* Standardna veličina fonta */
-  opacity: 0.9;     /* Blago prozirno za suptilniji izgled */
+  font-size: 1.1em;
+  opacity: 0.95;
+  position: relative;
+  z-index: 1;
+  font-weight: 300;
 }
 
-/* Stilovi za sadržaj kartice (mat-card-content) */
 .custom-card-content {
-  padding: 24px; /* Unutrašnji padding za celokupan sadržaj forme */
+  padding: 32px;
 }
 
-/* Flexbox raspored za input polja unutar forme */
 .login-form-layout {
   display: flex;
-  flex-direction: column; /* Elementi će biti složeni vertikalno */
-  gap: 15px; /* Razmak između svakog mat-form-field elementa */
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* Dodatni donji razmak za input polja (ako je potrebno finije podešavanje) */
 .input-field-margin {
-  margin-bottom: 5px; /* Manji razmak ispod svakog input polja */
+  margin-bottom: 8px;
 }
 
-/* Stilovi za poruku o grešci prilikom prijave (invalid username/password) */
+.input-field-margin input {
+  padding-left: 16px;
+}
+
 .error-message {
-  color: #d32f2f; /* Intenzivna crvena boja */
-  text-align: center; /* Centriranje teksta */
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-size: 0.9em; /* Malo manji font */
-  font-weight: 500; /* Srednja debljina fonta */
-  background-color: #ffebee; /* Vrlo svetlo crvena pozadina */
-  border: 1px solid #ef9a9a; /* Svetlo crveni obrub */
-  padding: 10px;
-  border-radius: 4px;
+  color: #e53e3e;
+  text-align: center;
+  margin: 16px 0;
+  font-size: 0.9em;
+  font-weight: 500;
+  background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+  border: 1px solid #fc8181;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(229, 62, 62, 0.1);
 }
 
-/* Kontejner za dugmad - za centriranje dugmeta */
 .action-buttons-container {
-  margin-top: 25px; /* Razmak iznad dugmeta za prijavu */
-  text-align: center; /* Centriranje dugmeta */
+  margin-top: 28px;
+  text-align: center;
 }
 
-/* Stilovi za dugme za prijavu (mat-raised-button) */
 .login-button-style {
-  padding: 10px 20px;       /* Unutrašnji padding */
-  font-size: 1.1em;         /* Povećan font za dugme */
-  font-weight: 600;         /* Deblji font */
-  height: 50px;             /* Fiksna visina dugmeta */
-  border-radius: 8px;       /* Zaobljenije ivice dugmeta */
-  letter-spacing: 0.5px;    /* Blagi razmak između slova */
-  width: 100%;              /* Dugme zauzima celu širinu kontejnera */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Glatki prelaz */
+  padding: 14px 24px;
+  font-size: 1.1em;
+  font-weight: 600;
+  height: 54px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+  width: 100%;
+  background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%);
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
 }
 
-/* Stil za dugme kada je onemogućeno (disabled) */
 .login-button-style:disabled {
-  background-color: #a0a0a0 !important; /* Tamnija siva boja kada je onemogućeno */
-  cursor: not-allowed;                 /* Kursor "zabranjeno" */
-  transform: none;                     /* Ukloni transformaciju */
-  box-shadow: none;                    /* Ukloni senku */
+  background: linear-gradient(135deg, #cbd5e0 0%, #a0aec0 100%);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  color: #718096;
 }
 
-/* Stil za dugme kada je aktivno (kliknuto/hover) */
 .login-button-style:not(:disabled):hover {
-  background-color: #0056b3; /* Tamnija plava na hover */
-  transform: translateY(-2px); /* Lagani skok efekat na hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Senka na hover */
+  background: linear-gradient(135deg, #ff8a42 0%, #ff5722 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
 }
 
 .login-button-style:not(:disabled):active {
-  background-color: #003f7f; /* Još tamnija plava na klik */
-  transform: translateY(0); /* Vraća se u originalnu poziciju */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Manja senka na klik */
+  background: linear-gradient(135deg, #ff7a28 0%, #e64a19 100%);
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.2);
 }
 
-/* Medijski upiti za responzivnost (opciono, ali preporučeno) */
 @media (max-width: 600px) {
   .login-card {
-    margin: 10px; /* Manji margin na malim ekranima */
-    border-radius: 0; /* Oštre ivice na veoma malim ekranima */
-    box-shadow: none; /* Ukloni senku na malim ekranima */
+    margin: 10px;
+    max-width: calc(100vw - 20px);
+    border-radius: 12px;
   }
 
   .login-wrapper {
-    padding: 0; /* Ukloni padding oko wrapper-a na mobilnim */
+    padding: 10px;
   }
 
   .custom-card-content {
-    padding: 15px; /* Manji padding unutar kartice na mobilnim */
+    padding: 24px;
   }
 
   .custom-card-header {
-    padding: 15px; /* Manji padding za zaglavlje na mobilnim */
+    padding: 24px 20px;
+  }
+
+  .card-title-text {
+    font-size: 1.9em;
+  }
+
+  .card-subtitle-text {
+    font-size: 1em;
   }
 }

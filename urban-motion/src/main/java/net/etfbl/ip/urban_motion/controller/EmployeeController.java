@@ -5,6 +5,7 @@ import net.etfbl.ip.urban_motion.dto.AddEmployeeDTO;
 import net.etfbl.ip.urban_motion.model.Employee;
 import net.etfbl.ip.urban_motion.model.Role;
 import net.etfbl.ip.urban_motion.service.EmployeeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,5 +49,16 @@ public class EmployeeController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody AddEmployeeDTO updateEmployeeDTO) {
+        try {
+            Employee updatedEmployee = employeeService.updateEmployeeById(id, updateEmployeeDTO);
+            return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
+        } catch (RuntimeException e) {
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
