@@ -1,0 +1,64 @@
+<div class="login-wrapper">
+  <mat-card class="login-card custom-card-style">
+    <mat-card-header class="custom-card-header">
+      <mat-card-title class="card-title-text">Welcome!</mat-card-title>
+      <mat-card-subtitle class="card-subtitle-text"
+        >Sign in to continue</mat-card-subtitle
+      >
+    </mat-card-header>
+
+    <mat-card-content class="custom-card-content">
+      <form [formGroup]="loginForm" class="login-form-layout">
+        <mat-form-field
+          appearance="outline"
+          class="full-width input-field-margin"
+        >
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="username"
+            placeholder="Insert username"
+          />
+          @if (loginForm.get('username')?.hasError('required') &&
+          loginForm.get('username')?.touched) {
+          <mat-error>Username required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          class="full-width input-field-margin"
+        >
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            placeholder="Insert password"
+          />
+          @if (loginForm.get('password')?.hasError('required') &&
+          loginForm.get('password')?.touched) {
+          <mat-error>Password required.</mat-error>
+          }
+        </mat-form-field>
+
+        @if(invalidCredentials) {
+        <p class="error-message">Invalid username or password. Try again.</p>
+        }
+
+        <div class="action-buttons-container">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="login()"
+            [disabled]="loginForm.invalid"
+            class="full-width login-button-style"
+          >
+            Sign in
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
