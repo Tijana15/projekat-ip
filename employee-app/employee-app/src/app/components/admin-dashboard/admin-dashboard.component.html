@@ -1,1 +1,64 @@
-<p>admin-dashboard works!</p>
+<div class="admin-layout">
+  <mat-toolbar class="admin-toolbar">
+    <span class="toolbar-title">Admin Dashboard</span>
+    <span class="spacer"></span>
+    <span class="welcome-text">Welcome, Administrator!</span>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" opened class="sidebar">
+      <mat-nav-list>
+        <h3 class="sidebar-title">Manage options</h3>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'vehicles'"
+          (click)="selectSection('vehicles')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>directions_car</mat-icon>
+          <span matListItemTitle>Vehicles</span>
+        </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'manufacturers'"
+          (click)="selectSection('manufacturers')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>business</mat-icon>
+          <span matListItemTitle>Manufacturers</span>
+        </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'clients'"
+          (click)="selectSection('clients')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>people</mat-icon>
+          <span matListItemTitle>Clients</span>
+        </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'employees'"
+          (click)="selectSection('employees')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>badge</mat-icon>
+          <span matListItemTitle>Employees</span>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="main-content">
+      <div class="content-wrapper">
+        @if (selectedSection === 'vehicles') {
+        <app-admin-vehicles-managemant></app-admin-vehicles-managemant>
+        } @else if (selectedSection === 'manufacturers') {
+        <app-admin-manufacturers-management></app-admin-manufacturers-management>
+        } @else if (selectedSection === 'clients') {
+        <app-admin-clients-management></app-admin-clients-management>
+        } @else if (selectedSection === 'employees') {
+        <app-admin-employees-management></app-admin-employees-management>
+        }
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

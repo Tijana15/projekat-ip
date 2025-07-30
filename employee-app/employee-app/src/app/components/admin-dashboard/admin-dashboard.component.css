@@ -1,0 +1,167 @@
+.admin-layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-toolbar {
+  background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.toolbar-title {
+  font-size: 1.4em;
+  font-weight: 600;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.welcome-text {
+  font-size: 1em;
+  opacity: 0.9;
+}
+
+.sidenav-container {
+  flex: 1;
+  background-color: #f8f9fa;
+}
+
+.sidebar {
+  width: 280px;
+  background-color: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-title {
+  padding: 20px 16px 10px 16px;
+  margin: 0;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #424242;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.menu-item {
+  cursor: pointer;
+  margin: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  min-height: 48px;
+}
+
+.menu-item:hover {
+  background-color: #fff3e0;
+  transform: translateX(4px);
+}
+
+.menu-item.active {
+  background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+}
+
+.menu-item.active mat-icon {
+  color: white;
+}
+
+.menu-item mat-icon {
+  color: #ff6b35;
+  margin-right: 12px;
+}
+
+.main-content {
+  padding: 0;
+  background-color: #f8f9fa;
+}
+
+.content-wrapper {
+  padding: 24px;
+  max-width: 1200px;
+}
+
+.content-section {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: none;
+  background: white;
+}
+
+.section-card mat-card-header {
+  padding-bottom: 16px;
+}
+
+.section-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5em;
+  color: #424242;
+}
+
+.section-card mat-card-title mat-icon {
+  color: #ff6b35;
+  font-size: 1.8em;
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.section-card mat-card-subtitle {
+  color: #757575;
+  font-size: 1em;
+  margin-top: 8px;
+}
+
+.section-card mat-card-content {
+  padding-top: 8px;
+}
+
+.section-card ul {
+  margin: 16px 0;
+  padding-left: 20px;
+}
+
+.section-card li {
+  margin: 8px 0;
+  color: #616161;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+  }
+
+  .content-wrapper {
+    padding: 16px;
+  }
+
+  .toolbar-title {
+    font-size: 1.2em;
+  }
+
+  .welcome-text {
+    display: none;
+  }
+}
