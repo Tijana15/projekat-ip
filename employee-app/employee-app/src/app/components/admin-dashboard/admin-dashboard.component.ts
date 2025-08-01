@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 import { AdminVehiclesManagemantComponent } from '../admin/admin-vehicles-managemant/admin-vehicles-managemant.component';
 import { AdminManufacturersManagementComponent } from '../admin/admin-manufacturers-management/admin-manufacturers-management.component';
@@ -33,8 +34,12 @@ import { AdminEmployeesManagementComponent } from '../admin/admin-employees-mana
 })
 export class AdminDashboardComponent {
   selectedSection: string = 'vehicles';
+  constructor(private router: Router) {}
 
   selectSection(sectionId: string): void {
     this.selectedSection = sectionId;
+  }
+  logout(): void {
+    this.router.navigate(['/login']);
   }
 }
