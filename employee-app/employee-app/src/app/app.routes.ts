@@ -11,6 +11,5 @@ export const routes: Routes = [
   { path: 'admin-dashboard', component: AdminDashboardComponent },
   { path: 'operator-dashboard', component: OperatorDashboardComponent },
   { path: 'management-dashboard', component: ManagementDashboardComponent },
-
   { path: '**', redirectTo: '/login' },
 ];

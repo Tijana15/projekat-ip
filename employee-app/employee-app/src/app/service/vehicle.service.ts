@@ -44,9 +44,7 @@ export class VehicleService {
   deleteEScooter(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}escooters/${id}`);
   }
-  // Dodaj ove metode u VehicleService
 
-  // Metode za dobijanje pojedinačnih vozila
   getCarById(id: string): Observable<Car> {
     return this.http.get<Car>(`${this.apiUrl}/cars/${id}`);
   }
@@ -58,7 +56,6 @@ export class VehicleService {
   getEScooterById(id: string): Observable<EScooter> {
     return this.http.get<EScooter>(`${this.apiUrl}/escooters/${id}`);
   }
-  // Metode za ažuriranje vozila
   updateCar(id: string, car: Car): Observable<Car> {
     return this.http.put<Car>(`${this.apiUrl}/cars/${id}`, car);
   }
@@ -69,5 +66,14 @@ export class VehicleService {
 
   updateEScooter(id: string, escooter: EScooter): Observable<EScooter> {
     return this.http.put<EScooter>(`${this.apiUrl}/escooters/${id}`, escooter);
+  }
+  deleteManufacturer(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}manufacturers/${id}`);
+  }
+  addManufacturer(manufacturer: Manufacturer): Observable<Manufacturer> {
+    return this.http.post<Manufacturer>(
+      this.apiUrl + 'manufacturers',
+      manufacturer
+    );
   }
 }

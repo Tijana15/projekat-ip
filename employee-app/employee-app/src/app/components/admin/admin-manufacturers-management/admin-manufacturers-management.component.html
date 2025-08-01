@@ -1,1 +1,113 @@
-<p>admin-manufacturers-management works!</p>
+<!-- src/app/admin-manufacturers-management/admin-manufacturers-management.component.html -->
+
+<div class="content-section">
+  <mat-card class="section-card">
+    <mat-card-content>
+      <div class="table-header">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addManufacturer()"
+          class="add-button"
+        >
+          <mat-icon>add</mat-icon> Add New Manufacturer
+        </button>
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Filter</mat-label>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Search manufacturers"
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z8 manufacturers-table"
+      >
+        <!-- ID Kolona -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+
+        <!-- Name Kolona -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!-- State Kolona -->
+        <ng-container matColumnDef="state">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+          <td mat-cell *matCellDef="let element">{{ element.state }}</td>
+        </ng-container>
+
+        <!-- Address Kolona -->
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+          <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+        </ng-container>
+
+        <!-- Phone Kolona -->
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+          <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
+        </ng-container>
+
+        <!-- Fax Kolona -->
+        <ng-container matColumnDef="fax">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fax</th>
+          <td mat-cell *matCellDef="let element">{{ element.fax }}</td>
+        </ng-container>
+
+        <!-- Mail Kolona -->
+        <ng-container matColumnDef="mail">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Mail</th>
+          <td mat-cell *matCellDef="let element">{{ element.mail }}</td>
+        </ng-container>
+
+        <!-- Actions Kolona -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element" class="actions-cell">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="editManufacturer(element)"
+              aria-label="Edit Manufacturer"
+              class="action-btn edit-btn"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="deleteManufacturer(element.id)"
+              aria-label="Delete Manufacturer"
+              class="action-btn delete-btn"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Red zaglavlja -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <!-- Redovi podataka -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <!-- Paginator -->
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of manufacturers"
+      ></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,108 @@
+<div class="add-manufacturer-container">
+  <mat-card class="manufacturer-form-card">
+    <mat-card-header>
+      <mat-card-title>Add New Manufacturer</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="manufacturerForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            formControlName="name"
+            placeholder="e.g., Tesla Inc."
+          />
+          @if (manufacturerForm.get('name')?.invalid &&
+          manufacturerForm.get('name')?.touched) {
+          <mat-error>Name is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>State</mat-label>
+          <input
+            matInput
+            formControlName="state"
+            placeholder="e.g., California"
+          />
+          @if (manufacturerForm.get('state')?.invalid &&
+          manufacturerForm.get('state')?.touched) {
+          <mat-error>State is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Address</mat-label>
+          <input
+            matInput
+            formControlName="address"
+            placeholder="e.g., 123 Electric Ave"
+          />
+          @if (manufacturerForm.get('address')?.invalid &&
+          manufacturerForm.get('address')?.touched) {
+          <mat-error>Address is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Phone</mat-label>
+          <input
+            matInput
+            formControlName="phone"
+            placeholder="e.g., +1234567890"
+          />
+          @if (manufacturerForm.get('phone')?.invalid &&
+          manufacturerForm.get('phone')?.touched) { @if
+          (manufacturerForm.get('phone')?.errors?.['required']) {
+          <mat-error>Phone is required.</mat-error>
+          } @else if (manufacturerForm.get('phone')?.errors?.['pattern']) {
+          <mat-error>Invalid phone format.</mat-error>
+          } }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Fax (Optional)</mat-label>
+          <input
+            matInput
+            formControlName="fax"
+            placeholder="e.g., +1234567891"
+          />
+          @if (manufacturerForm.get('fax')?.invalid &&
+          manufacturerForm.get('fax')?.touched) { @if
+          (manufacturerForm.get('fax')?.errors?.['pattern']) {
+          <mat-error>Invalid fax format.</mat-error>
+          } }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="mail"
+            placeholder="e.g., info@tesla.com"
+          />
+          @if (manufacturerForm.get('mail')?.invalid &&
+          manufacturerForm.get('mail')?.touched) { @if
+          (manufacturerForm.get('mail')?.errors?.['required']) {
+          <mat-error>Email is required.</mat-error>
+          } @else if (manufacturerForm.get('mail')?.errors?.['email']) {
+          <mat-error>Invalid email format.</mat-error>
+          } }
+        </mat-form-field>
+
+        <mat-card-actions align="end">
+          <button mat-button type="button" (click)="onCancel()">Clear</button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="manufacturerForm.invalid"
+          >
+            Add Manufacturer
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

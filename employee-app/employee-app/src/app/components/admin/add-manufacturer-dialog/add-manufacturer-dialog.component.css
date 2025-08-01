@@ -1,0 +1,99 @@
+/* src/app/add-new-manufacturer/add-new-manufacturer.component.css */
+
+.add-manufacturer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 64px); /* Prilagodi visinu kontejnera (minus visina navigacije/headera) */
+  padding: 24px;
+  background-color: #f8f9fa; /* Svetlija pozadina */
+}
+
+.manufacturer-form-card {
+  width: 100%;
+  max-width: 600px; /* Maksimalna širina forme */
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+mat-card-header {
+  padding: 24px;
+  border-bottom: 1px solid #eee;
+}
+
+mat-card-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #3f51b5; /* Primarna boja */
+}
+
+mat-card-content {
+  padding: 24px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-bottom: 16px; /* Razmak između polja */
+}
+
+mat-card-actions {
+  padding: 16px 24px 24px 24px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end; /* Poravnava dugmad desno */
+  gap: 12px; /* Razmak između dugmadi */
+}
+
+/* Stil za primarno dugme */
+button[mat-raised-button][color="primary"] {
+  background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  transition: all 0.3s ease;
+}
+
+button[mat-raised-button][color="primary"]:hover {
+  background: linear-gradient(135deg, #ff8a43 0%, #ff5722 100%);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+  transform: translateY(-2px);
+}
+
+button[mat-raised-button][color="primary"]:disabled {
+  background: #bdbdbd;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+/* Stil za obično dugme (npr. Clear) */
+button[mat-button] {
+  color: #757575;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+button[mat-button]:hover {
+  background-color: #f5f5f5;
+  color: #424242;
+}
+
+/* Stil za mat-error */
+mat-error {
+  font-size: 12px;
+  color: #f44336;
+  margin-top: 4px;
+}

@@ -1,0 +1,230 @@
+/* src/app/admin-manufacturers-management/admin-manufacturers-management.component.css */
+
+/* Osnovni stilovi za sekciju */
+.content-section {
+  padding: 24px;
+  background-color: #f8f9fa;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-card {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: none;
+  background: white;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap; /* Omogućava prelamanje elemenata na manjim ekranima */
+  gap: 16px; /* Razmak između elemenata */
+}
+
+.filter-field {
+  width: 100%;
+  max-width: 300px; /* Ograniči širinu filter polja */
+}
+
+/* Dugme za dodavanje */
+.add-button {
+  background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  transition: all 0.3s ease;
+  text-transform: none;
+  min-height: 48px;
+}
+
+.add-button:hover {
+  background: linear-gradient(135deg, #ff8a43 0%, #ff5722 100%);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+  transform: translateX(4px);
+}
+
+.add-button:active {
+  transform: translateX(2px);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+}
+
+.add-button mat-icon {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.add-button:hover mat-icon {
+  transform: rotate(90deg);
+}
+
+/* Stilizacija tabele */
+.manufacturers-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Header ćelije */
+.mat-mdc-table .mat-mdc-header-cell {
+  font-weight: 600;
+  color: #424242;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 16px;
+  vertical-align: middle;
+  height: 56px;
+}
+
+/* Ćelije podataka */
+.mat-mdc-table .mat-mdc-row .mat-mdc-cell {
+  padding: 16px;
+  vertical-align: middle;
+  display: table-cell;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
+  /* Visina reda se kontroliše na .mat-mdc-row */
+}
+
+/* Redovi tabele */
+.mat-mdc-row {
+  transition: all 0.3s ease;
+  min-height: 64px; /* Minimalna visina reda */
+  border-bottom: 1px solid #eee; /* Linija između redova */
+}
+
+.mat-mdc-row:nth-child(even) {
+  background-color: #fafbfc;
+}
+
+.mat-mdc-row:hover {
+  background-color: #fff3e0;
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.1);
+}
+
+/* Akcione dugmad u ćelijama */
+.actions-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%; /* Važno za vertikalno poravnanje unutar ćelije */
+}
+
+.action-btn {
+  min-width: 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2);
+}
+
+.edit-btn:hover {
+  background: linear-gradient(135deg, #ff8a43 0%, #ff5722 100%);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  transform: translateX(4px);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #dc3545 0%, #c62828 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+}
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, #c82333 0%, #b71c1c 100%);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+  transform: translateX(4px);
+}
+
+.action-btn mat-icon {
+  font-size: 18px;
+}
+
+/* Stil za paginator */
+.mat-mdc-paginator {
+  background-color: white;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 16px;
+}
+
+/* Poruka kada nema podataka */
+.mat-mdc-table .mat-mdc-row.mat-no-data-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Visina poruke za praznu tabelu */
+  background-color: #fdfdfd;
+  color: #757575;
+  font-style: italic;
+}
+
+/* Responsive prilagodbe */
+@media (max-width: 768px) {
+  .add-button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .actions-cell {
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+  }
+
+  .action-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .mat-header-cell,
+  .mat-cell {
+    padding: 12px 8px;
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-field {
+    max-width: 100%;
+  }
+}
