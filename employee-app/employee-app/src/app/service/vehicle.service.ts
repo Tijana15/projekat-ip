@@ -46,26 +46,26 @@ export class VehicleService {
   }
 
   getCarById(id: string): Observable<Car> {
-    return this.http.get<Car>(`${this.apiUrl}/cars/${id}`);
+    return this.http.get<Car>(`${this.apiUrl}cars/${id}`);
   }
 
   getEBikeById(id: string): Observable<EBike> {
-    return this.http.get<EBike>(`${this.apiUrl}/ebikes/${id}`);
+    return this.http.get<EBike>(`${this.apiUrl}ebikes/${id}`);
   }
 
   getEScooterById(id: string): Observable<EScooter> {
-    return this.http.get<EScooter>(`${this.apiUrl}/escooters/${id}`);
+    return this.http.get<EScooter>(`${this.apiUrl}escooters/${id}`);
   }
   updateCar(id: string, car: Car): Observable<Car> {
-    return this.http.put<Car>(`${this.apiUrl}/cars/${id}`, car);
+    return this.http.put<Car>(`${this.apiUrl}cars/${id}`, car);
   }
 
   updateEBike(id: string, ebike: EBike): Observable<EBike> {
-    return this.http.put<EBike>(`${this.apiUrl}/ebikes/${id}`, ebike);
+    return this.http.put<EBike>(`${this.apiUrl}ebikes/${id}`, ebike);
   }
 
   updateEScooter(id: string, escooter: EScooter): Observable<EScooter> {
-    return this.http.put<EScooter>(`${this.apiUrl}/escooters/${id}`, escooter);
+    return this.http.put<EScooter>(`${this.apiUrl}escooters/${id}`, escooter);
   }
   deleteManufacturer(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}manufacturers/${id}`);

@@ -112,7 +112,6 @@ export class AdminManufacturersManagementComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Edited manufacturer:', result);
-        // Osvježi listu proizvođača nakon što se dijalog zatvori sa spremljenim podacima
         this.loadManufacturers();
       } else {
         console.log('Edit manufacturer dialog closed without saving.');

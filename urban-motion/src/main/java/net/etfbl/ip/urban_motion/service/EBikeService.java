@@ -34,14 +34,12 @@ public class EBikeService {
         EBike eBike = eBikeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("EBike not found with id: " + id));
 
-        // Update Vehicle fields
         eBike.setManufacturer(eBikeDetails.getManufacturer());
         eBike.setModel(eBikeDetails.getModel());
         eBike.setPurchasePrice(eBikeDetails.getPurchasePrice());
         eBike.setVehicleState(eBikeDetails.getVehicleState());
         eBike.setPicture(eBikeDetails.getPicture());
 
-        // Update EBike-specific fields
         eBike.setMaxRange(eBikeDetails.getMaxRange());
 
         return eBikeRepository.save(eBike);

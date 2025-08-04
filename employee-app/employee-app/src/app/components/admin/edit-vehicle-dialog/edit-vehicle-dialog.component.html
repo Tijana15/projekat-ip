@@ -1,0 +1,146 @@
+<div class="edit-vehicle-dialog-container">
+  <mat-card class="vehicle-form-card">
+    <mat-card-header>
+      <mat-card-title>Edit {{ vehicleType | titlecase }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="vehicleForm" (ngSubmit)="onSave()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>ID</mat-label>
+          <input matInput formControlName="id" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Manufacturer</mat-label>
+          <mat-select formControlName="manufacturer">
+            @for (manufacturer of (manufacturers$ | async); track
+            manufacturer.id) {
+            <mat-option [value]="manufacturer.id">{{
+              manufacturer.name
+            }}</mat-option>
+            }
+          </mat-select>
+          @if (vehicleForm.get('manufacturer')?.invalid &&
+          vehicleForm.get('manufacturer')?.touched) {
+          <mat-error>Manufacturer is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Model</mat-label>
+          <input matInput formControlName="model" placeholder="e.g., Model S" />
+          @if (vehicleForm.get('model')?.invalid &&
+          vehicleForm.get('model')?.touched) {
+          <mat-error>Model is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Purchase Price</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="purchasePrice"
+            placeholder="e.g., 50000.00"
+          />
+          @if (vehicleForm.get('purchasePrice')?.invalid &&
+          vehicleForm.get('purchasePrice')?.touched) {
+          <mat-error>Purchase Price is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Picture URL (Optional)</mat-label>
+          <input
+            matInput
+            formControlName="picture"
+            placeholder="e.g., https://example.com/car.jpg"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Vehicle State</mat-label>
+          <mat-select formControlName="vehicleState">
+            <mat-option value="AVAILABLE">Available</mat-option>
+            <mat-option value="IN_USE">In Use</mat-option>
+            <mat-option value="UNDER_MAINTENANCE">Under Maintenance</mat-option>
+            <mat-option value="OUT_OF_SERVICE">Out of Service</mat-option>
+          </mat-select>
+          @if (vehicleForm.get('vehicleState')?.invalid &&
+          vehicleForm.get('vehicleState')?.touched) {
+          <mat-error>Vehicle State is required.</mat-error>
+          }
+        </mat-form-field>
+
+        @if (vehicleType === 'car') {
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Purchase Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="purchaseDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (vehicleForm.get('purchaseDate')?.invalid &&
+          vehicleForm.get('purchaseDate')?.touched) {
+          <mat-error>Purchase Date is required.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description (Optional)</mat-label>
+          <textarea
+            matInput
+            formControlName="description"
+            placeholder="e.g., A reliable city car"
+          ></textarea>
+        </mat-form-field>
+        } @if (vehicleType === 'e-scooter') {
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Max Speed (km/h)</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="maxSpeed"
+            placeholder="e.g., 25"
+          />
+          @if (vehicleForm.get('maxSpeed')?.invalid &&
+          vehicleForm.get('maxSpeed')?.touched) {
+          <mat-error>Max Speed is required and must be positive.</mat-error>
+          }
+        </mat-form-field>
+        } @if (vehicleType === 'e-bike') {
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Max Range (km)</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="maxRange"
+            placeholder="e.g., 50"
+          />
+          @if (vehicleForm.get('maxRange')?.invalid &&
+          vehicleForm.get('maxRange')?.touched) {
+          <mat-error>Max Range is required and must be positive.</mat-error>
+          }
+        </mat-form-field>
+        }
+
+        <mat-card-actions align="end">
+          <button mat-button type="button" (click)="onCancel()">Cancel</button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="vehicleForm.invalid"
+          >
+            Save Changes
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

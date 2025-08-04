@@ -34,14 +34,12 @@ public class EScooterService {
         EScooter eScooter = eScooterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("EScooter not found with id: " + id));
 
-        // Update Vehicle fields
         eScooter.setManufacturer(eScooterDetails.getManufacturer());
         eScooter.setModel(eScooterDetails.getModel());
         eScooter.setPurchasePrice(eScooterDetails.getPurchasePrice());
         eScooter.setVehicleState(eScooterDetails.getVehicleState());
         eScooter.setPicture(eScooterDetails.getPicture());
 
-        // Update EScooter-specific fields
         eScooter.setMaxSpeed(eScooterDetails.getMaxSpeed());
 
         return eScooterRepository.save(eScooter);

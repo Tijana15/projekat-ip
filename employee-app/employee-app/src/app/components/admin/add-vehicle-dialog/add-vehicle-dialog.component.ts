@@ -316,7 +316,7 @@ export class AddVehicleDialogComponent implements OnInit {
               row
             )}`
           );
-          return []; // Return empty array if invalid
+          return []; 
         }
         cars.push(car);
       } catch (e) {
@@ -400,7 +400,7 @@ export class AddVehicleDialogComponent implements OnInit {
         );
 
         if (vehicleToUpload) {
-          let uploadObservable: Observable<any>; // Can return Car, EScooter, EBike
+          let uploadObservable: Observable<any>;
 
           if (this.csvSelectedVehicleType === 'car') {
             uploadObservable = this.vehicleService.addCar(
@@ -411,7 +411,6 @@ export class AddVehicleDialogComponent implements OnInit {
               vehicleToUpload as EScooter
             );
           } else {
-            // 'e-bike'
             uploadObservable = this.vehicleService.addEBike(
               vehicleToUpload as EBike
             );

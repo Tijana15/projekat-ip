@@ -6,14 +6,21 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
 import { Car, EBike, EScooter, Vehicle } from '../../../model/vehicle.model';
 import { VehicleService } from '../../../service/vehicle.service';
 import { Observable } from 'rxjs';
-import { AddVehicleDialogComponent } from '../add-vehicle-dialog/add-vehicle-dialog.component';
-import { AddVehicleDialogData } from '../add-vehicle-dialog/add-vehicle-dialog.component';
+import {
+  AddVehicleDialogComponent,
+  AddVehicleDialogData,
+} from '../add-vehicle-dialog/add-vehicle-dialog.component';
+import {
+  EditVehicleDialogComponent,
+  EditVehicleDialogData,
+} from '../edit-vehicle-dialog/edit-vehicle-dialog.component';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -28,12 +35,12 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatSortModule,
     MatDialogModule,
-    MatPaginator,
+    MatPaginatorModule,
   ],
   templateUrl: './admin-vehicles-managemant.component.html',
   styleUrl: './admin-vehicles-managemant.component.css',
 })
-export class AdminVehiclesManagemantComponent {
+export class AdminVehiclesManagemantComponent implements OnInit {
   dialog: MatDialog;
   vehicleService: VehicleService;
   constructor(
@@ -53,7 +60,6 @@ export class AdminVehiclesManagemantComponent {
     'manufacturer',
     'model',
     'purchasePrice',
-
     'purchaseDate',
     'description',
     'actions',
@@ -64,7 +70,6 @@ export class AdminVehiclesManagemantComponent {
     'manufacturer',
     'model',
     'purchasePrice',
-
     'maxRange',
     'actions',
   ];
@@ -88,26 +93,45 @@ export class AdminVehiclesManagemantComponent {
     this.eScooterDataSource = this.vehicleService.getEScooters();
   }
 
-  editVehicle(vehicle: Vehicle, type: string): void {
+  editVehicle(vehicle: Vehicle, type: 'car' | 'e-scooter' | 'e-bike'): void {
     console.log(`Edit ${type}:`, vehicle);
-    this.router.navigate(['/admin/vehicles/edit', type, vehicle.id]);
+    this.openEditVehicleDialog(vehicle.id, type);
+  }
+
+  openEditVehicleDialog(
+    id: string,
+    type: 'car' | 'e-scooter' | 'e-bike'
+  ): void {
+    console.log('Opening edit dialog for ID:', id, 'Type:', type);
+
+    const dialogRef = this.dialog.open(EditVehicleDialogComponent, {
+      width: '600px',
+      disableClose: true,
+      data: { id: id, type: type } as EditVehicleDialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Vehicle edited successfully.');
+        this.loadVehicles();
+      } else {
+        console.log('Edit vehicle dialog closed without saving.');
+      }
+    });
   }
 
   deleteVehicle(id: string, type: 'car' | 'e-scooter' | 'e-bike'): void {
     console.log('Attempting to delete vehicle with ID:', id, 'Type:', type);
 
-    // Važno: Koristi custom modal UI umesto confirm() za bolji UX
-    // Za sada, zadržavamo confirm() za jednostavnost
     if (confirm(`Are you sure you want to delete ${type} with ID: ${id}?`)) {
       if (type === 'car') {
         this.vehicleService.deleteCar(id).subscribe({
           next: () => {
             console.log('Car deleted successfully.');
-            this.loadVehicles(); // Ponovo učitaj listu nakon brisanja
+            this.loadVehicles();
           },
           error: (err) => {
             console.error('Error deleting car:', err);
-            // Opcionalno: prikaži poruku o grešci korisniku
           },
         });
       } else if (type === 'e-bike') {
@@ -143,31 +167,7 @@ export class AdminVehiclesManagemantComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Dialog result (new vehicle data):', result);
-        if (type === 'car') {
-          this.vehicleService.addCar(result as Car).subscribe({
-            next: (newCar) => {
-              console.log('Car added successfully:', newCar);
-              this.loadVehicles();
-            },
-            error: (err) => console.error('Error adding car:', err),
-          });
-        } else if (type === 'e-bike') {
-          this.vehicleService.addEBike(result as EBike).subscribe({
-            next: (newBike) => {
-              console.log('EBike added successfully:', newBike);
-              this.loadVehicles();
-            },
-            error: (err) => console.error('Error adding ebike:', err),
-          });
-        } else if (type === 'e-scooter') {
-          this.vehicleService.addEScooter(result as EScooter).subscribe({
-            next: (newEScooter) => {
-              console.log('Car added successfully:', newEScooter);
-              this.loadVehicles();
-            },
-            error: (err) => console.error('Error adding escooter:'),
-          });
-        }
+        this.loadVehicles();
       } else {
         console.log('Dialog closed without saving.');
       }
