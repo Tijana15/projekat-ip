@@ -1,0 +1,170 @@
+.add-vehicle-dialog-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 300px; /* Minimalna širina za mobilne uređaje */
+  max-width: 600px; /* Maksimalna širina za veće ekrane */
+  margin: auto; /* Centriranje kontejnera */
+}
+
+.dialog-options-card,
+.section-card {
+  width: 100%;
+  max-width: 500px; /* Maksimalna širina kartica */
+  margin-bottom: 20px;
+  border-radius: 8px; /* Zaobljene ivice */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Blaga senka */
+  display: flex; /* Dodato za flex kontejner unutar kartice */
+  flex-direction: column; /* Dodato za flex kontejner unutar kartice */
+  max-height: calc(100vh - 100px); /* Ograničava visinu kartice da stane na ekran */
+}
+
+mat-card-header {
+  padding: 16px;
+  background-color: #f5f5f5; /* Svetlija pozadina za zaglavlje */
+  border-bottom: 1px solid #eee;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  flex-shrink: 0; /* Osigurava da se zaglavlje ne smanjuje */
+}
+
+mat-card-title {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  width: 100%;
+}
+
+mat-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-grow: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.full-width-btn {
+  width: 100%;
+  padding: 15px 0;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.full-width-btn mat-icon {
+  margin-right: 8px;
+}
+
+.full-width-btn:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-bottom: 10px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  margin-top: 15px;
+  flex-shrink: 0;
+}
+
+.text-green-600 {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.text-red-600 {
+  color: #dc3545;
+  font-weight: 500;
+}
+
+.hidden {
+  display: none;
+}
+
+.mt-8 {
+  margin-top: 32px;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.p-6 {
+  padding: 24px;
+}
+
+.mb-4 {
+  margin-bottom: 16px;
+}
+
+.mt-4 {
+  margin-top: 16px;
+}
+
+.text-gray-600 {
+  color: #4a5568;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .add-vehicle-dialog-container {
+    padding: 10px;
+  }
+
+  .dialog-options-card,
+  .section-card {
+    margin-bottom: 15px;
+    max-height: calc(100vh - 60px);
+  }
+
+  mat-card-content {
+    padding: 15px;
+    gap: 10px;
+  }
+
+  .full-width-btn {
+    padding: 12px 0;
+    font-size: 1em;
+  }
+
+  mat-card-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  mat-card-actions button {
+    width: 100%;
+  }
+}

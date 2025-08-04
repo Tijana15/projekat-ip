@@ -1,166 +1,240 @@
-<h2 mat-dialog-title>Add New {{ vehicleType | titlecase }}</h2>
-
-<mat-dialog-content>
+<div class="add-vehicle-dialog-container">
+  @if (!showManualForm && !showCsvUpload) {
   <mat-card class="dialog-options-card">
     <mat-card-content>
       <h3>Choose an option:</h3>
-      <button mat-raised-button color="accent" class="full-width-btn" disabled>
-        <mat-icon>upload_file</mat-icon> Import from File (Coming Soon)
+      <button
+        mat-raised-button
+        color="accent"
+        class="full-width-btn"
+        (click)="selectImportOption()"
+      >
+        <mat-icon>upload_file</mat-icon> Import from file
       </button>
-      @if (!showManualForm) {
+
       <button
         mat-raised-button
         color="primary"
         class="full-width-btn"
-        (click)="showManualForm = true"
+        (click)="selectManualOption()"
       >
-        <mat-icon>create</mat-icon> Add Manually
+        <mat-icon>create</mat-icon> Add manually
       </button>
-      }
     </mat-card-content>
   </mat-card>
+  } @if (showCsvUpload) {
+  <mat-card class="section-card mt-8">
+    <mat-card-header>
+      <mat-card-title>Upload vehicle via CSV</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="flex flex-col items-center justify-center p-6">
+      <mat-form-field appearance="outline" class="full-width mb-4">
+        <mat-label>Select vehicle type for CSV</mat-label>
+        <mat-select [(ngModel)]="csvSelectedVehicleType" name="csvVehicleType">
+          <mat-option value="car">Car</mat-option>
+          <mat-option value="e-scooter">E-Scooter</mat-option>
+          <mat-option value="e-bike">E-Bike</mat-option>
+        </mat-select>
+        @if (!csvSelectedVehicleType) {
+        <mat-error>Vehicle type is required for CSV upload.</mat-error>
+        }
+      </mat-form-field>
 
-  <form [formGroup]="vehicleForm" (ngSubmit)="onSave()">
-    <mat-card class="form-card">
-      <mat-card-title>Vehicle Details</mat-card-title>
-      <mat-card-content>
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Vehicle ID</mat-label>
-          <input matInput formControlName="id" required />
-          @if (vehicleForm.get('id')?.hasError('required') &&
-          vehicleForm.get('id')?.touched) {
-          <mat-error>Vehicle ID is required</mat-error>
+      <input
+        type="file"
+        #fileInput
+        (change)="onFileSelected($event)"
+        accept=".csv"
+        class="hidden"
+      />
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="fileInput.click()"
+        class="mb-4"
+        [disabled]="!csvSelectedVehicleType"
+      >
+        <mat-icon>cloud_upload</mat-icon> Select CSV File
+      </button>
+
+      @if (selectedFileName) {
+      <p class="text-gray-600 mb-4">
+        Selected file: <span class="font-medium">{{ selectedFileName }}</span>
+      </p>
+      }
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="uploadCsv()"
+        [disabled]="!selectedFile || !csvSelectedVehicleType"
+        class="mt-4"
+      >
+        <mat-icon>upload</mat-icon> Upload Vehicles
+      </button>
+      @if (uploadMessage) {
+      <p
+        class="mt-4 text-sm"
+        [ngClass]="uploadSuccess ? 'text-green-600' : 'text-red-600'"
+      >
+        {{ uploadMessage }}
+      </p>
+      }
+      <button mat-button color="basic" (click)="resetOptions()" class="mt-4">
+        Back to options
+      </button>
+    </mat-card-content>
+  </mat-card>
+  } @if (showManualForm) {
+  <mat-card class="section-card mt-8">
+    <mat-card-header>
+      <mat-card-title
+        >Add new {{ vehicleType | titlecase }} manually</mat-card-title
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="vehicleForm" (ngSubmit)="onSave()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>ID</mat-label>
+          <input matInput formControlName="id" placeholder="e.g., CAR-001" />
+          @if (vehicleForm.get('id')?.invalid && vehicleForm.get('id')?.touched)
+          {
+          <mat-error>ID is required.</mat-error>
           }
         </mat-form-field>
-        <mat-form-field appearance="fill" class="full-width">
+
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Manufacturer</mat-label>
-          <mat-select formControlName="manufacturer" required>
-            @for (m of (manufacturers$ | async); track m.id) {
-            <mat-option [value]="m.id"> {{ m.name }} </mat-option>
+          <mat-select formControlName="manufacturer">
+            @for (manufacturer of (manufacturers$ | async); track
+            manufacturer.id) {
+            <mat-option [value]="manufacturer.id">{{
+              manufacturer.name
+            }}</mat-option>
             }
           </mat-select>
-          @if (vehicleForm.get('manufacturer')?.hasError('required') &&
+          @if (vehicleForm.get('manufacturer')?.invalid &&
           vehicleForm.get('manufacturer')?.touched) {
-          <mat-error>Manufacturer is required</mat-error>
+          <mat-error>Manufacturer is required.</mat-error>
           }
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Model</mat-label>
-          <input matInput formControlName="model" required />
-          @if (vehicleForm.get('model')?.hasError('required') &&
+          <input matInput formControlName="model" placeholder="e.g., Model S" />
+          @if (vehicleForm.get('model')?.invalid &&
           vehicleForm.get('model')?.touched) {
-          <mat-error>Model is required</mat-error>
+          <mat-error>Model is required.</mat-error>
           }
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Purchase Price</mat-label>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Purchase price</mat-label>
           <input
             matInput
             type="number"
             formControlName="purchasePrice"
-            required
-            min="0"
+            placeholder="e.g., 50000.00"
           />
-          @if (vehicleForm.get('purchasePrice')?.hasError('required') &&
+          @if (vehicleForm.get('purchasePrice')?.invalid &&
           vehicleForm.get('purchasePrice')?.touched) {
-          <mat-error>Purchase Price is required</mat-error>
-          } @else if (vehicleForm.get('purchasePrice')?.hasError('min') &&
-          vehicleForm.get('purchasePrice')?.touched) {
-          <mat-error>Price must be positive</mat-error>
+          <mat-error>Purchase price is required.</mat-error>
           }
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Picture URL</mat-label>
-          <input matInput formControlName="picture" />
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Picture URL (Optional)</mat-label>
+          <input
+            matInput
+            formControlName="picture"
+            placeholder="e.g., https://example.com/car.jpg"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Vehicle state</mat-label>
+          <mat-select formControlName="vehicleState">
+            <mat-option value="AVAILABLE">Available</mat-option>
+            <mat-option value="BROKEN">Broken</mat-option>
+            <mat-option value="RENTED">Rented</mat-option>
+          </mat-select>
+          @if (vehicleForm.get('vehicleState')?.invalid &&
+          vehicleForm.get('vehicleState')?.touched) {
+          <mat-error>Vehicle state is required.</mat-error>
+          }
         </mat-form-field>
 
         @if (vehicleType === 'car') {
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Purchase Date</mat-label>
           <input
             matInput
             [matDatepicker]="picker"
             formControlName="purchaseDate"
-            required
           />
-          <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle
-            matIconSuffix
+            matSuffix
             [for]="picker"
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-          @if (vehicleForm.get('purchaseDate')?.hasError('required') &&
+          @if (vehicleForm.get('purchaseDate')?.invalid &&
           vehicleForm.get('purchaseDate')?.touched) {
-          <mat-error>Purchase Date is required</mat-error>
+          <mat-error>Purchase Date is required.</mat-error>
           }
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Description</mat-label>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description (Optional)</mat-label>
           <textarea
             matInput
             formControlName="description"
-            required
-            rows="3"
+            placeholder="e.g., A reliable city car"
           ></textarea>
-          @if (vehicleForm.get('description')?.hasError('required') &&
-          vehicleForm.get('description')?.touched) {
-          <mat-error>Description is required</mat-error>
-          }
         </mat-form-field>
         } @if (vehicleType === 'e-scooter') {
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Max Speed (km/h)</mat-label>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Max speed (km/h)</mat-label>
           <input
             matInput
             type="number"
             formControlName="maxSpeed"
-            required
-            min="1"
+            placeholder="e.g., 25"
           />
-          @if (vehicleForm.get('maxSpeed')?.hasError('required') &&
+          @if (vehicleForm.get('maxSpeed')?.invalid &&
           vehicleForm.get('maxSpeed')?.touched) {
-          <mat-error>Max Speed is required</mat-error>
-          } @else if (vehicleForm.get('maxSpeed')?.hasError('min') &&
-          vehicleForm.get('maxSpeed')?.touched) {
-          <mat-error>Max Speed must be positive</mat-error>
+          <mat-error>Max speed is required and must be positive.</mat-error>
           }
         </mat-form-field>
         } @if (vehicleType === 'e-bike') {
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Max Range (km)</mat-label>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Max range (km)</mat-label>
           <input
             matInput
             type="number"
             formControlName="maxRange"
-            required
-            min="1"
+            placeholder="e.g., 50"
           />
-          @if (vehicleForm.get('maxRange')?.hasError('required') &&
+          @if (vehicleForm.get('maxRange')?.invalid &&
           vehicleForm.get('maxRange')?.touched) {
-          <mat-error>Max Range is required</mat-error>
-          } @else if (vehicleForm.get('maxRange')?.hasError('min') &&
-          vehicleForm.get('maxRange')?.touched) {
-          <mat-error>Max Range must be positive</mat-error>
+          <mat-error>Max range is required and must be positive.</mat-error>
           }
         </mat-form-field>
         }
-      </mat-card-content>
-    </mat-card>
-  </form>
-</mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="onSave()"
-    [disabled]="!vehicleForm.valid"
-  >
-    Save
-  </button>
-</mat-dialog-actions>
+        <mat-card-actions align="end">
+          <button mat-button type="button" (click)="resetOptions()">
+            Back to Options
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="vehicleForm.invalid"
+          >
+            Add {{ vehicleType | titlecase }}
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  }
+</div>
