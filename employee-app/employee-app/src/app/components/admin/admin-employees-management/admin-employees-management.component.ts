@@ -14,6 +14,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { UserService } from '../../../service/user.service';
 import { Employee } from '../../../model/employee.model';
 import { AddEmployeeDialogComponent } from '../add-employee-dialog/add-employee-dialog.component';
+import { EditEmployeeDialogComponent } from '../edit-employee-dialog/edit-employee-dialog.component';
 @Component({
   selector: 'app-admin-employees-management',
   imports: [
@@ -89,7 +90,21 @@ export class AdminEmployeesManagementComponent
   }
 
   editEmployee(employee: Employee): void {
-    console.log('Edit client:', employee);
+    console.log('Edit employee:', employee);
+    const dialogRef = this.dialog.open(EditEmployeeDialogComponent, {
+      width: '500px',
+      disableClose: true,
+      data: employee,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Employee edited successfully:', result);
+        this.loadEmployees();
+      } else {
+        console.log('Edit employee dialog closed without saving.');
+      }
+    });
   }
 
   deleteEmployee(id: number): void {

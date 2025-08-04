@@ -27,4 +27,7 @@ export class UserService {
   addEmployee(employee: Employee): Observable<Employee> {
     return this.http.post<Employee>(this.apiUrl + 'employees', employee);
   }
+  editEmployee(id: number, employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(`${this.apiUrl}employees/${id}`, employee);
+  }
 }
