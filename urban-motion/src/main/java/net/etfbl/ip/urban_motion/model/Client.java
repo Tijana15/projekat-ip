@@ -20,13 +20,15 @@ public class Client extends User{
     private String email;
     private String phone;
     private String avatarPicture;
+    private boolean blocked;
 
     @OneToMany(mappedBy = "client")
     private List<Rental> rentals=new ArrayList<>();
 
-    public Client(Long id, String username, String password, String firstName, String lastName, String email, String phone) {
+    public Client(Long id, String username, String password, String firstName, String lastName, String email, String phone, boolean blocked) {
         super(id, username, password, firstName, lastName, Role.CLIENT);
         this.email = email;
         this.phone = phone;
+        this.blocked=blocked;
     }
 }

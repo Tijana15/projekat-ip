@@ -38,5 +38,25 @@ public class ClientService {
     public void deleteClientById(Long id) {
         clientRepository.deleteById(id);
     }
+    public boolean blockClient(Long id){
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        if (clientOptional.isPresent()) {
+            Client client = clientOptional.get();
+            client.setBlocked(true);
+            clientRepository.save(client);
+            return true;
+        }
+        return false;
+    }
+    public boolean unblockClient(Long id){
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        if (clientOptional.isPresent()) {
+            Client client = clientOptional.get();
+            client.setBlocked(false);
+            clientRepository.save(client);
+            return true;
+        }
+        return false;
+    }
 
 }

@@ -51,27 +51,42 @@
           <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
         </ng-container>
 
+        <ng-container matColumnDef="blocked">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon [color]="element.blocked ? 'warn' : 'primary'">
+              {{ element.blocked ? "lock" : "lock_open" }}
+            </mat-icon>
+            {{ element.blocked ? "Blocked" : "Active" }}
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <th mat-header-cell *matHeaderCellDef>Lock/unlock account</th>
           <td mat-cell *matCellDef="let element" class="actions-cell">
+            @if (element.blocked) {
             <button
               mat-icon-button
               color="primary"
-              (click)="editClient(element)"
-              aria-label="Edit Client"
-              class="action-btn edit-btn"
+              (click)="unblockClient(element.id)"
+              aria-label="Unblock Client"
+              class="action-btn unblock-btn"
+              matTooltip="Unblock Client"
             >
-              <mat-icon>edit</mat-icon>
+              <mat-icon>lock_open</mat-icon>
             </button>
+            } @else {
             <button
               mat-icon-button
               color="warn"
-              (click)="deleteClient(element.id)"
-              aria-label="Delete Client"
-              class="action-btn delete-btn"
+              (click)="blockClient(element.id)"
+              aria-label="Block Client"
+              class="action-btn block-btn"
+              matTooltip="Block Client"
             >
-              <mat-icon>delete</mat-icon>
+              <mat-icon>lock</mat-icon>
             </button>
+            }
           </td>
         </ng-container>
 

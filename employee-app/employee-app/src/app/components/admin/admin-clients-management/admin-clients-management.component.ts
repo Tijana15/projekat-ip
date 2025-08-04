@@ -89,9 +89,37 @@ export class AdminClientsManagementComponent implements OnInit, AfterViewInit {
     }
   }
 
-  editClient(client: Client): void {
-    console.log('Edit client:', client);
+  blockClient(id: number): void {
+    console.log('Blocking client with ID:', id);
+    this.userService.blockClient(id).subscribe({
+      next: (isBlocked) => {
+        if (isBlocked) {
+          console.log('Client successfully blocked.');
+          this.loadClients();
+        } else {
+          console.error('Failed to block client.');
+        }
+      },
+      error: (err) => {
+        console.error('Error blocking client:', err);
+      },
+    });
   }
 
-  deleteClient(id: number): void {}
+  unblockClient(id: number): void {
+    console.log('Unblocking client with ID:', id);
+    this.userService.unblockClient(id).subscribe({
+      next: (isUnblocked) => {
+        if (isUnblocked) {
+          console.log('Client successfully unblocked.');
+          this.loadClients();
+        } else {
+          console.error('Failed to unblock client.');
+        }
+      },
+      error: (err) => {
+        console.error('Error unblocking client:', err);
+      },
+    });
+  }
 }

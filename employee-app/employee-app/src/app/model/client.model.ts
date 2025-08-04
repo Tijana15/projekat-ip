@@ -5,4 +5,5 @@ export interface Client {
   idDocument: string;
   email: string;
   phone: string;
+  blocked:boolean;
 }

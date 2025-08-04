@@ -22,3 +22,6 @@ temp/
 Thumbs.db
 
 .class
+urban-motion/target/classes/net/etfbl/ip/urban_motion/controller/ClientController.class
+urban-motion/target/classes/net/etfbl/ip/urban_motion/model/Client.class
+urban-motion/target/classes/net/etfbl/ip/urban_motion/service/ClientService.class

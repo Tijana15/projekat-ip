@@ -56,4 +56,20 @@ public class ClientController {
         }
     }
 
+    @PutMapping("/{id}/block")
+    public ResponseEntity<Boolean> blockClient(@PathVariable Long id) {
+        Optional<Client> client = clientService.getClientById(id);
+        if (client.isPresent()) {
+            return ResponseEntity.ok(clientService.blockClient(id));
+        }
+        return ResponseEntity.notFound().build();
+    }
+    @PutMapping("/{id}/unblock")
+    public ResponseEntity<Boolean> unblockClient(@PathVariable Long id) {
+        Optional<Client> client = clientService.getClientById(id);
+        if (client.isPresent()) {
+            return ResponseEntity.ok(clientService.unblockClient(id));
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

@@ -30,4 +30,11 @@ export class UserService {
   editEmployee(id: number, employee: Employee): Observable<Employee> {
     return this.http.put<Employee>(`${this.apiUrl}employees/${id}`, employee);
   }
+  blockClient(id: number): Observable<boolean> {
+    return this.http.put<boolean>(`${this.apiUrl}clients/${id}/block`, {});
+  }
+
+  unblockClient(id: number): Observable<boolean> {
+    return this.http.put<boolean>(`${this.apiUrl}clients/${id}/unblock`, {});
+  }
 }
