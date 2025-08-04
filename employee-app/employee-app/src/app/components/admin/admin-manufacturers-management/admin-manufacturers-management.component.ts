@@ -15,6 +15,7 @@ import { VehicleService } from '../../../service/vehicle.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { AddManufacturerDialogComponent } from '../add-manufacturer-dialog/add-manufacturer-dialog.component';
+import { EditManufacturerDialogComponent } from '../edit-manufacturer-dialog/edit-manufacturer-dialog.component';
 
 @Component({
   selector: 'app-admin-manufacturers-management',
@@ -83,25 +84,40 @@ export class AdminManufacturersManagementComponent implements OnInit {
     }
   }
 
-    addManufacturer(): void {
-      const dialogRef = this.dialog.open(AddManufacturerDialogComponent, {
-        width: '500px',
-        disableClose: true,
-      });
-      this.loadManufacturers();
-      dialogRef.afterClosed().subscribe((newManufacturerData) => {
-        if (newManufacturerData) {
-          console.log('New manufacturer to add:', newManufacturerData);
-          this.loadManufacturers();
-        } else {
-          console.log('Add manufacturer dialog closed without saving.');
-        }
-      });
-      this.loadManufacturers();
-    }
+  addManufacturer(): void {
+    const dialogRef = this.dialog.open(AddManufacturerDialogComponent, {
+      width: '500px',
+      disableClose: true,
+    });
+    this.loadManufacturers();
+    dialogRef.afterClosed().subscribe((newManufacturerData) => {
+      if (newManufacturerData) {
+        console.log('New manufacturer to add:', newManufacturerData);
+        this.loadManufacturers();
+      } else {
+        console.log('Add manufacturer dialog closed without saving.');
+      }
+    });
+    this.loadManufacturers();
+  }
 
   editManufacturer(manufacturer: Manufacturer): void {
     console.log('Edit manufacturer:', manufacturer);
+    const dialogRef = this.dialog.open(EditManufacturerDialogComponent, {
+      width: '600px',
+      disableClose: true,
+      data: manufacturer,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Edited manufacturer:', result);
+        // Osvježi listu proizvođača nakon što se dijalog zatvori sa spremljenim podacima
+        this.loadManufacturers();
+      } else {
+        console.log('Edit manufacturer dialog closed without saving.');
+      }
+    });
   }
 
   deleteManufacturer(id: number): void {

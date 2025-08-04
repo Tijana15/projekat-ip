@@ -76,4 +76,13 @@ export class VehicleService {
       manufacturer
     );
   }
+  updateManufacturer(
+    id: number,
+    manufacturer: Manufacturer
+  ): Observable<Manufacturer> {
+    return this.http.put<Manufacturer>(
+      `${this.apiUrl}manufacturers/${id}`,
+      manufacturer
+    );
+  }
 }
