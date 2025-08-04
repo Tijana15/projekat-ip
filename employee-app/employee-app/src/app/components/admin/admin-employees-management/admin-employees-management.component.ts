@@ -13,6 +13,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 
 import { UserService } from '../../../service/user.service';
 import { Employee } from '../../../model/employee.model';
+import { AddEmployeeDialogComponent } from '../add-employee-dialog/add-employee-dialog.component';
 @Component({
   selector: 'app-admin-employees-management',
   imports: [
@@ -100,5 +101,21 @@ export class AdminEmployeesManagementComponent
         console.error('Error deleting employee:', err);
       },
     });
+  }
+  addEmployee(): void {
+    const dialogRef = this.dialog.open(AddEmployeeDialogComponent, {
+      width: '500px',
+      disableClose: true,
+    });
+    this.loadEmployees();
+    dialogRef.afterClosed().subscribe((newManufacturerData) => {
+      if (newManufacturerData) {
+        console.log('New manufacturer to add:', newManufacturerData);
+        this.loadEmployees();
+      } else {
+        console.log('Add manufacturer dialog closed without saving.');
+      }
+    });
+    this.loadEmployees();
   }
 }

@@ -1,5 +1,3 @@
-// src/app/add-manufacturer-dialog/add-manufacturer-dialog.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -64,26 +62,26 @@ export class AddManufacturerDialogComponent implements OnInit {
   onSubmit(): void {
     if (this.manufacturerForm.valid) {
       const newManufacturer: Manufacturer = this.manufacturerForm.value;
-      console.log('Novi proizvođač:', newManufacturer);
+      console.log('New manufacturer: ', newManufacturer);
 
       this.vehicleService.addManufacturer(newManufacturer).subscribe({
         next: (response) => {
-          console.log('Proizvođač uspešno dodan:', response);
+          console.log('Manufacturer added succesfully:', response);
           this.manufacturerForm.reset();
         },
         error: (error) => {
-          console.error('Greška pri dodavanju proizvođača:', error);
+          console.error('Error occured while adding manufacturer: ', error);
         },
       });
       this.manufacturerForm.reset();
-      alert('Proizvođač je uspešno dodat (konzolni ispis)!');
+      alert('Manufacturer added sucessfuly.');
     } else {
       this.manufacturerForm.markAllAsTouched();
-      console.log('Forma nije validna. Proverite unete podatke.');
+      console.log('Invalid form. Check data.');
     }
   }
 
   onCancel(): void {
-    this.dialogRef.close(); // Zatvori dijalog bez vraćanja podataka
+    this.dialogRef.close();
   }
 }

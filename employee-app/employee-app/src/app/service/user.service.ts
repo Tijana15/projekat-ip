@@ -24,4 +24,7 @@ export class UserService {
   deleteEmployee(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}employees/${id}`);
   }
+  addEmployee(employee: Employee): Observable<Employee> {
+    return this.http.post<Employee>(this.apiUrl + 'employees', employee);
+  }
 }

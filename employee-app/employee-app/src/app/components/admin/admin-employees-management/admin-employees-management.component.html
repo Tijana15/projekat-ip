@@ -2,6 +2,14 @@
   <mat-card class="section-card">
     <mat-card-content>
       <div class="table-header">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addEmployee()"
+          class="add-button"
+        >
+          <mat-icon>add</mat-icon> Add new employee
+        </button>
         <mat-form-field appearance="outline" class="filter-field">
           <mat-label>Filter</mat-label>
           <input
@@ -49,7 +57,7 @@
             <button
               mat-icon-button
               color="primary"
-              (click)="editClient(element)"
+              (click)="editEmployee(element)"
               aria-label="Edit Client"
               class="action-btn edit-btn"
             >
@@ -58,7 +66,7 @@
             <button
               mat-icon-button
               color="warn"
-              (click)="deleteClient(element.id)"
+              (click)="deleteEmployee(element.id)"
               aria-label="Delete Client"
               class="action-btn delete-btn"
             >
