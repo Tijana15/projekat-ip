@@ -1,4 +1,3 @@
-/* src/app/add-new-manufacturer/add-new-manufacturer.component.css */
 
 .add-manufacturer-container {
   display: flex;
@@ -25,7 +24,7 @@ mat-card-header {
 mat-card-title {
   font-size: 24px;
   font-weight: 600;
-  color: #3f51b5; /* Primarna boja */
+  color: #a05a04; /* Primarna boja */
 }
 
 mat-card-content {

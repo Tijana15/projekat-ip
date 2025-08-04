@@ -7,6 +7,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { CdkTableModule } from '@angular/cdk/table';
+import { MatTableModule } from '@angular/material/table';
 
 import { AdminVehiclesManagemantComponent } from '../admin/admin-vehicles-managemant/admin-vehicles-managemant.component';
 import { AdminManufacturersManagementComponent } from '../admin/admin-manufacturers-management/admin-manufacturers-management.component';
@@ -28,6 +30,8 @@ import { AdminEmployeesManagementComponent } from '../admin/admin-employees-mana
     AdminClientsManagementComponent,
     AdminEmployeesManagementComponent,
     AdminVehiclesManagemantComponent,
+    CdkTableModule,
+    MatTableModule,
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css',

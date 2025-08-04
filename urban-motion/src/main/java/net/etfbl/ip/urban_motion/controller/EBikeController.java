@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/ebikes")
+@RequestMapping("/api/v1/ebikes")
 public class EBikeController {
 
     @Autowired

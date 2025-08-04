@@ -6,6 +6,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 import { Car, EBike, EScooter, Vehicle } from '../../../model/vehicle.model';
 import { VehicleService } from '../../../service/vehicle.service';
@@ -24,7 +26,9 @@ import { Router } from '@angular/router';
     MatTableModule,
     MatIconModule,
     MatButtonModule,
+    MatSortModule,
     MatDialogModule,
+    MatPaginator,
   ],
   templateUrl: './admin-vehicles-managemant.component.html',
   styleUrl: './admin-vehicles-managemant.component.css',

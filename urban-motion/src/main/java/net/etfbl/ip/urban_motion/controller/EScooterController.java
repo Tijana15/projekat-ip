@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/escooters")
+@RequestMapping("/api/v1/escooters")
 public class EScooterController {
 
     @Autowired
