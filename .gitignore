@@ -2,30 +2,23 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-# Build folderi
 dist/
 .angular/
 out/
 
-# IDE fajlovi (VS Code)
 .vscode/
 .idea/
 
-# Log fajlovi
 *.log
 
-# Environment fajlovi
 .env
 .env.*
 
-# Ostali privremeni fajlovi
 tmp/
 temp/
 
-# Specijalni fajlovi za MacOS (ako koristis Mac)
 .DS_Store
 
-# Windows Thumbs.db
 Thumbs.db
 
 .class
