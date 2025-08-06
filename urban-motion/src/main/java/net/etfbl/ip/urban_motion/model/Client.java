@@ -1,6 +1,8 @@
 package net.etfbl.ip.urban_motion.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +24,8 @@ public class Client extends User{
     private String avatarPicture;
     private boolean blocked;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Rental> rentals=new ArrayList<>();
 
     public Client(Long id, String username, String password, String firstName, String lastName, String email, String phone, boolean blocked) {

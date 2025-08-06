@@ -12,9 +12,9 @@
   max-width: 600px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  position: relative; /* Neophodno da bi z-index funkcionisao */
+  position: relative; 
   z-index: 2;
-  overflow: hidden; /* ✅ sprečava "curenje" */
+  overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -92,18 +92,15 @@
   font-size: 1rem;
 }
 
-/* Loading state for select */
 mat-select[disabled] {
   color: rgba(0, 0, 0, 0.6);
 
 }
 
-/* Error styling */
 .mat-mdc-form-field.mat-form-field-invalid .mat-mdc-text-field-wrapper {
   background-color: rgba(255, 0, 0, 0.04);
 }
 
-/* Success and Error Snackbar styling */
 .success-snackbar {
   --mdc-snackbar-container-color: #4caf50;
   --mdc-snackbar-supporting-text-color: #ffffff;
@@ -114,7 +111,6 @@ mat-select[disabled] {
   --mdc-snackbar-supporting-text-color: #ffffff;
 }
 
-/* Responsive design */
 @media (max-width: 600px) {
   .breakdown-form-container {
     padding: 10px;
@@ -143,7 +139,6 @@ mat-select[disabled] {
   }
 }
 
-/* Animation for submit button */
 .submit-button:disabled {
   opacity: 0.7;
 }
@@ -157,12 +152,10 @@ mat-select[disabled] {
   100% { transform: rotate(360deg); }
 }
 
-/* Form field hover effects */
 .mat-mdc-form-field:not(.mat-form-field-disabled):hover .mat-mdc-text-field-wrapper {
   background-color: rgba(0, 0, 0, 0.04);
 }
 
-/* Enhanced focus states */
 .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
   box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
 }

@@ -10,7 +10,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CdkTableModule } from '@angular/cdk/table';
-import { CdkColumnDef } from '@angular/cdk/table';
 
 import { UserService } from '../../../service/user.service';
 import { Client } from '../../../model/client.model';

@@ -1,0 +1,67 @@
+<div class="content-section">
+  <mat-card class="section-card">
+    <mat-card-content>
+      <div class="table-header">
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Filter</mat-label>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Search rentals"
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z8 clients-table"
+      >
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateTime">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Rental time</th>
+          <td mat-cell *matCellDef="let element">
+            {{ formatDateTime(element.dateTime) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="durationSeconds">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Duration</th>
+          <td mat-cell *matCellDef="let element">
+            {{ formatDuration(element.durationSeconds) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="clientName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+          <td mat-cell *matCellDef="let element">{{ element.clientName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="vehicleId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Vehicle ID</th>
+          <td mat-cell *matCellDef="let element">{{ element.vehicleId }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+          <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of rentals"
+      ></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,6 +1,3 @@
-/* src/app/admin-manufacturers-management/admin-manufacturers-management.component.css */
-
-/* Osnovni stilovi za sekciju */
 .content-section {
   padding: 24px;
   background-color: #f8f9fa;
@@ -33,16 +30,15 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-  flex-wrap: wrap; /* Omogućava prelamanje elemenata na manjim ekranima */
-  gap: 16px; /* Razmak između elemenata */
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .filter-field {
   width: 100%;
-  max-width: 300px; /* Ograniči širinu filter polja */
+  max-width: 300px;
 }
 
-/* Dugme za dodavanje */
 .add-button {
   background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%);
   color: white;
@@ -81,7 +77,6 @@
   transform: rotate(90deg);
 }
 
-/* Stilizacija tabele */
 .manufacturers-table {
   width: 100%;
   border-radius: 8px;
@@ -89,7 +84,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Header ćelije */
 .mat-mdc-table .mat-mdc-header-cell {
   font-weight: 600;
   color: #424242;
@@ -100,21 +94,18 @@
   height: 56px;
 }
 
-/* Ćelije podataka */
 .mat-mdc-table .mat-mdc-row .mat-mdc-cell {
   padding: 16px;
   vertical-align: middle;
   display: table-cell;
   box-sizing: border-box;
   border-bottom: 1px solid #eee;
-  /* Visina reda se kontroliše na .mat-mdc-row */
 }
 
-/* Redovi tabele */
 .mat-mdc-row {
   transition: all 0.3s ease;
-  min-height: 64px; /* Minimalna visina reda */
-  border-bottom: 1px solid #eee; /* Linija između redova */
+  min-height: 64px;
+  border-bottom: 1px solid #eee;
 }
 
 .mat-mdc-row:nth-child(even) {
@@ -127,13 +118,12 @@
   box-shadow: 0 2px 8px rgba(255, 107, 53, 0.1);
 }
 
-/* Akcione dugmad u ćelijama */
 .actions-cell {
   display: flex;
   gap: 8px;
   align-items: center;
   justify-content: flex-start;
-  height: 100%; /* Važno za vertikalno poravnanje unutar ćelije */
+  height: 100%;
 }
 
 .action-btn {
@@ -176,7 +166,6 @@
   font-size: 18px;
 }
 
-/* Stil za paginator */
 .mat-mdc-paginator {
   background-color: white;
   border-bottom-left-radius: 8px;
@@ -185,18 +174,16 @@
   margin-top: 16px;
 }
 
-/* Poruka kada nema podataka */
 .mat-mdc-table .mat-mdc-row.mat-no-data-row {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px; /* Visina poruke za praznu tabelu */
+  height: 100px;
   background-color: #fdfdfd;
   color: #757575;
   font-style: italic;
 }
 
-/* Responsive prilagodbe */
 @media (max-width: 768px) {
   .add-button {
     padding: 12px 24px;
