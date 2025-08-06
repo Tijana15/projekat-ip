@@ -4,3 +4,9 @@ export interface Breakdown {
   description: string;
   vehicleId: string;
 }
+
+export interface BreakdownCreateRequest {
+  vehicleId: string;
+  description: string;
+  breakdownDateTime: string;
+}

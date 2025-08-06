@@ -1,1 +1,64 @@
-<p>operator-dashboard works!</p>
+<div class="operator-layout">
+  <mat-toolbar class="operator-toolbar">
+    <span class="toolbar-title">Operator dashboard</span>
+    <span class="spacer"></span>
+    <span class="welcome-text">Welcome, operator!</span>
+    <button mat-icon-button (click)="logout()" aria-label="Logout">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" opened class="sidebar">
+      <mat-nav-list>
+        <h3 class="sidebar-title">Manage options</h3>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'vehicles'"
+          (click)="selectSection('vehicles')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>map</mat-icon>
+          <span matListItemTitle>Map with vehicles</span>
+        </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'rentals'"
+          (click)="selectSection('rentals')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>airport_shuttle</mat-icon>
+          <span matListItemTitle>Rentals</span>
+        </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'clients'"
+          (click)="selectSection('clients')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>people</mat-icon>
+          <span matListItemTitle>Clients</span>
+        </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'breakdowns'"
+          (click)="selectSection('breakdowns')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>build</mat-icon>
+          <span matListItemTitle>Breakdowns</span>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="main-content">
+      <div class="content-wrapper">
+        @if (selectedSection === 'vehicles') { } @else if (selectedSection ===
+        'rentals') { } @else if (selectedSection === 'clients') {
+        <app-admin-clients-management></app-admin-clients-management>
+        } @else if (selectedSection === 'breakdowns') {
+        <app-add-vehicle-breakdown></app-add-vehicle-breakdown>
+        }
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

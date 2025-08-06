@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Car, EBike, EScooter, Manufacturer } from '../model/vehicle.model';
+import {
+  Car,
+  EBike,
+  EScooter,
+  Manufacturer,
+  Vehicle,
+} from '../model/vehicle.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +17,9 @@ export class VehicleService {
 
   constructor(private http: HttpClient) {}
 
+  getAllVehicles(): Observable<Vehicle[]> {
+    return this.http.get<Vehicle[]>(this.apiUrl + 'vehicles');
+  }
   getCars(): Observable<Car[]> {
     return this.http.get<Car[]>(this.apiUrl + 'cars');
   }

@@ -305,6 +305,7 @@ export class VehicleDetailsComponent implements OnInit {
   getEBikeData(): EBike {
     return this.vehicle as EBike;
   }
+  
   formatDuration(durationSeconds: number): string {
     const hours = Math.floor(durationSeconds / 3600);
     const minutes = Math.floor((durationSeconds % 3600) / 60);

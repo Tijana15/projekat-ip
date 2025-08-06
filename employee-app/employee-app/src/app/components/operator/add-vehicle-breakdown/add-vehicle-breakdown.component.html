@@ -1,0 +1,102 @@
+<div class="breakdown-form-container">
+  <mat-card class="breakdown-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>report_problem</mat-icon>
+        Report vehicle breakdown
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form
+        [formGroup]="breakdownForm"
+        (ngSubmit)="onSubmit()"
+        class="breakdown-form"
+      >
+        <!-- Vehicle Selection -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select vehicle</mat-label>
+          <mat-select formControlName="vehicleId" [disabled]="isLoading">
+            @if (isLoading) {
+            <mat-option disabled>Loading vehicles...</mat-option>
+            } @else { @for (vehicle of vehicles; track vehicle.id) {
+            <mat-option [value]="vehicle.id">
+              {{ getVehicleDisplayName(vehicle) }}
+            </mat-option>
+            } }
+          </mat-select>
+          <mat-icon matSuffix>directions_car</mat-icon>
+          @if (vehicleId?.invalid && vehicleId?.touched) {
+          <mat-error>Please select a vehicle</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Description -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Breakdown Description</mat-label>
+          <textarea
+            matInput
+            formControlName="description"
+            rows="4"
+            placeholder="Describe the issue in detail..."
+            [disabled]="isSubmitting"
+          >
+          </textarea>
+          <mat-icon matSuffix>description</mat-icon>
+          @if (description?.invalid && description?.touched) {
+          <mat-error>
+            @if (description?.errors?.['required']) { Description is required }
+            @else if (description?.errors?.['minlength']) { Description must be
+            at least 10 characters long }
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Date and Time Row -->
+        <div class="date-time-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Date & Time</mat-label>
+            <input
+              matInput
+              type="datetime-local"
+              [(ngModel)]="newBreakdownDateTime"
+              [ngModelOptions]="{ standalone: true }"
+              required
+            />
+            <mat-icon matSuffix>access_time</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-row">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="breakdownForm.invalid || isSubmitting"
+            class="submit-button"
+          >
+            @if (isSubmitting) {
+            <mat-spinner diameter="20"></mat-spinner>
+            <span>Submitting...</span>
+            } @else {
+            <mat-icon>report</mat-icon>
+            <span>Report Breakdown</span>
+            }
+          </button>
+
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="resetForm()"
+            [disabled]="isSubmitting"
+            class="reset-button"
+          >
+            <mat-icon>refresh</mat-icon>
+            <span>Reset Form</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

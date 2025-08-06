@@ -22,4 +22,5 @@ public class BreakdownSimpleDTO {
         this.breakdownDateTime = breakdown.getBreakdownDateTime();
         this.vehicleId = breakdown.getVehicle().getId();
     }
+
 }

@@ -1,0 +1,177 @@
+.breakdown-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.breakdown-card {
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  position: relative; /* Neophodno da bi z-index funkcionisao */
+  z-index: 2;
+  overflow: hidden; /* ✅ sprečava "curenje" */
+  box-sizing: border-box;
+}
+
+.breakdown-card mat-card-header {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: white;
+  margin: -24px -24px 24px -24px;
+  padding: 24px;
+  border-radius: 12px 12px 0 0;
+}
+
+.breakdown-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.breakdown-card mat-card-title mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.breakdown-form {
+  box-sizing: border-box;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.date-time-row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.date-field {
+  flex: 1;
+}
+
+.time-field {
+  flex: 0 0 150px;
+}
+
+.button-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.submit-button {
+  min-width: 180px;
+  height: 48px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.submit-button mat-spinner {
+  margin-right: 8px;
+}
+
+.submit-button span,
+.reset-button span {
+  margin-left: 8px;
+}
+
+.reset-button {
+  min-width: 140px;
+  height: 48px;
+  font-size: 1rem;
+}
+
+/* Loading state for select */
+mat-select[disabled] {
+  color: rgba(0, 0, 0, 0.6);
+
+}
+
+/* Error styling */
+.mat-mdc-form-field.mat-form-field-invalid .mat-mdc-text-field-wrapper {
+  background-color: rgba(255, 0, 0, 0.04);
+}
+
+/* Success and Error Snackbar styling */
+.success-snackbar {
+  --mdc-snackbar-container-color: #4caf50;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #f44336;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .breakdown-form-container {
+    padding: 10px;
+  }
+
+  .breakdown-card {
+    margin: 0;
+  }
+
+  .date-time-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .time-field {
+    flex: 1;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+
+  .submit-button,
+  .reset-button {
+    width: 100%;
+  }
+}
+
+/* Animation for submit button */
+.submit-button:disabled {
+  opacity: 0.7;
+}
+
+.submit-button mat-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Form field hover effects */
+.mat-mdc-form-field:not(.mat-form-field-disabled):hover .mat-mdc-text-field-wrapper {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Enhanced focus states */
+.mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+mat-select, mat-option, textarea, input {
+  background-color: white !important;
+  z-index: 1;
+}
+.mat-form-field {
+  background-color: white;
+  z-index: 1;
+}
+
