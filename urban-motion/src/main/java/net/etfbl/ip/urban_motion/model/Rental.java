@@ -21,6 +21,8 @@ public class Rental {
     private int endX;
     private int endY;
     private int durationSeconds;
+    private Boolean active;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -28,4 +30,17 @@ public class Rental {
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
+
+    public Rental(LocalDateTime dateTime, int startX, int starty, int endX, int endY, Integer durationSeconds, Boolean active, Double price, Client client, Vehicle vehicle) {
+        this.dateTime = dateTime;
+        this.startX = startX;
+        this.startY = starty;
+        this.endX = endX;
+        this.endY = endY;
+        this.durationSeconds = durationSeconds;
+        this.active = active;
+        this.price = price;
+        this.client = client;
+        this.vehicle = vehicle;
+    }
 }

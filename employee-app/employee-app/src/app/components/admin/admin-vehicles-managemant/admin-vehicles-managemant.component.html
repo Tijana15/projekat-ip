@@ -90,6 +90,15 @@
                     >
                       <mat-icon>delete</mat-icon>
                     </button>
+                    <button
+                      mat-icon-button
+                      color="green"
+                      (click)="openVehicleDetailsDialog(element.id, 'car')"
+                      aria-label="Delete Car"
+                      class="action-btn view-details-btn"
+                    >
+                      <mat-icon>visibility</mat-icon>
+                    </button>
                   </div>
                 </td>
               </ng-container>
@@ -186,6 +195,15 @@
                   >
                     <mat-icon>delete</mat-icon>
                   </button>
+                  <button
+                    mat-icon-button
+                    color="green"
+                    (click)="openVehicleDetailsDialog(element.id, 'e-bike')"
+                    aria-label="Delete Car"
+                    class="action-btn view-details-btn"
+                  >
+                    <mat-icon>visibility</mat-icon>
+                  </button>
                 </td>
               </ng-container>
 
@@ -280,6 +298,15 @@
                     class="action-btn delete-btn"
                   >
                     <mat-icon>delete</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="green"
+                    (click)="openVehicleDetailsDialog(element.id, 'e-scooter')"
+                    aria-label="Delete Car"
+                    class="action-btn view-details-btn"
+                  >
+                    <mat-icon>visibility</mat-icon>
                   </button>
                 </td>
               </ng-container>

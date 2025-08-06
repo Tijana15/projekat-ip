@@ -1,4 +1,3 @@
-/* Stilovi za glavni kontejner dijaloga */
 .edit-vehicle-dialog-container {
   padding: 20px;
   display: flex;
@@ -60,18 +59,16 @@ mat-form-field {
   margin-bottom: 10px; /* Razmak ispod svakog polja */
 }
 
-/* Stilovi za dugmad akcija (Save, Cancel) */
 mat-card-actions {
   display: flex;
-  justify-content: flex-end; /* Dugmad desno */
-  gap: 10px; /* Razmak između dugmadi */
+  justify-content: flex-end;
+  gap: 10px;
   padding-top: 20px;
   border-top: 1px solid #eee;
   margin-top: 15px;
-  flex-shrink: 0; /* Osigurava da se akcije ne smanjuju */
+  flex-shrink: 0;
 }
 
-/* Prilagodbe za mobilne uređaje */
 @media (max-width: 600px) {
   .edit-vehicle-dialog-container {
     padding: 10px;
@@ -79,7 +76,7 @@ mat-card-actions {
 
   .vehicle-form-card {
     margin-bottom: 15px;
-    max-height: calc(100vh - 60px); /* Prilagođeno za mobilne uređaje */
+    max-height: calc(100vh - 60px);
   }
 
   mat-card-content {
@@ -88,8 +85,8 @@ mat-card-actions {
   }
 
   mat-card-actions {
-    flex-direction: column; /* Dugmad idu u kolonu na manjim ekranima */
-    align-items: stretch; /* Rastegnu se cijelom širinom */
+    flex-direction: column;
+    align-items: stretch;
     gap: 8px;
   }
 

@@ -1,0 +1,316 @@
+<div class="vehicle-details-container">
+  <mat-card class="details-card">
+    <mat-card-header>
+      <mat-card-title>
+        Vehicle details: {{ vehicleType | titlecase }} (ID: {{ vehicleId }})
+      </mat-card-title>
+      <button mat-icon-button class="close-button" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (isLoading) {
+      <div class="loading-spinner">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading vehicle details...</p>
+      </div>
+      } @else if (errorMessage) {
+      <div class="error-message">
+        <mat-icon color="warn">error_outline</mat-icon>
+        <p>{{ errorMessage }}</p>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="loadVehicleDetails()"
+        >
+          Retry
+        </button>
+      </div>
+      } @else if (vehicle) {
+      <div class="details-grid">
+        <div class="detail-item">
+          <strong>ID:</strong> <span>{{ vehicle.id }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Manufacturer:</strong>
+          <span>{{ vehicle.manufacturer.name || "N/A" }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Model:</strong> <span>{{ vehicle.model }}</span>
+        </div>
+        <div class="detail-item">
+          <strong>Purchase price:</strong>
+          <span>{{
+            vehicle.purchasePrice | currency : "USD" : "symbol" : "1.2-2"
+          }}</span>
+        </div>
+
+        @if (vehicle.picture) {
+        <div class="detail-item full-width-item">
+          <strong>Picture:</strong>
+          <img
+            [src]="vehicle.picture"
+            alt="Vehicle Picture"
+            class="vehicle-picture"
+          />
+        </div>
+        }
+
+        <!-- Specifični detalji za Car -->
+        @if (vehicleType === 'car') {
+        <div class="detail-item">
+          <strong>Purchase date:</strong>
+          <span>{{ getCarData().purchaseDate | date : "medium" }}</span>
+        </div>
+        <div class="detail-item full-width-item">
+          <strong>Description:</strong>
+          <span>{{ getCarData().description }}</span>
+        </div>
+        }
+
+        <!-- Specifični detalji za E-Scooter -->
+        @if (vehicleType === 'e-scooter') {
+        <div class="detail-item">
+          <strong>Max speed:</strong>
+          <span>{{ getEScooterData().maxSpeed }} km/h</span>
+        </div>
+        }
+
+        <!-- Specifični detalji za E-Bike -->
+        @if (vehicleType === 'e-bike') {
+        <div class="detail-item">
+          <strong>Max range:</strong>
+          <span>{{ getEBikeData().maxRange }} km</span>
+        </div>
+        }
+      </div>
+
+      <!-- Tabela kvarova -->
+      <mat-divider class="my-4"></mat-divider>
+
+      <div class="faults-header">
+        <h3>Vehicle breakdowns</h3>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="openAddBreakdownDialog()"
+          class="add-breakdown-btn"
+          [disabled]="isAddingBreakdown"
+        >
+          <mat-icon>add</mat-icon>
+          Add new breakdown
+        </button>
+      </div>
+
+      @if (isLoadingBreakdowns) {
+      <div class="loading-breakdown">
+        <mat-spinner diameter="30"></mat-spinner>
+        <p>Loading faults...</p>
+      </div>
+      } @else if (vehicleBreakdowns && vehicleBreakdowns.length > 0) {
+      <div class="table-container">
+        <table
+          mat-table
+          [dataSource]="vehicleBreakdowns"
+          matSort
+          class="full-width-table mat-elevation-z2"
+        >
+          <!-- ID kolona -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let breakdown">{{ breakdown.id }}</td>
+          </ng-container>
+
+          <!-- Datum/Vreme kolona -->
+          <ng-container matColumnDef="breakdownDateTime">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date/Time</th>
+            <td mat-cell *matCellDef="let breakdown">
+              {{ breakdown.breakdownDateTime | date : "short" }}
+            </td>
+          </ng-container>
+
+          <!-- Opis kolona -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let breakdown" class="description-cell">
+              {{ breakdown.description }}
+            </td>
+          </ng-container>
+
+          <!-- Actions kolona -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let breakdown" class="actions-cell">
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="deleteBreakdown(breakdown.id, breakdown.description)"
+                aria-label="Delete Breakdown"
+                class="delete-btn"
+                [disabled]="isDeletingBreakdown"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedBrokenColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedBrokenColumns"
+            [class.deleting-row]="row.isDeleting"
+          ></tr>
+        </table>
+      </div>
+      } @else {
+      <div class="no-data-message">
+        <p>No faults reported for this vehicle.</p>
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="openAddBreakdownDialog()"
+          class="add-first-breakdown-btn"
+        >
+          <mat-icon>add</mat-icon>
+          Report First Fault
+        </button>
+      </div>
+      }
+
+      <!-- Tabela iznajmljivanja -->
+      <mat-divider class="my-4"></mat-divider>
+
+      <div class="rentals-header">
+        <h3>Vehicle rentals</h3>
+      </div>
+
+      @if (isLoadingRentals) {
+      <div class="loading-rentals">
+        <mat-spinner diameter="30"></mat-spinner>
+        <p>Loading rentals...</p>
+      </div>
+      } @else if (vehicleRentals && vehicleRentals.length > 0) {
+      <div class="table-container">
+        <table
+          mat-table
+          [dataSource]="vehicleRentals"
+          matSort
+          class="full-width-table mat-elevation-z2"
+        >
+          <!-- ID kolona -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let rental">{{ rental.id }}</td>
+          </ng-container>
+
+          <!-- Datum/Vreme kolona -->
+          <ng-container matColumnDef="dateTime">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date/Time</th>
+            <td mat-cell *matCellDef="let rental">
+              {{ rental.dateTime | date : "short" }}
+            </td>
+          </ng-container>
+
+          <!-- Ime klijenta kolona -->
+          <ng-container matColumnDef="clientName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+            <td mat-cell *matCellDef="let rental">{{ rental.clientName }}</td>
+          </ng-container>
+
+          <!-- Trajanje kolona -->
+          <ng-container matColumnDef="durationSeconds">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Duration</th>
+            <td mat-cell *matCellDef="let rental">
+              {{ formatDuration(rental.durationSeconds) }}
+            </td>
+          </ng-container>
+
+          <!-- Cena kolona -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+            <td mat-cell *matCellDef="let rental">
+              {{ rental.price | currency : "USD" : "symbol" : "1.2-2" }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedRentalColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedRentalColumns"
+          ></tr>
+        </table>
+      </div>
+      } @else {
+      <div class="no-data-message">
+        <p>No rentals found for this vehicle.</p>
+      </div>
+      } }
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Dialog za dodavanje novog kvara -->
+@if (showAddBreakdownDialog) {
+<div class="dialog-overlay" (click)="closeAddBreakdownDialog()">
+  <div class="add-breakdown-dialog" (click)="$event.stopPropagation()">
+    <div class="dialog-header">
+      <h4>Add New Fault</h4>
+      <button
+        mat-icon-button
+        (click)="closeAddBreakdownDialog()"
+        class="close-dialog-btn"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="dialog-content">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Fault Description</mat-label>
+        <textarea
+          matInput
+          [(ngModel)]="newBreakdownDescription"
+          placeholder="Describe the fault..."
+          rows="4"
+          maxlength="500"
+        ></textarea>
+        <mat-hint>{{ newBreakdownDescription.length || 0 }}/500</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Date & Time</mat-label>
+        <input
+          matInput
+          type="datetime-local"
+          [(ngModel)]="newBreakdownDateTime"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="dialog-actions">
+      <button
+        mat-button
+        (click)="closeAddBreakdownDialog()"
+        [disabled]="isAddingBreakdown"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addBreakdown()"
+        [disabled]="!canAddBreakdown() || isAddingBreakdown"
+        class="save-btn"
+      >
+        @if (isAddingBreakdown) {
+        <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+        <mat-icon>save</mat-icon>
+        }
+        {{ isAddingBreakdown ? "Adding..." : "Add Fault" }}
+      </button>
+    </div>
+  </div>
+</div>
+}

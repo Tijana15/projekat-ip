@@ -135,7 +135,7 @@
   min-width: 40px !important;
   width: 40px !important;
   height: 40px !important;
-  
+
   transition: all 0.3s ease !important;
   display: flex !important;
   justify-content: center !important;
@@ -169,7 +169,25 @@
 .action-btn mat-icon {
   font-size: 18px !important;
 }
-
+.actions-cell .view-details-btn:hover {
+  background-color: #e2d529; /* Malo tamnija zelena pri prelasku mišem */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Izraženija senka */
+}
+.actions-cell .view-details-btn mat-icon {
+  font-size: 20px; /* Veličina ikone */
+}
+.actions-cell .view-details-btn { /* Dodaj klasu 'view-details-btn' u HTML dugmeta */
+  background-color: #eec82f; /* Svijetla nijansa zelene */
+  color: #fefffc; /* Tamnija zelena za ikonu/tekst */
+  border-radius: 50%; /* Okruglo dugme */
+  width: 40px; /* Širina */
+  height: 40px; /* Visina */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Blaga senka */
+}
 /* Responsive prilagodbe */
 @media (max-width: 768px) {
   .add-button {

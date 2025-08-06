@@ -22,6 +22,10 @@ import {
 } from '../edit-vehicle-dialog/edit-vehicle-dialog.component';
 
 import { Router } from '@angular/router';
+import {
+  VehicleDetailsComponent,
+  VehicleDetailsDialogData,
+} from '../vehicle-details/vehicle-details.component';
 
 @Component({
   selector: 'app-admin-vehicles-managemant',
@@ -171,6 +175,23 @@ export class AdminVehiclesManagemantComponent implements OnInit {
       } else {
         console.log('Dialog closed without saving.');
       }
+    });
+  }
+
+  openVehicleDetailsDialog(
+    id: string,
+    type: 'car' | 'e-scooter' | 'e-bike'
+  ): void {
+    console.log('Opening details dialog for ID:', id, 'Type:', type);
+
+    const dialogRef = this.dialog.open(VehicleDetailsComponent, {
+      width: '95vw', // Povećana širina
+      maxWidth: '1000px', // Maksimalna širina
+      height: '90vh', // Visina
+      maxHeight: '800px', // Maksimalna visina
+      disableClose: false,
+      data: { id: id, type: type } as VehicleDetailsDialogData,
+      panelClass: 'vehicle-details-dialog', // Dodajte custom CSS klasu
     });
   }
 }

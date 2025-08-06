@@ -21,4 +21,10 @@ public class Breakdown {
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
+
+    public Breakdown(LocalDateTime breakdownDateTime, String description, Vehicle vehicle) {
+        this.breakdownDateTime = breakdownDateTime;
+        this.description = description;
+        this.vehicle = vehicle;
+    }
 }

@@ -10,4 +10,5 @@ import java.util.List;
 public interface BreakdownRepository extends JpaRepository<Breakdown, Long> {
     List<Breakdown> findAllByVehicleId(String vehicleId);
     void deleteAllByVehicleId(String vehicleId);
+
 }
