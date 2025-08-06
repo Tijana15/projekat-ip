@@ -25,4 +25,6 @@ public abstract class Vehicle {
     @Enumerated(EnumType.STRING)
     private VehicleState vehicleState;
     private String picture;
+    private Double mapX;
+    private Double mapY;
 }

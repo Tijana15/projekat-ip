@@ -42,6 +42,8 @@ public class CarService {
 
         car.setPurchaseDate(carDetails.getPurchaseDate());
         car.setDescription(carDetails.getDescription());
+        car.setMapY(car.getMapY());
+        car.setMapX(car.getMapX());
 
         return carRepository.save(car);
     }

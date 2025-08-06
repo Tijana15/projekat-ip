@@ -56,6 +56,8 @@ export interface AddVehicleDialogData {
   styleUrl: './add-vehicle-dialog.component.css',
 })
 export class AddVehicleDialogComponent implements OnInit {
+  getRandomOffset = () => (Math.random() - 0.5) * 0.02;
+
   showManualForm: boolean = true;
   showCsvUpload: boolean = false;
   vehicleForm!: FormGroup;
@@ -246,6 +248,10 @@ export class AddVehicleDialogComponent implements OnInit {
   private parseCsvForEBike(csvContent: string): EBike[] {
     const parsedRows = this.parseCsvGeneric(csvContent);
     const bikes: EBike[] = [];
+    const centerLat = 44.7722;
+    const centerLng = 17.191;
+    const mapY = centerLat + this.getRandomOffset(); // latitude
+    const mapX = centerLng + this.getRandomOffset();
 
     if (parsedRows.length > 0) {
       const row = parsedRows[0];
@@ -259,6 +265,12 @@ export class AddVehicleDialogComponent implements OnInit {
 
           picture: row['picture']?.trim() || '',
           maxRange: parseFloat(row['maxRange']),
+          mapX: (
+            row['mapX']?.trim() || centerLng + this.getRandomOffset()
+          ).toString(),
+          mapY: (
+            row['mapY']?.trim() || centerLat + this.getRandomOffset()
+          ).toString(),
         };
 
         if (
@@ -291,6 +303,10 @@ export class AddVehicleDialogComponent implements OnInit {
 
     if (parsedRows.length > 0) {
       const row = parsedRows[0];
+      const centerLat = 44.7722;
+      const centerLng = 17.191;
+      const mapY = centerLat + this.getRandomOffset(); // latitude
+      const mapX = centerLng + this.getRandomOffset();
       try {
         const manufacturerId = parseInt(row['manufacturerId']?.trim(), 10);
         const car: Car = {
@@ -302,6 +318,12 @@ export class AddVehicleDialogComponent implements OnInit {
           picture: row['picture']?.trim() || '',
           purchaseDate: row['purchaseDate']?.trim(),
           description: row['description']?.trim() || '',
+          mapX: (
+            row['mapX']?.trim() || centerLng + this.getRandomOffset()
+          ).toString(),
+          mapY: (
+            row['mapY']?.trim() || centerLat + this.getRandomOffset()
+          ).toString(),
         };
 
         if (
@@ -316,7 +338,7 @@ export class AddVehicleDialogComponent implements OnInit {
               row
             )}`
           );
-          return []; 
+          return [];
         }
         cars.push(car);
       } catch (e) {
@@ -331,6 +353,10 @@ export class AddVehicleDialogComponent implements OnInit {
   private parseCsvForEScooter(csvContent: string): EScooter[] {
     const parsedRows = this.parseCsvGeneric(csvContent);
     const scooters: EScooter[] = [];
+    const centerLat = 44.7722;
+    const centerLng = 17.191;
+    const mapY = centerLat + this.getRandomOffset(); // latitude
+    const mapX = centerLng + this.getRandomOffset();
 
     if (parsedRows.length > 0) {
       const row = parsedRows[0];
@@ -344,6 +370,12 @@ export class AddVehicleDialogComponent implements OnInit {
 
           picture: row['picture']?.trim() || '',
           maxSpeed: parseFloat(row['maxSpeed']),
+          mapX: (
+            row['mapX']?.trim() || centerLng + this.getRandomOffset()
+          ).toString(),
+          mapY: (
+            row['mapY']?.trim() || centerLat + this.getRandomOffset()
+          ).toString(),
         };
 
         if (

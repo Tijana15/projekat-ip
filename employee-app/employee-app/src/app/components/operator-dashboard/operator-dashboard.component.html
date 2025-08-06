@@ -54,8 +54,10 @@
       <div class="content-wrapper">
         @if (selectedSection === 'clients') {
         <app-admin-clients-management></app-admin-clients-management>
-        } @else if (selectedSection === 'vehicles') { } @else if
-        (selectedSection === 'breakdowns') {
+        } @else if (selectedSection === 'vehicles') {
+        <app-vehicle-map></app-vehicle-map>
+
+        } @else if (selectedSection === 'breakdowns') {
         <app-add-vehicle-breakdown></app-add-vehicle-breakdown>
         } @else if (selectedSection==='rentals'){
         <app-rentals-overview></app-rentals-overview>

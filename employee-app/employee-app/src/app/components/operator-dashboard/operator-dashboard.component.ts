@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { AdminClientsManagementComponent } from '../admin/admin-clients-management/admin-clients-management.component';
 import { AddVehicleBreakdownComponent } from '../operator/add-vehicle-breakdown/add-vehicle-breakdown.component';
 import { RentalsOverviewComponent } from '../operator/rentals-overview/rentals-overview.component';
+import { VehicleMapComponent } from '../operator/vehicle-map/vehicle-map.component';
 @Component({
   selector: 'app-operator-dashboard',
   imports: [
@@ -26,7 +27,8 @@ import { RentalsOverviewComponent } from '../operator/rentals-overview/rentals-o
     AddVehicleBreakdownComponent,
     CdkTableModule,
     MatTableModule,
-    RentalsOverviewComponent
+    RentalsOverviewComponent,
+    VehicleMapComponent,
   ],
   templateUrl: './operator-dashboard.component.html',
   styleUrl: './operator-dashboard.component.css',

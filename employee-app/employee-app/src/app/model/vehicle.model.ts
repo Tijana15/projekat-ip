@@ -4,6 +4,8 @@ export interface Vehicle {
   model: String;
   purchasePrice: number;
   picture?: String;
+  mapX: number;
+  mapY: number;
 }
 
 export interface Car extends Vehicle {
