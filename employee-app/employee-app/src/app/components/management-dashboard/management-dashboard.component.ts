@@ -17,6 +17,8 @@ import { AdminEmployeesManagementComponent } from '../admin/admin-employees-mana
 import { VehicleMapComponent } from '../operator/vehicle-map/vehicle-map.component';
 import { RentalsOverviewComponent } from '../operator/rentals-overview/rentals-overview.component';
 import { AddVehicleBreakdownComponent } from '../operator/add-vehicle-breakdown/add-vehicle-breakdown.component';
+import { RentalPriceConfigComponent } from '../management/rental-price-config/rental-price-config.component';
+
 @Component({
   selector: 'app-management-dashboard',
   imports: [
@@ -36,6 +38,7 @@ import { AddVehicleBreakdownComponent } from '../operator/add-vehicle-breakdown/
     VehicleMapComponent,
     RentalsOverviewComponent,
     AddVehicleBreakdownComponent,
+    RentalPriceConfigComponent,
   ],
   templateUrl: './management-dashboard.component.html',
   styleUrl: './management-dashboard.component.css',

@@ -73,6 +73,15 @@
           <mat-icon matListItemIcon>build</mat-icon>
           <span matListItemTitle>Report breakdown</span>
         </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'rentalPriceConfig'"
+          (click)="selectSection('rentalPriceConfig')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>money</mat-icon>
+          <span matListItemTitle>Rental price config</span>
+        </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>
 
@@ -93,6 +102,8 @@
         <app-add-vehicle-breakdown></app-add-vehicle-breakdown>
         } @else if (selectedSection==='rentals'){
         <app-rentals-overview></app-rentals-overview>
+        } @else if (selectedSection==='rentalPriceConfig'){
+        <app-rental-price-config></app-rental-price-config>
         }
       </div>
     </mat-sidenav-content>

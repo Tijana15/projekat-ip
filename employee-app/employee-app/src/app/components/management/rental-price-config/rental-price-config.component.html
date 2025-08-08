@@ -1,0 +1,160 @@
+<div class="content-section">
+  <mat-card class="section-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>attach_money</mat-icon>
+        Rental Price Configuration
+      </mat-card-title>
+      <mat-card-subtitle>
+        Configure rental prices for cars, e-bikes, and e-scooters
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="priceForm" (ngSubmit)="save()" class="price-form">
+        <div class="price-item">
+          <div class="price-icon-container car-icon">
+            <mat-icon>directions_car</mat-icon>
+          </div>
+          <div class="price-content">
+            <h3>Car Rental</h3>
+            <mat-form-field appearance="outline" class="price-field">
+              <mat-label>Price per hour</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="carPrice"
+                (input)="onInputChange()"
+                placeholder="0.00"
+                min="0"
+                step="0.01"
+              />
+              <span matTextSuffix></span>
+              <mat-icon matSuffix>euro</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="price-item">
+          <div class="price-icon-container ebike-icon">
+            <mat-icon>pedal_bike</mat-icon>
+          </div>
+          <div class="price-content">
+            <h3>E-bike Rental</h3>
+            <mat-form-field appearance="outline" class="price-field">
+              <mat-label>Price per hour</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="ebikePrice"
+                (input)="onInputChange()"
+                placeholder="0.00"
+                min="0"
+                step="0.01"
+              />
+              <span matTextSuffix></span>
+              <mat-icon matSuffix>euro</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="price-item">
+          <div class="price-icon-container escooter-icon">
+            <mat-icon>electric_scooter</mat-icon>
+          </div>
+          <div class="price-content">
+            <h3>E-scooter Rental</h3>
+            <mat-form-field appearance="outline" class="price-field">
+              <mat-label>Price per hour</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="escooterPrice"
+                (input)="onInputChange()"
+                placeholder="0.00"
+                min="0"
+                step="0.01"
+              />
+              <span matTextSuffix></span>
+              <mat-icon matSuffix>euro</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            mat-stroked-button
+            color="primary"
+            (click)="resetForm()"
+            class="reset-btn"
+          >
+            <mat-icon>refresh</mat-icon>
+            Reset
+          </button>
+
+          <button
+            type="submit"
+            mat-raised-button
+            color="primary"
+            [disabled]="!isChanged || priceForm.invalid"
+            class="save-btn"
+          >
+            <mat-icon>save</mat-icon>
+            {{ isChanged ? "Save Changes" : "No Changes" }}
+          </button>
+        </div>
+
+        <div class="status-indicator" *ngIf="isChanged">
+          <mat-icon>info</mat-icon>
+          <span>You have unsaved changes</span>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="preview-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>preview</mat-icon>
+        Price Preview
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="preview-grid">
+        <div class="preview-item">
+          <mat-icon class="preview-icon car-color">directions_car</mat-icon>
+          <div class="preview-details">
+            <span class="preview-label">Car</span>
+            <span class="preview-price"
+              >{{ priceForm.get("carPrice")?.value || "0.00" }}€/min</span
+            >
+          </div>
+        </div>
+
+        <div class="preview-item">
+          <mat-icon class="preview-icon ebike-color">pedal_bike</mat-icon>
+          <div class="preview-details">
+            <span class="preview-label">E-bike</span>
+            <span class="preview-price"
+              >{{ priceForm.get("ebikePrice")?.value || "0.00" }}€/min</span
+            >
+          </div>
+        </div>
+
+        <div class="preview-item">
+          <mat-icon class="preview-icon escooter-color"
+            >electric_scooter</mat-icon
+          >
+          <div class="preview-details">
+            <span class="preview-label">E-scooter</span>
+            <span class="preview-price"
+              >{{ priceForm.get("escooterPrice")?.value || "0.00" }}€/min</span
+            >
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
