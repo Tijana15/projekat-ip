@@ -51,11 +51,11 @@
 .add-button:hover {
   background: linear-gradient(135deg, #ff8a43 0%, #ff5722 100%);
   box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
-  transform: translateX(4px);
+  transform: translateY(-2px);
 }
 
 .add-button:active {
-  transform: translateX(2px);
+  transform: translateY(1px);
   box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
 }
 
@@ -85,7 +85,6 @@
   height: 56px;
 }
 
-
 .mat-mdc-table .mat-mdc-row {
   transition: all 0.3s ease;
   height: 64px;
@@ -109,100 +108,100 @@
   box-shadow: 0 2px 8px rgba(255, 107, 53, 0.1);
 }
 
-.mat-mdc-table .mat-mdc-row .mat-mdc-cell.actions-cell {
-  display: inline-flex;
+.actions-cell {
+  display: inline-flex !important;
   gap: 8px !important;
   align-items: center !important;
   justify-content: flex-start !important;
-
   padding: 0 8px !important;
 }
 
-.actions-cell .mat-mdc-button.mat-icon-button {
-  margin: 0 !important;
-  padding: 0 !important;
-  min-width: 40px !important;
+.actions-cell .action-btn {
   width: 40px !important;
   height: 40px !important;
-
-  transition: all 0.3s ease !important;
+  min-width: 40px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 8px !important;
+  border: none !important;
   display: flex !important;
-  justify-content: center !important;
   align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
 }
 
-.edit-btn {
+.actions-cell .action-btn mat-icon {
+  font-size: 20px !important;
+}
+
+.actions-cell .action-btn.edit-btn {
   background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%) !important;
   color: white !important;
   box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2) !important;
 }
-
-.edit-btn:hover {
-  background: linear-gradient(135deg, #ff8a43 0%, #ff5722 100%) !important;
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3) !important;
-  transform: translateX(4px) !important;
+.actions-cell .action-btn.edit-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4) !important;
+}
+.actions-cell .action-btn.edit-btn:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(255, 154, 86, 0.5) !important;
 }
 
-.delete-btn {
+.actions-cell .action-btn.delete-btn {
   background: linear-gradient(135deg, #dc3545 0%, #c62828 100%) !important;
   color: white !important;
   box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2) !important;
 }
-
-.delete-btn:hover {
-  background: linear-gradient(135deg, #c82333 0%, #b71c1c 100%) !important;
-  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3) !important;
-  transform: translateX(4px) !important;
+.actions-cell .action-btn.delete-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
+}
+.actions-cell .action-btn.delete-btn:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.5) !important;
 }
 
-.action-btn mat-icon {
-  font-size: 18px !important;
+.actions-cell .action-btn.view-details-btn {
+  background-color: #eec82f !important;
+  color: #333 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
 }
-.actions-cell .view-details-btn:hover {
-  background-color: #e2d529;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.actions-cell .action-btn.view-details-btn:hover {
+  transform: translateY(-2px) !important;
+  background-color: #f0d050 !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
 }
-.actions-cell .view-details-btn mat-icon {
-  font-size: 20px;
+.actions-cell .action-btn.view-details-btn:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(238, 200, 47, 0.6) !important;
 }
-.actions-cell .view-details-btn {
-  background-color: #eec82f;
-  color: #fefffc;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+
 @media (max-width: 768px) {
   .add-button {
     padding: 12px 24px !important;
     font-size: 14px !important;
+    width: 100%;
   }
 
   .actions-cell {
-    flex-direction: column !important;
+    flex-direction: row !important;
     gap: 4px !important;
-    align-items: flex-start !important;
+    align-items: center !important;
   }
 
-  .action-btn {
+  .actions-cell .action-btn {
     width: 36px !important;
     height: 36px !important;
+    min-width: 36px !important;
+  }
+
+  .actions-cell .action-btn mat-icon {
+    font-size: 18px !important;
   }
 
   .mat-header-cell,
   .mat-cell {
     padding: 12px 8px !important;
   }
-  .actions-cell .action-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-}
-
 }

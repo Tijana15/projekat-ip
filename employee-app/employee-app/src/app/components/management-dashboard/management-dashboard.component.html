@@ -1,1 +1,100 @@
-<p>management-dashboard works!</p>
+<div class="managemant-layout">
+  <mat-toolbar class="managemant-toolbar">
+    <span class="toolbar-title">Manager Dashboard</span>
+    <span class="spacer"></span>
+    <span class="welcome-text">Welcome, Manager!</span>
+    <button mat-icon-button (click)="logout()" aria-label="Logout">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" opened class="sidebar">
+      <mat-nav-list>
+        <h3 class="sidebar-title">Manage options</h3>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'vehicles'"
+          (click)="selectSection('vehicles')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>directions_car</mat-icon>
+          <span matListItemTitle>Vehicles</span>
+        </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'manufacturers'"
+          (click)="selectSection('manufacturers')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>business</mat-icon>
+          <span matListItemTitle>Manufacturers</span>
+        </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'clients'"
+          (click)="selectSection('clients')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>people</mat-icon>
+          <span matListItemTitle>Clients</span>
+        </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'employees'"
+          (click)="selectSection('employees')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>badge</mat-icon>
+          <span matListItemTitle>Employees</span>
+        </mat-list-item>
+        <mat-list-item
+          [class.active]="selectedSection === 'mapVehicles'"
+          (click)="selectSection('mapVehicles')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>map</mat-icon>
+          <span matListItemTitle>Map with vehicles</span>
+        </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'rentals'"
+          (click)="selectSection('rentals')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>airport_shuttle</mat-icon>
+          <span matListItemTitle>Rentals</span>
+        </mat-list-item>
+
+        <mat-list-item
+          [class.active]="selectedSection === 'breakdowns'"
+          (click)="selectSection('breakdowns')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>build</mat-icon>
+          <span matListItemTitle>Report breakdown</span>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="main-content">
+      <div class="content-wrapper">
+        @if (selectedSection === 'vehicles') {
+        <app-admin-vehicles-managemant></app-admin-vehicles-managemant>
+        } @else if (selectedSection === 'manufacturers') {
+        <app-admin-manufacturers-management></app-admin-manufacturers-management>
+        } @else if (selectedSection === 'clients') {
+        <app-admin-clients-management></app-admin-clients-management>
+        } @else if (selectedSection === 'employees') {
+        <app-admin-employees-management></app-admin-employees-management>
+        } @else if (selectedSection === 'mapVehicles') {
+        <app-vehicle-map></app-vehicle-map>
+
+        } @else if (selectedSection === 'breakdowns') {
+        <app-add-vehicle-breakdown></app-add-vehicle-breakdown>
+        } @else if (selectedSection==='rentals'){
+        <app-rentals-overview></app-rentals-overview>
+        }
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

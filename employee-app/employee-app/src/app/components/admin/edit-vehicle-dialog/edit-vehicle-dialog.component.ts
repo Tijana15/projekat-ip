@@ -199,7 +199,6 @@ export class EditVehicleDialogComponent implements OnInit {
 
       const manufacturerId = formValue.manufacturer;
       formValue.manufacturer = { id: manufacturerId } as Manufacturer;
-
       if (
         this.vehicleType === 'car' &&
         formValue.purchaseDate instanceof Date

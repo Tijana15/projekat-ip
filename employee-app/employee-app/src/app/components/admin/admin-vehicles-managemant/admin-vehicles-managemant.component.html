@@ -73,7 +73,6 @@
                 <td mat-cell *matCellDef="let element" class="actions-cell">
                   <div class="action-wrapper">
                     <button
-                      mat-icon-button
                       color="primary"
                       (click)="editVehicle(element, 'car')"
                       aria-label="Edit Car"
@@ -82,7 +81,6 @@
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button
-                      mat-icon-button
                       color="warn"
                       (click)="deleteVehicle(element.id, 'car')"
                       aria-label="Delete Car"
@@ -91,7 +89,6 @@
                       <mat-icon>delete</mat-icon>
                     </button>
                     <button
-                      mat-icon-button
                       color="green"
                       (click)="openVehicleDetailsDialog(element.id, 'car')"
                       aria-label="Delete Car"
@@ -178,7 +175,6 @@
                 <th mat-header-cell *matHeaderCellDef>Actions</th>
                 <td mat-cell *matCellDef="let element" class="actions-cell">
                   <button
-                    mat-icon-button
                     color="primary"
                     (click)="editVehicle(element, 'e-bike')"
                     aria-label="Edit Ebike"
@@ -187,7 +183,6 @@
                     <mat-icon>edit</mat-icon>
                   </button>
                   <button
-                    mat-icon-button
                     color="warn"
                     (click)="deleteVehicle(element.id, 'e-bike')"
                     aria-label="Delete ebike"
@@ -196,7 +191,6 @@
                     <mat-icon>delete</mat-icon>
                   </button>
                   <button
-                    mat-icon-button
                     color="green"
                     (click)="openVehicleDetailsDialog(element.id, 'e-bike')"
                     aria-label="Delete Car"
@@ -282,7 +276,6 @@
                 <th mat-header-cell *matHeaderCellDef>Actions</th>
                 <td mat-cell *matCellDef="let element" class="actions-cell">
                   <button
-                    mat-icon-button
                     color="primary"
                     (click)="editVehicle(element, 'e-scooter')"
                     aria-label="Edit Escooter"
@@ -291,7 +284,6 @@
                     <mat-icon>edit</mat-icon>
                   </button>
                   <button
-                    mat-icon-button
                     color="warn"
                     (click)="deleteVehicle(element.id, 'e-scooter')"
                     aria-label="Delete Escooter"
@@ -300,7 +292,6 @@
                     <mat-icon>delete</mat-icon>
                   </button>
                   <button
-                    mat-icon-button
                     color="green"
                     (click)="openVehicleDetailsDialog(element.id, 'e-scooter')"
                     aria-label="Delete Car"
