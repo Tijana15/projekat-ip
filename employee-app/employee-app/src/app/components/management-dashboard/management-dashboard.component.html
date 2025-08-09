@@ -82,6 +82,14 @@
           <mat-icon matListItemIcon>money</mat-icon>
           <span matListItemTitle>Rental price config</span>
         </mat-list-item>
+        <mat-list-item
+          [class.active]="selectedSection === 'statistics'"
+          (click)="selectSection('statistics')"
+          class="menu-item"
+        >
+          <mat-icon matListItemIcon>insert_chart</mat-icon>
+          <span matListItemTitle>Statistics</span>
+        </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>
 
@@ -104,6 +112,8 @@
         <app-rentals-overview></app-rentals-overview>
         } @else if (selectedSection==='rentalPriceConfig'){
         <app-rental-price-config></app-rental-price-config>
+        }@else if(selectedSection==='statistics'){
+        <app-statistics></app-statistics>
         }
       </div>
     </mat-sidenav-content>

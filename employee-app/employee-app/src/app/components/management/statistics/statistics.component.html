@@ -1,0 +1,64 @@
+<div class="statistics-container">
+  <h2>Statistics revenue</h2>
+
+  <mat-card class="chart-card">
+    <mat-card-header>
+      <mat-card-title>Daily revenue</mat-card-title>
+      <div class="month-year-selector">
+        <mat-form-field appearance="outline">
+          <mat-label>Year</mat-label>
+          <mat-select
+            [(value)]="selectedYear"
+            (selectionChange)="onMonthYearChange()"
+          >
+            <mat-option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Month</mat-label>
+          <mat-select
+            [(value)]="selectedMonth"
+            (selectionChange)="onMonthYearChange()"
+          >
+            <mat-option *ngFor="let month of months" [value]="month.value">
+              {{ month.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="chart-container">
+        <canvas #dailyRevenueCanvas></canvas>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="chart-card">
+    <mat-card-header>
+      <mat-card-title>Number of breakdowns by vehicle type</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="chart-container">
+        <canvas #breakdownCanvas></canvas>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="chart-card">
+    <mat-card-header>
+      <mat-card-title>Total revenue by vehicle type</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="chart-container">
+        <canvas #revenueCanvas></canvas>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
