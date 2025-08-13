@@ -37,7 +37,7 @@ public class PostDAO {
     }
 
     public boolean save(PostDTO post) {
-        String sql = "INSERT INTO posts (title, content, created_at) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO post (title, content, created_at) VALUES (?, ?, ?)";
         Connection conn = null;
         PreparedStatement stmt = null;
 

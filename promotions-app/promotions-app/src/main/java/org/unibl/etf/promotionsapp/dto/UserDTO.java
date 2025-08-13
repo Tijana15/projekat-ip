@@ -16,7 +16,6 @@ public class UserDTO {
         this.password = password;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

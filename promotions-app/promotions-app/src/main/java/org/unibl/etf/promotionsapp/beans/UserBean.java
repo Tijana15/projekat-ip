@@ -10,6 +10,7 @@ public class UserBean implements Serializable {
     private String password;
     private String firstname;
     private String lastname;
+
     private boolean loggedIn = false;
     private String errorMessage;
     private UserDAO userDAO;

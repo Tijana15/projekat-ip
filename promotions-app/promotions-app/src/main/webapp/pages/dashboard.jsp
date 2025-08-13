@@ -55,11 +55,11 @@
 %>
 
 <!DOCTYPE html>
-<html lang="sr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Aplikacija za promocije</title>
+    <title>Dashboard - Promotions Management App</title>
     <style>
         * {
             margin: 0;
@@ -296,18 +296,6 @@
             margin-bottom: 1rem;
         }
 
-        .message.success {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-        }
-
-        .message.error {
-            background: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-        }
-
         .no-items {
             text-align: center;
             color: #666;
@@ -341,64 +329,64 @@
 <body>
 <div class="header">
     <div class="header-content">
-        <h1>Aplikacija za promocije</h1>
+        <h1>Promotions Management App</h1>
         <div class="user-info">
-            <span>Dobro došli, <%= userBean.getUsername() != null ? userBean.getUsername() : "Menadžer" %>!</span>
-            <a href="dashboard.jsp?action=logout" class="logout-btn">Odjaviti se</a>
+            <span>Welcome, <%= userBean.getUsername() != null ? userBean.getUsername() : "Manager" %>!</span>
+            <a href="dashboard.jsp?action=logout" class="logout-btn">Log out</a>
         </div>
     </div>
 </div>
 
 <div class="container">
     <div class="tabs">
-        <button class="tab active" onclick="switchTab(event, 'posts')">Objave</button>
-        <button class="tab" onclick="switchTab(event, 'promotions')">Promocije</button>
+        <button class="tab active" onclick="switchTab(event, 'posts')">Posts</button>
+        <button class="tab" onclick="switchTab(event, 'promotions')">Promotions</button>
     </div>
 
-    <!-- Tab za objave -->
+    <!-- Posts tab -->
     <div id="posts" class="tab-content active">
         <div class="section">
-            <!-- Forma za kreiranje objave -->
+            <!-- Create post form -->
             <div class="form-container">
-                <h3>Kreiraj novu objavu</h3>
+                <h3>Create new post</h3>
                 <form method="post" action="dashboard.jsp">
                     <input type="hidden" name="action" value="createPost">
 
                     <div class="form-group">
-                        <label for="postTitle">Naslov:</label>
+                        <label for="postTitle">Title:</label>
                         <input type="text" id="postTitle" name="title" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="postContent">Sadržaj:</label>
+                        <label for="postContent">Content:</label>
                         <textarea id="postContent" name="content" required></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Kreiraj objavu</button>
+                    <button type="submit" class="btn btn-primary">Create post</button>
                 </form>
             </div>
 
             <% if (postBean.getMessage() != null) { %>
-            <div class="message <%= postBean.getMessage().contains("uspješno") ? "success" : "error" %>">
+            <div class="message <%= postBean.getMessage().toLowerCase().contains("successful")? "success" : "error" %>">
                 <%= postBean.getMessage() %>
             </div>
             <% } %>
 
-            <!-- Pretraga objava -->
+            <!-- Search posts -->
             <div class="search-container">
                 <form method="post" action="dashboard.jsp" class="search-form">
                     <input type="hidden" name="action" value="searchPosts">
                     <div class="form-group">
-                        <label for="postSearchTerm">Pretraži objave:</label>
+                        <label for="postSearchTerm">Search posts:</label>
                         <input type="text" id="postSearchTerm" name="searchTerm"
                                value="<%= postBean.getSearchTerm() != null ? postBean.getSearchTerm() : "" %>"
-                               placeholder="Unesite pojam za pretragu...">
+                               placeholder="Enter search term...">
                     </div>
-                    <button type="submit" class="btn btn-primary">Pretraži</button>
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </form>
             </div>
 
-            <!-- Lista objava -->
+            <!-- Posts list -->
             <div class="items-grid">
                 <%
                     List<PostDTO> posts = postBean.getPosts();
@@ -411,13 +399,13 @@
                     <p><%= post.getContent() %>
                     </p>
                     <div class="item-meta">
-                        Kreirano: <%= post.getCreatedAt().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")) %>
+                        Created: <%= post.getCreatedAt().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")) %>
                     </div>
                     <div class="item-actions">
                         <a href="dashboard.jsp?action=deletePost&postId=<%= post.getId() %>"
                            class="btn btn-danger"
-                           onclick="return confirm('Da li ste sigurni da želite obrisati ovu objavu?')">
-                            Obriši
+                           onclick="return confirm('Are you sure you want to delete this post?')">
+                            Delete
                         </a>
                     </div>
                 </div>
@@ -425,68 +413,68 @@
                     }
                 } else {
                 %>
-                <div class="no-items">Nema objava za prikaz.</div>
+                <div class="no-items">No posts to display.</div>
                 <% } %>
             </div>
         </div>
     </div>
 
-    <!-- Tab za promocije -->
+    <!-- Promotions tab -->
     <div id="promotions" class="tab-content">
         <div class="section">
-            <!-- Forma za kreiranje promocije -->
+            <!-- Create promotion form -->
             <div class="form-container">
-                <h3>Kreiraj novu promociju</h3>
+                <h3>Create new promotion</h3>
                 <form method="post" action="dashboard.jsp">
                     <input type="hidden" name="action" value="createPromotion">
 
                     <div class="form-group">
-                        <label for="promotionTitle">Naslov:</label>
+                        <label for="promotionTitle">Title:</label>
                         <input type="text" id="promotionTitle" name="title" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="promotionDescription">Opis:</label>
+                        <label for="promotionDescription">Description:</label>
                         <textarea id="promotionDescription" name="description" required></textarea>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="startDate">Datum početka:</label>
+                            <label for="startDate">Start date:</label>
                             <input type="datetime-local" id="startDate" name="startDateStr" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="endDate">Datum završetka:</label>
+                            <label for="endDate">End date:</label>
                             <input type="datetime-local" id="endDate" name="endDateStr" required>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Kreiraj promociju</button>
+                    <button type="submit" class="btn btn-primary">Create promotion</button>
                 </form>
             </div>
 
             <% if (promotionBean.getMessage() != null) { %>
-            <div class="message <%= promotionBean.getMessage().contains("uspješno") ? "success" : "error" %>">
+            <div class="message <%= promotionBean.getMessage().toLowerCase().contains("successful") ? "success" : "error" %>">
                 <%= promotionBean.getMessage() %>
             </div>
             <% } %>
 
-            <!-- Pretraga promocija -->
+            <!-- Search promotions -->
             <div class="search-container">
                 <form method="post" action="dashboard.jsp" class="search-form">
                     <input type="hidden" name="action" value="searchPromotions">
                     <div class="form-group">
-                        <label for="promotionSearchTerm">Pretraži promocije:</label>
+                        <label for="promotionSearchTerm">Search promotions:</label>
                         <input type="text" id="promotionSearchTerm" name="searchTerm"
                                value="<%= promotionBean.getSearchTerm() != null ? promotionBean.getSearchTerm() : "" %>"
-                               placeholder="Unesite pojam za pretragu...">
+                               placeholder="Enter search term...">
                     </div>
-                    <button type="submit" class="btn btn-primary">Pretraži</button>
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </form>
             </div>
 
-            <!-- Lista promocija -->
+            <!-- Promotions list -->
             <div class="items-grid">
                 <%
                     List<PromotionDTO> promotions = promotionBean.getPromotions();
@@ -506,8 +494,8 @@
                     <div class="item-actions">
                         <a href="dashboard.jsp?action=deletePromotion&promotionId=<%= promotion.getId() %>"
                            class="btn btn-danger"
-                           onclick="return confirm('Da li ste sigurni da želite obrisati ovu promociju?')">
-                            Obriši
+                           onclick="return confirm('Are you sure you want to delete this promotion?')">
+                            Delete
                         </a>
                     </div>
                 </div>
@@ -515,7 +503,7 @@
                     }
                 } else {
                 %>
-                <div class="no-items">Nema promocija za prikaz.</div>
+                <div class="no-items">No promotions to display.</div>
                 <% } %>
             </div>
         </div>
@@ -526,24 +514,20 @@
     function switchTab(evt, tabName) {
         var i, tabcontent, tabs;
 
-        // Sakrij sve tab sadržaje
         tabcontent = document.getElementsByClassName("tab-content");
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].classList.remove("active");
         }
 
-        // Ukloni active klasu sa svih tabova
         tabs = document.getElementsByClassName("tab");
         for (i = 0; i < tabs.length; i++) {
             tabs[i].classList.remove("active");
         }
 
-        // Prikaži odgovarajući tab i označi ga kao aktivan
         document.getElementById(tabName).classList.add("active");
         evt.currentTarget.classList.add("active");
     }
 
-    // Postavi minimalne datume za promocije (ne može biti u prošlosti)
     window.onload = function () {
         var now = new Date();
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -552,7 +536,6 @@
         document.getElementById('startDate').setAttribute('min', dateString);
         document.getElementById('endDate').setAttribute('min', dateString);
 
-        // Kada se promeni start datum, update end datum minimum
         document.getElementById('startDate').addEventListener('change', function () {
             document.getElementById('endDate').setAttribute('min', this.value);
         });

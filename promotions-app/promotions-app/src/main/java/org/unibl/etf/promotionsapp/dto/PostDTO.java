@@ -8,7 +8,6 @@ public class PostDTO {
     private String content;
     private LocalDateTime createdAt;
 
-    // Constructors
     public PostDTO() {
     }
 
@@ -18,7 +17,6 @@ public class PostDTO {
         this.createdAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

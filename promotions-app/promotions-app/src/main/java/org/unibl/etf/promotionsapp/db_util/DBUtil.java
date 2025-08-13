@@ -9,7 +9,6 @@ public class DBUtil {
     public static PreparedStatement prepareStatement(Connection c, String sql,
                                                      boolean retGenKeys, Object... values) throws SQLException {
 
-
         PreparedStatement ps = c.prepareStatement(sql,
                 retGenKeys ? Statement.RETURN_GENERATED_KEYS
                         : Statement.NO_GENERATED_KEYS);

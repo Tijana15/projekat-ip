@@ -14,6 +14,7 @@ public class PromotionBean {
     private String description;
     private String startDateStr;
     private String endDateStr;
+
     private String searchTerm;
     private String message;
     private PromotionDAO promotionDAO;
@@ -24,13 +25,12 @@ public class PromotionBean {
         loadAllPromotions();
     }
 
-    // CRUD metode
     public String createPromotion() {
         if (title == null || title.trim().isEmpty() ||
                 description == null || description.trim().isEmpty() ||
                 startDateStr == null || startDateStr.trim().isEmpty() ||
                 endDateStr == null || endDateStr.trim().isEmpty()) {
-            message = "Svi podaci su obavezni!";
+            message = "All data must be filled!";
             return "error";
         }
 
@@ -39,23 +39,23 @@ public class PromotionBean {
             LocalDateTime endDate = LocalDateTime.parse(endDateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
             if (endDate.isBefore(startDate)) {
-                message = "Datum završetka mora biti nakon datuma početka!";
+                message = "Date of ending has to be after day of starting!";
                 return "error";
             }
 
             PromotionDTO promotion = new PromotionDTO(title.trim(), description.trim(), startDate, endDate);
 
             if (promotionDAO.save(promotion)) {
-                message = "Promocija je uspješno kreirana!";
+                message = "Promotion created successfully!";
                 clearForm();
                 loadAllPromotions();
                 return "success";
             } else {
-                message = "Greška pri kreiranju promocije!";
+                message = "Error creating promotion!";
                 return "error";
             }
         } catch (DateTimeParseException e) {
-            message = "Neispravna format datuma!";
+            message = "Bad form date!";
             return "error";
         }
     }
@@ -75,11 +75,11 @@ public class PromotionBean {
 
     public String deletePromotion(Long id) {
         if (promotionDAO.delete(id)) {
-            message = "Promocija je uspješno obrisana!";
+            message = "Promotion successfully deleted!";
             loadAllPromotions();
             return "success";
         } else {
-            message = "Greška pri brisanju promocije!";
+            message = "Error deleting promotion!";
             return "error";
         }
     }
@@ -113,5 +113,53 @@ public class PromotionBean {
 
     public void setPromotions(List<PromotionDTO> promotions) {
         this.promotions = promotions;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStartDateStr() {
+        return startDateStr;
+    }
+
+    public void setStartDateStr(String startDateStr) {
+        this.startDateStr = startDateStr;
+    }
+
+    public String getEndDateStr() {
+        return endDateStr;
+    }
+
+    public void setEndDateStr(String endDateStr) {
+        this.endDateStr = endDateStr;
+    }
+
+    public PromotionDAO getPromotionDAO() {
+        return promotionDAO;
+    }
+
+    public void setPromotionDAO(PromotionDAO promotionDAO) {
+        this.promotionDAO = promotionDAO;
     }
 }

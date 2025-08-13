@@ -11,7 +11,7 @@ public class PostBean {
     private String title;
     private String content;
     private LocalDateTime dateCreated = LocalDateTime.now();
-    // CRUD metode
+
     private String searchTerm;
     private String message;
     private PostDAO postDAO;
@@ -22,24 +22,23 @@ public class PostBean {
         loadAllPosts();
     }
 
-    // CRUD metode
     public String createPost() {
         if (title == null || title.trim().isEmpty() ||
                 content == null || content.trim().isEmpty()) {
-            message = "Naslov i sadržaj su obavezni!";
+            message = "Title and content are necessary!";
             return "error";
         }
 
         PostDTO post = new PostDTO(title.trim(), content.trim());
 
         if (postDAO.save(post)) {
-            message = "Objava je uspješno kreirana!";
+            message = "Post created successfully!";
             title = "";
             content = "";
-            loadAllPosts(); // Refresh liste
+            loadAllPosts();
             return "success";
         } else {
-            message = "Greška pri kreiranju objave!";
+            message = "Error creating post!";
             return "error";
         }
     }
@@ -59,11 +58,11 @@ public class PostBean {
 
     public String deletePost(Long id) {
         if (postDAO.delete(id)) {
-            message = "Objava je uspješno obrisana!";
+            message = "Post deleted successfully!";
             loadAllPosts();
             return "success";
         } else {
-            message = "Greška pri brisanju objave!";
+            message = "Error deleting post!";
             return "error";
         }
     }
@@ -90,5 +89,45 @@ public class PostBean {
 
     public void setPosts(List<PostDTO> posts) {
         this.posts = posts;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public PostDAO getPostDAO() {
+        return postDAO;
+    }
+
+    public void setPostDAO(PostDAO postDAO) {
+        this.postDAO = postDAO;
     }
 }
