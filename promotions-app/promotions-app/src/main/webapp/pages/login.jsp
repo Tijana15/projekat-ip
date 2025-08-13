@@ -33,7 +33,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #e3b238 0%, #c8c014 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -87,13 +87,13 @@
 
         .form-group input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #e3b238;
         }
 
         .login-button {
             width: 100%;
             padding: 0.75rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #e3b238 0%, #c8c014 100%);
             color: white;
             border: none;
             border-radius: 5px;
@@ -119,7 +119,7 @@
 
         .info-note {
             background: #f8f9fa;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #e3b238;
             padding: 1rem;
             margin-top: 1.5rem;
             border-radius: 0 5px 5px 0;
