@@ -1,4 +1,7 @@
 package org.unibl.etf.clientapp.bean;
 
-public class UserBean {
+import java.io.Serializable;
+
+public class UserBean implements Serializable {
+
 }
