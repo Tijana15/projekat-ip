@@ -16,7 +16,18 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+        String action = request.getParameter("action");
+        HttpSession session = request.getSession();
+        System.out.println("GET Action = " + action);
+
+        session.setAttribute("notification", session.getAttribute("notification") != null ? session.getAttribute("notification") : "");
+
+
+        if ("register".equals(action)) {
+            request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
+        }
     }
 
 
