@@ -20,6 +20,8 @@ public class Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        HttpSession session = request.getSession();
+
         if (action == null) {
             action = "login";
         }
@@ -30,6 +32,16 @@ public class Controller extends HttpServlet {
             case "login":
                 request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
                 break;
+            case "home":
+                if (session.getAttribute("userBean") != null) {
+                    request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("Controller?action=login");
+                }
+                break;
+            case "logout":
+                session.invalidate();
+                request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
         }
     }
 
@@ -42,13 +54,14 @@ public class Controller extends HttpServlet {
 
         System.out.println("Action here in post is " + action);
 
-        if (action.equals("login")) {
+        if ("login".equals(action)) {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             UserBean user = new UserBean();
             if (user.login(username, password)) {
                 session.setAttribute("userBean", user);
-                response.sendRedirect(request.getContextPath() + "/home.jsp");
+                response.sendRedirect("Controller?action=home");
+
             } else {
                 session.setAttribute("notification", "Invalid credentials");
                 request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
@@ -85,6 +98,8 @@ public class Controller extends HttpServlet {
 
                 }
             }
+        } else if ("logout".equals(action)) {
+            response.sendRedirect(request.getContextPath() + "/Controller?action=logout");
         }
 
     }

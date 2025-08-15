@@ -54,13 +54,21 @@
                 <h2>Sign In</h2>
                 <p>Access your Urban Motion account</p>
 
-                <form action="?action=auth" method="post">
-                    <%-- Dodaj ovaj kod negdje na login.jsp, npr. iznad forme za login --%>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="action" value="login">
+
                     <% if (session.getAttribute("registrationSuccess") != null) { %>
-                    <div class="success-message">
+                    <div class="success-message" style="display: block; background-color: #dcfce7; border-color: #86efac; color: #166534; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
                         <%= session.getAttribute("registrationSuccess") %>
                     </div>
                     <% session.removeAttribute("registrationSuccess"); %>
+                    <% } %>
+
+                    <% if (session.getAttribute("notification") != null) { %>
+                    <div class="error-message" style="display: block; background-color: #fee2e2; border-color: #fca5a5; color: #b91c1c; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                        <%= session.getAttribute("notification") %>
+                    </div>
+                    <% session.removeAttribute("notification"); %>
                     <% } %>
 
                     <div class="form-group">
