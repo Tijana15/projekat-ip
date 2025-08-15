@@ -83,7 +83,7 @@
                     <div class="option-icon">
                         <span class="vehicle-emoji">👤</span>
                     </div>
-                    <h3>My Profile</h3>
+                    <h3>My profile</h3>
                     <p>Manage your account and rental history</p>
                     <ul class="feature-list">
                         <li>✓ View rental history</li>

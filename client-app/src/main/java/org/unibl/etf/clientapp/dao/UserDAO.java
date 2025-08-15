@@ -145,4 +145,91 @@ public class UserDAO {
         }
     }
 
+    public static boolean updatePassword(long userId, String oldPassword, String newPassword) {
+        Connection conn = null;
+        PreparedStatement stmtSelect = null;
+        PreparedStatement stmtUpdate = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT password FROM user WHERE id = ?";
+        String sqlUpdate = "UPDATE user SET password = ? WHERE id = ?";
+
+        try {
+            conn = DBUtil.getConnection();
+            conn.setAutoCommit(false);
+
+            stmtSelect = conn.prepareStatement(sqlSelect);
+            stmtSelect.setLong(1, userId);
+            rs = stmtSelect.executeQuery();
+
+            if (rs.next()) {
+                String storedPassword = rs.getString("password");
+
+                if (storedPassword.equals(oldPassword)) {
+
+                    stmtUpdate = conn.prepareStatement(sqlUpdate);
+                    stmtUpdate.setString(1, newPassword);
+                    stmtUpdate.setLong(2, userId);
+
+                    int affectedRows = stmtUpdate.executeUpdate();
+
+                    if (affectedRows > 0) {
+                        conn.commit();
+                        return true;
+                    }
+
+                } else {
+                    System.out.println("Old password is not correct: " + userId);
+                    conn.rollback();
+                    return false;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            DBUtil.close(rs, stmtSelect, null);
+            DBUtil.close(null, stmtUpdate, conn);
+        }
+
+        return false;
+    }
+
+    public static boolean deactivate(Long id) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String sql = "UPDATE client SET blocked = ? WHERE id = ?";
+
+        try {
+            conn = DBUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setBoolean(1, true);
+            stmt.setLong(2, id);
+            int affectedRows = stmt.executeUpdate();
+
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error deactivating account of user: " + id);
+            e.printStackTrace();
+            return false;
+        } finally {
+            DBUtil.close(null, stmt, conn);
+        }
+    }
 }
+

@@ -6,7 +6,6 @@ import org.unibl.etf.clientapp.dto.User;
 
 import java.io.*;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +40,14 @@ public class Controller extends HttpServlet {
                 break;
             case "logout":
                 session.invalidate();
+                session = request.getSession(true);
+                session.setAttribute("notification", "You have been successfully logged out.");
                 request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+                break;
+            case "profile":
+                request.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(request, response);
+                break;
+
         }
     }
 
@@ -49,9 +55,6 @@ public class Controller extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
-        UserBean userBean = (UserBean) session.getAttribute("userBean");
-
-
         System.out.println("Action here in post is " + action);
 
         if ("login".equals(action)) {
@@ -100,6 +103,44 @@ public class Controller extends HttpServlet {
             }
         } else if ("logout".equals(action)) {
             response.sendRedirect(request.getContextPath() + "/Controller?action=logout");
+        } else if ("changePassword".equals(action)) {
+            String oldPassword = request.getParameter("oldPassword");
+            String newPassword = request.getParameter("newPassword");
+            String confirmPassword = request.getParameter("confirmPassword");
+            UserBean userBean = (UserBean) session.getAttribute("userBean");
+
+            String statusMessage = null;
+            boolean success = false;
+
+            if (newPassword == null || newPassword.isEmpty() || confirmPassword == null || confirmPassword.isEmpty()) {
+                statusMessage = "Error: Both password fields are required.";
+            }
+            if (!newPassword.equals(confirmPassword)) {
+                session.setAttribute("profileMessage", "Error. Password does not match.");
+            } else {
+                success = userBean.changePassword(oldPassword, newPassword);
+                if (success) {
+                    statusMessage = "Success: Password changed successfully!";
+                    System.out.println("Password changed for user ID: " + userBean.getId());
+                } else {
+                    statusMessage = "Error: Could not change password due to a server error.";
+                    System.err.println("Failed to change password for user ID: " + userBean.getId());
+                }
+            }
+            session.setAttribute("passwordChangeMessage", statusMessage);
+            response.sendRedirect(request.getContextPath() + "/Controller?action=profile");
+        } else if ("deactivateAccount".equals(action)) {
+            UserBean userBean = (UserBean) session.getAttribute("userBean");
+            boolean success = userBean.deactivateAccount();
+            if (success) {
+                session.invalidate();
+                session = request.getSession(true);
+                session.setAttribute("notification", "Your account has been successfully deactivated.");
+                response.sendRedirect("Controller?action=login");
+            } else {
+                session.setAttribute("profileMessage", "Error: Account deactivation failed. Please try again.");
+                response.sendRedirect("Controller?action=profile");
+            }
         }
 
     }

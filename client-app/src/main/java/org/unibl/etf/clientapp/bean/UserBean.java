@@ -10,8 +10,12 @@ public class UserBean implements Serializable {
     private boolean isLoggedIn = false;
 
     public boolean login(String username, String password) {
-        if ((user = UserDAO.findByUsernameAndPassword(username, password)) != null) {
-            isLoggedIn = true;
+        User userDTO = UserDAO.findByUsernameAndPassword(username, password);
+
+        if (userDTO != null && !userDTO.isBlocked()) {
+            
+            this.user = userDTO;
+            this.isLoggedIn = true;
             return true;
         }
         return false;
@@ -19,5 +23,23 @@ public class UserBean implements Serializable {
 
     public boolean register(User user) {
         return UserDAO.addNewClient(user);
+    }
+
+    public boolean changePassword(String oldPassword, String newPassword) {
+        if (this.user == null) {
+            return false;
+        }
+        return UserDAO.updatePassword(this.user.getId(), oldPassword, newPassword);
+    }
+
+    public boolean deactivateAccount() {
+        if (this.user == null) {
+            return false;
+        }
+        return UserDAO.deactivate(this.user.getId());
+    }
+
+    public Long getId() {
+        return user.getId();
     }
 }
