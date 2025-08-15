@@ -55,9 +55,13 @@
                 <p>Access your Urban Motion account</p>
 
                 <form action="?action=auth" method="post">
-                    <div id="error-message" class="error-message">
-                        <!-- Error messages will appear here -->
+                    <%-- Dodaj ovaj kod negdje na login.jsp, npr. iznad forme za login --%>
+                    <% if (session.getAttribute("registrationSuccess") != null) { %>
+                    <div class="success-message">
+                        <%= session.getAttribute("registrationSuccess") %>
                     </div>
+                    <% session.removeAttribute("registrationSuccess"); %>
+                    <% } %>
 
                     <div class="form-group">
                         <label for="username">Username</label>
@@ -77,7 +81,7 @@
                 </form>
 
                 <div class="register-link">
-                    <p>Don't have an account? <a href="?action=register">Register here</a></p>
+                    <p>Don't have an account? <a href="Controller?action=register">Register here</a></p>
                 </div>
             </div>
         </div>

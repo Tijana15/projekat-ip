@@ -159,12 +159,12 @@ body::before {
 /* --- Registration Form --- */
 .registration-section {
     background: rgba(255, 255, 255, 0.95);
-    padding: 3rem;
+    padding: 2.5rem;
     border-radius: 24px;
     box-shadow: 0 25px 50px rgba(124, 58, 237, 0.2);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    max-width: 450px;
+    max-width: 500px;
     width: 100%;
 }
 
@@ -180,6 +180,16 @@ body::before {
     color: #6B7280;
     text-align: center;
     margin-bottom: 2rem;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-grid .full-width {
+    grid-column: 1 / -1;
 }
 
 .form-group {

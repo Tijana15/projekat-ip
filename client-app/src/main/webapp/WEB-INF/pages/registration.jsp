@@ -21,6 +21,7 @@
             <div class="brand-name">Urban Motion</div>
         </div>
     </header>
+
     <main class="main-content">
         <div class="content-wrapper">
             <div class="hero-section floating">
@@ -41,73 +42,67 @@
                     </li>
                 </ul>
             </div>
-        </div>
-        <div class="registration-section">
-            <h2>Register</h2>
-            <p>Access all privileges of Urban Motion</p>
-            <form action="?action=register" method="post">
-                <div id="error-message" class="error-message">
 
-                </div>
-
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="username" name="username" placeholder="Insert username" required>
+            <div class="registration-section">
+                <h2>Register</h2>
+                <p>Access all privileges of Urban Motion</p>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="action" value="register">
+                    <% if (session.getAttribute("errorMessage") != null) { %>
+                    <div class="error-message" style="display: block;">
+                        <%= session.getAttribute("errorMessage") %>
                     </div>
-                </div>
+                    <% session.removeAttribute("errorMessage"); %>
+                    <% } %>
 
-                <div class="form-group">
-                    <label for="firstname">Firstname</label>
-                    <div class="input-wrapper">
-                        <input type="text" name="firstname" id="firstname" placeholder="Insert firstname" required>
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="lastname">Lastname</label>
-                    <div class="input-wrapper">
-                        <input type="text" name="lastname" id="lastname" placeholder="Insert lastname" required>
-                    </div>
-                </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" placeholder="Enter username" required>
+                        </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="input-wrapper">
-                        <input type="text" name="password" id="password" placeholder="Insert password" required>
-                    </div>
-                </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <%-- PROMJENA: type="password" da sakrije unos --%>
+                            <input type="password" name="password" id="password" placeholder="Enter password" required>
+                        </div>
 
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <div class="input-wrapper">
-                        <input type="text" name="email" id="email" placeholder="Insert email" required>
-                    </div>
-                </div>
+                        <div class="form-group">
+                            <label for="firstname">First Name</label>
+                            <input type="text" name="firstname" id="firstname" placeholder="Enter first name" required>
+                        </div>
 
-                <div class="form-group">
-                    <label for="id_document">Identification document</label>
-                    <div class="input-wrapper">
-                        <input type="text" name="id_document" id="id_document"
-                               placeholder="Insert identification document" required>
-                    </div>
-                </div>
+                        <div class="form-group">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" name="lastname" id="lastname" placeholder="Enter last name" required>
+                        </div>
 
-                <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <div class="input-wrapper">
-                        <input type="text" name="phone" id="phone" placeholder="Insert phone number" required>
+                        <div class="form-group full-width">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" placeholder="Enter email" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="id_document">Identification Document</label>
+                            <input type="text" name="id_document" id="id_document" placeholder="Enter ID document number" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="phone">Phone</label>
+                            <input type="tel" name="phone" id="phone" placeholder="Enter phone number" required>
+                        </div>
                     </div>
+
+                    <button type="submit" class="submit-btn">Register</button>
+                </form>
+
+                <div class="register-link-link">
+                    <p>Already have an account? <a href="Controller?action=login">Login here</a></p>
                 </div>
-                <button type="submit" class="submit-btn">Register</button>
-            </form>
-            <div class="register-link-link">
-                <p>Don't have an account? <a href="?action=login">Login here</a></p>
             </div>
         </div>
     </main>
 </div>
-
-
 </body>
 </html>
