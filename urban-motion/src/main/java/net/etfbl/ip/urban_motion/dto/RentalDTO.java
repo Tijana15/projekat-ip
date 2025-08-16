@@ -14,10 +14,10 @@ public class RentalDTO {
     private Long id;
     private LocalDateTime dateTime;
 
-    private int startX;
-    private int startY;
-    private int endX;
-    private int endY;
+    private Double startX;
+    private Double startY;
+    private Double endX;
+    private Double endY;
     private Integer durationSeconds;
     private Double price;
     private Boolean active;

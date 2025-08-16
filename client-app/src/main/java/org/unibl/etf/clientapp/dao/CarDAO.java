@@ -49,7 +49,7 @@ public class CarDAO {
                 car.setPicture(rs.getString("picture"));
                 car.setMapX(rs.getDouble("mapx"));
                 car.setMapY(rs.getDouble("mapy"));
-                String vehicleState = rs.getString("vehicle_state");
+                car.setVehicleState(rs.getString("vehicle_state"));
                 cars.add(car);
             }
         } catch (SQLException e) {
@@ -84,5 +84,47 @@ public class CarDAO {
         }
     }
 
+    public static Car getCarById(String vehicleId) {
+        Car car = null;
+        String sql = "SELECT " +
+                "    v.id, v.model, v.purchase_price, v.vehicle_state, " +
+                "    v.mapx, v.mapy, v.picture, m.name AS manufacturer_name, " +
+                "    c.description " +
+                "FROM " +
+                "    vehicle v " +
+                "INNER JOIN " +
+                "    car c ON v.id = c.id " +
+                "INNER JOIN " +
+                "    manufacturer m ON v.manufacturer_id = m.id " +
+                "WHERE v.id = ?";
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, vehicleId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                car = new Car();
+                car.setId(rs.getString("id"));
+                car.setManufacturer(rs.getString("manufacturer_name"));
+                car.setModel(rs.getString("model"));
+                car.setDescription(rs.getString("description"));
+                car.setPicture(rs.getString("picture"));
+                car.setMapX(rs.getDouble("mapx"));
+                car.setMapY(rs.getDouble("mapy"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, stmt, conn);
+        }
+
+        return car;
+    }
 }
 

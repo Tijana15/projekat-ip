@@ -1,6 +1,7 @@
 package org.unibl.etf.clientapp.dao;
 
 import org.unibl.etf.clientapp.db_util.DBUtil;
+import org.unibl.etf.clientapp.dto.Car;
 import org.unibl.etf.clientapp.dto.EBike;
 
 import java.sql.Connection;
@@ -56,5 +57,49 @@ public class EBikeDAO {
         }
 
         return eBikes;
+    }
+
+    public static EBike getEBikeById(String vehicleId) {
+        EBike eBike = null;
+        String sql = "SELECT " +
+                "    v.id, v.model, v.purchase_price, v.vehicle_state, " +
+                "    v.mapx, v.mapy, v.picture, m.name AS manufacturer_name, " +
+                "    b.max_range " +
+                "FROM " +
+                "    vehicle v " +
+                "INNER JOIN " +
+                "    ebike b ON v.id = b.id " +
+                "INNER JOIN " +
+                "    manufacturer m ON v.manufacturer_id = m.id " +
+                "WHERE v.id = ?";
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, vehicleId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                eBike = new EBike();
+                eBike.setId(rs.getString("id"));
+                eBike.setManufacturer(rs.getString("manufacturer_name"));
+                eBike.setModel(rs.getString("model"));
+                eBike.setPicture(rs.getString("picture"));
+                eBike.setMapX(rs.getDouble("mapx"));
+                eBike.setMapY(rs.getDouble("mapy"));
+                eBike.setMaxRange(rs.getInt("max_range"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, stmt, conn);
+        }
+
+        return eBike;
     }
 }

@@ -36,7 +36,7 @@
                 if (vehicles == null || vehicles.isEmpty()) {
             %>
             <div class="no-vehicles-message floating">
-                <h3>🚫 No Available Vehicles</h3>
+                <h3>🚫 No available vehicles</h3>
                 <p>Sorry, no vehicles of this type are currently available.</p>
                 <p>Please check back later or try a different vehicle type.</p>
             </div>
@@ -60,60 +60,46 @@
 
                 <div class="vehicle-details">
                     <%
-                        String vehicleId = "";
-                        String vehicleTitle = "";
-                        String vehicleSpec = "";
-
                         if (vehicleObj instanceof Car) {
                             Car item = (Car) vehicleObj;
-                            vehicleId = item.getId();
-                            vehicleTitle = item.getManufacturer() + " " + item.getModel();
-                            vehicleSpec = "Premium Car • Available Now";
                     %>
-                    <h3><%= vehicleTitle %>
+                    <h3><%= item.getManufacturer() %> <%= item.getModel() %>
                     </h3>
-                    <p class="spec"><%= vehicleSpec %>
-                    </p>
-                    <%
-                    } else if (vehicleObj instanceof EBike) {
-                        EBike item = (EBike) vehicleObj;
-                        vehicleId = item.getId();
-                        vehicleTitle = item.getManufacturer() + " " + item.getModel();
-                        vehicleSpec = "Max Range: " + item.getMaxRange() + " km";
-                    %>
-                    <h3><%= vehicleTitle %>
-                    </h3>
-                    <p class="spec"><%= vehicleSpec %>
-                    </p>
-                    <%
-                    } else if (vehicleObj instanceof EScooter) {
-                        EScooter item = (EScooter) vehicleObj;
-                        vehicleId = item.getId();
-                        vehicleTitle = item.getManufacturer() + " " + item.getModel();
-                        vehicleSpec = "Max Speed: " + item.getMaxSpeed() + " km/h";
-                    %>
-                    <h3><%= vehicleTitle %>
-                    </h3>
-                    <p class="spec"><%= vehicleSpec %>
-                    </p>
-                    <%
-                        }
-                    %>
-
+                    <p class="spec">Premium car • Available now</p>
                 </div>
-
-                <a href="Controller?action=show-rental-form&vehicleId=<%= vehicleId %>"
-                   class="btn">
-                    🚀 Rent now
-                </a>
+                <a href="Controller?action=show-rental-form&vehicleId=<%= item.getId() %>&vehicleType=car" class="btn">Rent
+                    now</a>
+                <%
+                } else if (vehicleObj instanceof EBike) {
+                    EBike item = (EBike) vehicleObj;
+                %>
+                <h3><%= item.getManufacturer() %> <%= item.getModel() %>
+                </h3>
+                <p class="spec">Max range: <%= item.getMaxRange() %> km</p>
             </div>
+            <a href="Controller?action=show-rental-form&vehicleId=<%= item.getId() %>&vehicleType=ebike" class="btn">Rent
+                now</a>
             <%
-                        cardIndex++;
-                    }
-                }
+            } else if (vehicleObj instanceof EScooter) {
+                EScooter item = (EScooter) vehicleObj;
             %>
+            <h3><%= item.getManufacturer() %> <%= item.getModel() %>
+            </h3>
+            <p class="spec">Max speed: <%= item.getMaxSpeed() %> km/h</p>
         </div>
-    </main>
+        <a href="Controller?action=show-rental-form&vehicleId=<%= item.getId() %>&vehicleType=scooter" class="btn">Rent
+            now</a>
+            <%
+        }
+    %>
+</div>
+<%
+            cardIndex++;
+        }
+    }
+%>
+</div>
+</main>
 </div>
 
 <script>

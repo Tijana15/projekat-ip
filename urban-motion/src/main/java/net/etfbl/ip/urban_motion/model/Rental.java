@@ -16,11 +16,11 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime dateTime;
-    private int startX;
-    private int startY;
-    private int endX;
-    private int endY;
-    private int durationSeconds;
+    private Double startX;
+    private Double startY;
+    private Double endX;
+    private Double endY;
+    private Integer durationSeconds;
     private Boolean active;
     private Double price;
 
@@ -31,7 +31,7 @@ public class Rental {
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
-    public Rental(LocalDateTime dateTime, int startX, int starty, int endX, int endY, Integer durationSeconds, Boolean active, Double price, Client client, Vehicle vehicle) {
+    public Rental(LocalDateTime dateTime, Double startX, Double starty, Double endX, Double endY, Integer durationSeconds, Boolean active, Double price, Client client, Vehicle vehicle) {
         this.dateTime = dateTime;
         this.startX = startX;
         this.startY = starty;

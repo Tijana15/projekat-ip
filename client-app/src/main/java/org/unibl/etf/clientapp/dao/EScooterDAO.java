@@ -1,7 +1,7 @@
 package org.unibl.etf.clientapp.dao;
 
 import org.unibl.etf.clientapp.db_util.DBUtil;
-import org.unibl.etf.clientapp.dto.EScooter; // Obavezno importuj EScooter DTO
+import org.unibl.etf.clientapp.dto.EScooter;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -53,4 +53,47 @@ public class EScooterDAO {
         return eScooters;
     }
 
+    public static EScooter getEScooterById(String vehicleId) {
+        EScooter eScooter = null;
+        String sql = "SELECT " +
+                "    v.id, v.model, v.purchase_price, v.vehicle_state, " +
+                "    v.mapx, v.mapy, v.picture, m.name AS manufacturer_name, " +
+                "    s.max_speed " +
+                "FROM " +
+                "    vehicle v " +
+                "INNER JOIN " +
+                "    escooter s ON v.id = s.id " +
+                "INNER JOIN " +
+                "    manufacturer m ON v.manufacturer_id = m.id " +
+                "WHERE v.id = ?";
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, vehicleId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                eScooter = new EScooter();
+                eScooter.setId(rs.getString("id"));
+                eScooter.setManufacturer(rs.getString("manufacturer_name"));
+                eScooter.setModel(rs.getString("model"));
+                eScooter.setPicture(rs.getString("picture"));
+                eScooter.setMapX(rs.getDouble("mapx"));
+                eScooter.setMapY(rs.getDouble("mapy"));
+                eScooter.setPicture(rs.getString("picture"));
+                eScooter.setMaxSpeed(rs.getInt("max_speed"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, stmt, conn);
+        }
+
+        return eScooter;
+    }
 }

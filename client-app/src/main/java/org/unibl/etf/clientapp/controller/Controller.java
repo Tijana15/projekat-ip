@@ -2,7 +2,7 @@ package org.unibl.etf.clientapp.controller;
 
 import org.unibl.etf.clientapp.bean.UserBean;
 import org.unibl.etf.clientapp.bean.VehicleBean;
-import org.unibl.etf.clientapp.dao.UserDAO;
+import org.unibl.etf.clientapp.dao.*;
 import org.unibl.etf.clientapp.dto.Car;
 import org.unibl.etf.clientapp.dto.EBike;
 import org.unibl.etf.clientapp.dto.EScooter;
@@ -60,6 +60,33 @@ public class Controller extends HttpServlet {
                 break;
             case "scooter-rental":
                 showScooterRentalPage(request, response);
+                break;
+            case "show-rental-form":
+                String vehicleId = request.getParameter("vehicleId");
+                String vehicleType = request.getParameter("vehicleType");
+                Object vehicle = null;
+                double price = 0.0;
+                switch (vehicleType) {
+                    case "car":
+                        vehicle = CarDAO.getCarById(vehicleId);
+                        price = RentalPriceConfigDAO.getPriceForCar();
+                        break;
+                    case "ebike":
+                        vehicle = EBikeDAO.getEBikeById(vehicleId);
+                        price = RentalPriceConfigDAO.getPriceForEBike();
+                        break;
+                    case "scooter":
+                        vehicle = EScooterDAO.getEScooterById(vehicleId);
+                        price = RentalPriceConfigDAO.getPriceForEScooter();
+                        break;
+                }
+                if (vehicle != null) {
+                    request.setAttribute("vehicle", vehicle);
+                    request.setAttribute("price", price);
+                    request.getRequestDispatcher("/WEB-INF/pages/rental-form.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("Controller?action=vehicle-list");
+                }
                 break;
 
         }
