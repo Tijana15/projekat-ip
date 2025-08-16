@@ -11,73 +11,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EBikeDAO {
-    private String SQL_SELECT_AVAILABLE_BIKES = "SELECT v.id, v.model, v.picture, v.purchase_price, v.vehicle_state, v.manufacturer_id, e.max_range\n" +
-            "FROM vehicle v\n" +
-            "JOIN ebike e ON v.id = e.id\n" +
-            "WHERE v.vehicle_state = 'AVAILABLE';\n";
 
-    public List<EBike> selectAvailableBikes() {
-        List<EBike> ebikes = new ArrayList<>();
+    public static List<EBike> getAllAvailableEBikes() {
+        List<EBike> eBikes = new ArrayList<>();
+
+        String sql = "SELECT " +
+                "    v.id, v.model, v.purchase_price, v.vehicle_state, " +
+                "    v.mapx, v.mapy, v.picture, m.name AS manufacturer_name, " +
+                "    eb.max_range " +
+                "FROM " +
+                "    vehicle v " +
+                "INNER JOIN " +
+                "    ebike eb ON v.id = eb.id " +
+                "INNER JOIN " +
+                "    manufacturer m ON v.manufacturer_id = m.id " +
+                "WHERE " +
+                "    v.vehicle_state = 'AVAILABLE'";
 
         Connection conn = null;
-        PreparedStatement ps = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
             conn = DBUtil.getConnection();
-            ps = DBUtil.prepareStatement(conn, SQL_SELECT_AVAILABLE_BIKES, false);
-            rs = ps.executeQuery();
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
 
             while (rs.next()) {
-                EBike ebike = new EBike();
-                ebike.setId(rs.getString("id"));
-                ebike.setModel(rs.getString("model"));
-                ebike.setPicture(rs.getString("picture"));
-                ebike.setMaxRange(rs.getInt("max_range"));
+                EBike eBike = new EBike();
+                eBike.setId(rs.getString("id"));
+                eBike.setManufacturer(rs.getString("manufacturer_name"));
+                eBike.setModel(rs.getString("model"));
+                eBike.setPicture(rs.getString("picture"));
+                eBike.setMapX(rs.getDouble("mapx"));
+                eBike.setMapY(rs.getDouble("mapy"));
+                eBike.setMaxRange(rs.getInt("max_range"));
 
-                ebikes.add(ebike);
+                eBikes.add(eBike);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtil.close(rs, ps, conn);
-        }
-        return ebikes;
-    }
-
-    public static EBike getEbikeById(String id) {
-        EBike ebike = null;
-
-        String SQL_SELECT_BY_ID =
-                "SELECT v.id, v.model, v.picture, v.purchase_price, v.vehicle_state, v.manufacturer_id, e.max_range " +
-                        "FROM vehicle v JOIN ebike e ON v.id = e.id " +
-                        "WHERE v.id = ?";
-
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            conn = DBUtil.getConnection();
-            ps = DBUtil.prepareStatement(conn, SQL_SELECT_BY_ID, false, id);
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                ebike = new EBike();
-                ebike.setId(rs.getString("id"));
-                ebike.setModel(rs.getString("model"));
-                ebike.setPicture(rs.getString("picture"));
-                ebike.setMaxRange(rs.getInt("max_range"));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBUtil.close(rs, ps, conn);
+            DBUtil.close(rs, stmt, conn);
         }
 
-        return ebike;
+        return eBikes;
     }
-
 }

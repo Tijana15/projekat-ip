@@ -13,4 +13,7 @@ public class Car {
     private String manufacturer;
     private String picture;
     private String description;
+    private Double mapX;
+    private Double mapY;
+    private String vehicleState;
 }

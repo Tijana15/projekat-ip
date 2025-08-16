@@ -13,4 +13,6 @@ public class EBike {
     private String model;
     private String picture;
     private int maxRange;
+    private Double mapX;
+    private Double mapY;
 }

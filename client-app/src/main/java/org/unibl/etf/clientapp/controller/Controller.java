@@ -1,10 +1,15 @@
 package org.unibl.etf.clientapp.controller;
 
 import org.unibl.etf.clientapp.bean.UserBean;
+import org.unibl.etf.clientapp.bean.VehicleBean;
 import org.unibl.etf.clientapp.dao.UserDAO;
+import org.unibl.etf.clientapp.dto.Car;
+import org.unibl.etf.clientapp.dto.EBike;
+import org.unibl.etf.clientapp.dto.EScooter;
 import org.unibl.etf.clientapp.dto.User;
 
 import java.io.*;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,6 +51,15 @@ public class Controller extends HttpServlet {
                 break;
             case "profile":
                 request.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(request, response);
+                break;
+            case "car-rental":
+                showCarRentalPage(request, response);
+                break;
+            case "bike-rental":
+                showBikeRentalPage(request, response);
+                break;
+            case "scooter-rental":
+                showScooterRentalPage(request, response);
                 break;
 
         }
@@ -143,5 +157,44 @@ public class Controller extends HttpServlet {
             }
         }
 
+    }
+
+    private void showScooterRentalPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("userBean") != null) {
+            VehicleBean vehicleBean = new VehicleBean();
+            List<EScooter> eScooters = vehicleBean.getAvailableEScooters();
+            request.setAttribute("vehicles", eScooters);
+            request.setAttribute("pageTitle", "Available E-Scooters");
+            request.getRequestDispatcher("/WEB-INF/pages/vehicle-list.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("Controller?action=login");
+        }
+    }
+
+    private void showCarRentalPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("userBean") != null) {
+            VehicleBean vehicleBean = new VehicleBean();
+            List<Car> cars = vehicleBean.getAvailableCars();
+            request.setAttribute("vehicles", cars);
+            request.setAttribute("pageTitle", "Available Cars");
+            request.getRequestDispatcher("/WEB-INF/pages/vehicle-list.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("Controller?action=login");
+        }
+    }
+
+    private void showBikeRentalPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("userBean") != null) {
+            VehicleBean vehicleBean = new VehicleBean();
+            List<EBike> eBikes = vehicleBean.getAvailableEBikes();
+            request.setAttribute("vehicles", eBikes);
+            request.setAttribute("pageTitle", "Available E-Bikes");
+            request.getRequestDispatcher("/WEB-INF/pages/vehicle-list.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("Controller?action=login");
+        }
     }
 }

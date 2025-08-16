@@ -13,4 +13,6 @@ public class EScooter {
     private String manufacturer;
     private String picture;
     private int maxSpeed;
+    private Double mapX;
+    private Double mapY;
 }
