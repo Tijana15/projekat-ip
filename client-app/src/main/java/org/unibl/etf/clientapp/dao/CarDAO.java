@@ -61,29 +61,6 @@ public class CarDAO {
         return cars;
     }
 
-    public static boolean setCarAvailabilityToRented(Long carId) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        String sql = "UPDATE vehicle SET vehicle_state = ? WHERE id = ?";
-
-        try {
-            conn = DBUtil.getConnection();
-            stmt = conn.prepareStatement(sql);
-
-            stmt.setString(1, "RENTED");
-            stmt.setLong(2, carId);
-            int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
-
-        } catch (SQLException e) {
-            System.err.println("Error occurred while setting car state to rented" + carId);
-            e.printStackTrace();
-            return false;
-        } finally {
-            DBUtil.close(null, stmt, conn);
-        }
-    }
-
     public static Car getCarById(String vehicleId) {
         Car car = null;
         String sql = "SELECT " +

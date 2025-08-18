@@ -21,4 +21,6 @@ public class Rental {
     private String vehicleId;
     private Double price;
     private boolean active;
+    private String vehicleType;
+
 }

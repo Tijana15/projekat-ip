@@ -87,7 +87,7 @@
             </h3>
             <p class="spec">Max speed: <%= item.getMaxSpeed() %> km/h</p>
         </div>
-        <a href="Controller?action=show-rental-form&vehicleId=<%= item.getId() %>&vehicleType=scooter" class="btn">Rent
+        <a href="Controller?action=show-rental-form&vehicleId=<%= item.getId() %>&vehicleType=escooter" class="btn">Rent
             now</a>
             <%
         }

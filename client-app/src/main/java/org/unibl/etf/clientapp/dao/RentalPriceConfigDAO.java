@@ -78,5 +78,23 @@ public class RentalPriceConfigDAO {
         }
         return 0.0;
     }
+
+    public static double getPriceByVehicleType(String vehicleType) {
+        if (vehicleType == null) {
+            return 0.0;
+        }
+
+        switch (vehicleType.toLowerCase()) {
+            case "car":
+                return getPriceForCar();
+            case "ebike":
+                return getPriceForEBike();
+            case "escooter":
+                return getPriceForEScooter();
+            default:
+                return 0.0;
+        }
+    }
+
 }
 

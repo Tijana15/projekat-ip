@@ -13,7 +13,7 @@ public class UserBean implements Serializable {
         User userDTO = UserDAO.findByUsernameAndPassword(username, password);
 
         if (userDTO != null && !userDTO.isBlocked()) {
-            
+
             this.user = userDTO;
             this.isLoggedIn = true;
             return true;
@@ -41,5 +41,9 @@ public class UserBean implements Serializable {
 
     public Long getId() {
         return user.getId();
+    }
+
+    public User getUser() {
+        return this.user;
     }
 }

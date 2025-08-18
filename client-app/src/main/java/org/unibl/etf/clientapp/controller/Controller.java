@@ -3,12 +3,10 @@ package org.unibl.etf.clientapp.controller;
 import org.unibl.etf.clientapp.bean.UserBean;
 import org.unibl.etf.clientapp.bean.VehicleBean;
 import org.unibl.etf.clientapp.dao.*;
-import org.unibl.etf.clientapp.dto.Car;
-import org.unibl.etf.clientapp.dto.EBike;
-import org.unibl.etf.clientapp.dto.EScooter;
-import org.unibl.etf.clientapp.dto.User;
+import org.unibl.etf.clientapp.dto.*;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -75,7 +73,7 @@ public class Controller extends HttpServlet {
                         vehicle = EBikeDAO.getEBikeById(vehicleId);
                         price = RentalPriceConfigDAO.getPriceForEBike();
                         break;
-                    case "scooter":
+                    case "escooter":
                         vehicle = EScooterDAO.getEScooterById(vehicleId);
                         price = RentalPriceConfigDAO.getPriceForEScooter();
                         break;
@@ -83,15 +81,22 @@ public class Controller extends HttpServlet {
                 if (vehicle != null) {
                     request.setAttribute("vehicle", vehicle);
                     request.setAttribute("price", price);
+                    request.setAttribute("vehicleType", vehicleType);
                     request.getRequestDispatcher("/WEB-INF/pages/rental-form.jsp").forward(request, response);
                 } else {
                     response.sendRedirect("Controller?action=vehicle-list");
                 }
                 break;
+            case "show-active-ride":
+                if (session.getAttribute("activeRental") != null) {
+                    request.getRequestDispatcher("/WEB-INF/pages/active-ride.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("Controller?action=home");
+                }
+                break;
 
         }
     }
-
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getParameter("action");
@@ -182,8 +187,95 @@ public class Controller extends HttpServlet {
                 session.setAttribute("profileMessage", "Error: Account deactivation failed. Please try again.");
                 response.sendRedirect("Controller?action=profile");
             }
-        }
+        } else if ("start-ride".equals(action)) {
+            UserBean userBean = (UserBean) session.getAttribute("userBean");
+            String vehicleIdStr = request.getParameter("vehicleId");
+            String vehicleType = request.getParameter("vehicleType");
 
+            if (vehicleIdStr == null || vehicleType == null) {
+                response.sendRedirect("Controller?action=home");
+                return;
+            }
+            Object vehicle = null;
+            switch (vehicleType) {
+                case "car":
+                    vehicle = CarDAO.getCarById(vehicleIdStr);
+                    break;
+                case "ebike":
+                    vehicle = EBikeDAO.getEBikeById(vehicleIdStr);
+                    break;
+                case "escooter":
+                    vehicle = EScooterDAO.getEScooterById(vehicleIdStr);
+                    break;
+            }
+            if (vehicle == null) {
+                session.setAttribute("notification", "Sorry, that vehicle was just rented by another user.");
+                response.sendRedirect("Controller?action=home");
+                return;
+            }
+            double startX = 0, startY = 0;
+            if (vehicle instanceof Car) {
+                startX = ((Car) vehicle).getMapX();
+                startY = ((Car) vehicle).getMapY();
+            } else if (vehicle instanceof EBike) {
+                startX = ((EBike) vehicle).getMapX();
+                startY = ((EBike) vehicle).getMapY();
+            } else {
+                startX = ((EScooter) vehicle).getMapX();
+                startY = ((EScooter) vehicle).getMapY();
+            }
+
+            double[] newCoords = generateRandomCoordinates();
+            VehicleDAO.setVehicleAvailabilityToRented(vehicleIdStr);
+            VehicleDAO.updateVehicleCoordinates(vehicleIdStr, newCoords[0], newCoords[1]);
+            Rental activeRental = new Rental();
+            activeRental.setClientId(userBean.getUser().getId());
+            activeRental.setVehicleId(vehicleIdStr);
+            activeRental.setDateTime(java.time.LocalDateTime.now());
+            activeRental.setStartX(startX);
+            activeRental.setStartY(startY);
+            activeRental.setEndX(newCoords[0]);
+            activeRental.setEndY(newCoords[1]);
+            activeRental.setVehicleType(vehicleType);
+            activeRental.setActive(true);
+
+            long rentalId = RentalDAO.startRental(activeRental);
+            if (rentalId > 0) {
+                activeRental.setId(rentalId);
+                session.setAttribute("activeRental", activeRental);
+                response.sendRedirect("Controller?action=show-active-ride");
+            } else {
+                VehicleDAO.setVehicleAvailabilityToAvailable(vehicleIdStr);
+                session.setAttribute("notification", "Error starting ride. Please try again.");
+                response.sendRedirect("Controller?action=home");
+            }
+
+        } else if ("end-ride".equals(action)) {
+            UserBean userBean = (UserBean) session.getAttribute("userBean");
+            Rental activeRental = (Rental) session.getAttribute("activeRental");
+
+            if (userBean == null || activeRental == null) {
+                response.sendRedirect("Controller?action=login");
+                return;
+            }
+            String vehicleType = activeRental.getVehicleType();
+            long rentalId = activeRental.getId();
+            String vehicleId = activeRental.getVehicleId();
+            int durationInSeconds = Integer.parseInt(request.getParameter("durationSeconds"));
+            double pricePerMinute = RentalPriceConfigDAO.getPriceByVehicleType(vehicleType);
+            double pricePerSecond = pricePerMinute / 60.0;
+            double finalPrice = durationInSeconds * pricePerSecond;
+
+            double endX = activeRental.getEndX();
+            double endY = activeRental.getEndY();
+
+            RentalDAO.endRental(rentalId, durationInSeconds, finalPrice, endX, endY);
+
+            VehicleDAO.setVehicleAvailabilityToAvailable(vehicleId);
+            session.removeAttribute("activeRental");
+            session.setAttribute("notification", "Ride finished! Total price: " + String.format("%.2f", finalPrice) + " $.");
+            response.sendRedirect("Controller?action=home");
+        }
     }
 
     private void showScooterRentalPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -224,4 +316,16 @@ public class Controller extends HttpServlet {
             response.sendRedirect("Controller?action=login");
         }
     }
+
+    private double[] generateRandomCoordinates() {
+        double centerLat = 44.7725;
+        double centerLon = 17.186;
+        double radius = 0.02;
+
+        double randomLat = centerLat + (Math.random() * 2 - 1) * radius;
+        double randomLon = centerLon + (Math.random() * 2 - 1) * radius;
+
+        return new double[]{randomLat, randomLon};
+    }
+
 }

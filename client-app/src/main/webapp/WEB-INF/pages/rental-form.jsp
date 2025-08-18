@@ -44,7 +44,7 @@
             <h3><%= vehicleName %>
             </h3>
             <div class="price-display">
-                Price: <span><%= String.format("%.2f", price) %> KM/min</span>
+                Price: <span><%= String.format("%.2f", price) %> $/min</span>
             </div>
         </div>
 
@@ -55,6 +55,7 @@
             <form action="Controller" method="post">
                 <input type="hidden" name="action" value="start-ride">
                 <input type="hidden" name="vehicleId" value="<%= vehicleId %>">
+                <input type="hidden" name="vehicleType" value="<%= request.getAttribute("vehicleType") %>">
 
                 <div class="form-group">
                     <label for="cardNumber">Card Number</label>

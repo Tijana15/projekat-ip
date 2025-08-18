@@ -29,6 +29,17 @@
         </div>
     </header>
 
+    <%
+        String notification = (String) session.getAttribute("notification");
+        if (notification != null) {
+    %>
+    <div class="notification success">
+        <%= notification %>
+    </div>
+    <%
+            session.removeAttribute("notification");
+        }
+    %>
     <main class="main-content">
         <div class="dashboard-wrapper">
             <div class="dashboard-header">
@@ -99,17 +110,17 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const cards = document.querySelectorAll('.option-card');
 
         cards.forEach((card, index) => {
             card.style.animationDelay = `${index * 0.1}s`;
 
-            card.addEventListener('mouseenter', function() {
+            card.addEventListener('mouseenter', function () {
                 this.style.transform = 'translateY(-10px) scale(1.02)';
             });
 
-            card.addEventListener('mouseleave', function() {
+            card.addEventListener('mouseleave', function () {
                 this.style.transform = 'translateY(0) scale(1)';
             });
         });
