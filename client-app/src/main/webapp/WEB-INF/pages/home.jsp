@@ -24,7 +24,6 @@
         </div>
 
         <div class="logout-container">
-            <span class="welcome-text">Welcome!</span>
             <a href="Controller?action=logout" class="logout-btn">Logout</a>
         </div>
     </header>
@@ -67,7 +66,7 @@
                         <li>✓ 30km range</li>
                         <li>✓ Perfect for short trips</li>
                     </ul>
-                    <a href="Controller?action=scooter-rental" class="option-btn">Rent E-Scooter</a>
+                    <a href="Controller?action=scooter-rental" class="option-btn">Rent e-scooter</a>
                 </div>
 
                 <div class="option-card floating">
@@ -81,7 +80,7 @@
                         <li>✓ 70km range</li>
                         <li>✓ Fitness & fun combined</li>
                     </ul>
-                    <a href="Controller?action=bike-rental" class="option-btn">Rent E-Bike</a>
+                    <a href="Controller?action=bike-rental" class="option-btn">Rent e-bike</a>
                 </div>
 
                 <div class="option-card floating">
@@ -95,7 +94,7 @@
                         <li>✓ Full insurance</li>
                         <li>✓ 24/7 support</li>
                     </ul>
-                    <a href="Controller?action=car-rental" class="option-btn">Rent Car</a>
+                    <a href="Controller?action=car-rental" class="option-btn">Rent car</a>
                 </div>
 
                 <div class="option-card floating">

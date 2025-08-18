@@ -5,6 +5,8 @@ import org.unibl.etf.clientapp.dto.InvoiceData;
 import org.unibl.etf.clientapp.dto.Rental;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RentalDAO {
     public static long startRental(Rental rental) {
@@ -128,5 +130,45 @@ public class RentalDAO {
         }
 
         return data;
+    }
+
+    public static List<Rental> getRentalsFromClient(long clientId) {
+        List<Rental> rentals = new ArrayList<>();
+
+        String sql = "SELECT * FROM rental WHERE client_id = ? ORDER BY date_time DESC";
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, clientId);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Rental rental = new Rental();
+
+                rental.setId(rs.getLong("id"));
+                rental.setClientId(rs.getLong("client_id"));
+                rental.setVehicleId(rs.getString("vehicle_id"));
+                rental.setDateTime(rs.getTimestamp("date_time").toLocalDateTime());
+                rental.setDurationSeconds(rs.getInt("duration_seconds"));
+                rental.setPrice(rs.getDouble("price"));
+                rental.setStartX(rs.getDouble("startx"));
+                rental.setStartY(rs.getDouble("starty"));
+                rental.setEndX(rs.getDouble("endx"));
+                rental.setEndY(rs.getDouble("endy"));
+
+                rentals.add(rental);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, stmt, conn);
+        }
+
+        return rentals;
     }
 }

@@ -55,6 +55,10 @@ public class Controller extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
                 break;
             case "profile":
+                UserBean userBean = (UserBean) session.getAttribute("userBean");
+                long clientId = userBean.getUser().getId();
+                List<Rental> rentals = RentalDAO.getRentalsFromClient(clientId);
+                request.setAttribute("rentals", rentals);
                 request.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(request, response);
                 break;
             case "car-rental":

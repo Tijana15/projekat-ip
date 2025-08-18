@@ -35,7 +35,7 @@
 
 <div class="ride-container floating">
     <div class="header">
-        <h1>Ride in Progress</h1>
+        <h1>Ride in progress</h1>
         <p>Started at: <strong><%= startTimeString %>
         </strong></p>
     </div>
