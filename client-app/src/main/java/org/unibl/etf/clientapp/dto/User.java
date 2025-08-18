@@ -19,6 +19,7 @@ public class User {
     private String email;
     private String phone;
     private String id_document;
+    private String avatarPicture;
 
     public User(String firstname, String lastname, String username, String password, String role, boolean blocked, String email, String phone, String id_document) {
         this.firstname = firstname;

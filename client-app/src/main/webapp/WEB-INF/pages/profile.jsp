@@ -41,6 +41,20 @@
         %>
 
         <div class="profile-sections">
+            <section class="card">
+                <h2>My Avatar</h2>
+                <div class="avatar-preview">
+                    <img src="avatars/${sessionScope.userBean.user.avatarPicture != null ? sessionScope.userBean.user.avatarPicture : 'default.png'}" alt="Your avatar">
+                </div>
+                <form action="Controller" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="uploadAvatar">
+                    <div class="form-group">
+                        <label for="avatar">Choose a new image:</label>
+                        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" required>
+                    </div>
+                    <button type="submit" class="btn">Upload Avatar</button>
+                </form>
+            </section>
 
             <section class="card wide-card floating">
                 <h2>🚀 My rentals</h2>

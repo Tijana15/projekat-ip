@@ -22,9 +22,13 @@
             </div>
             <div class="brand-name">Urban Motion</div>
         </div>
-
+        <div class="user-logout-container">
+        <div class="header-avatar">
+            <img src="avatars/${sessionScope.userBean.user.avatarPicture != null ? sessionScope.userBean.user.avatarPicture : 'default.png'}" alt="Avatar">
+        </div>
         <div class="logout-container">
             <a href="Controller?action=logout" class="logout-btn">Logout</a>
+        </div>
         </div>
     </header>
 

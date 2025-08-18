@@ -38,6 +38,7 @@ public class UserDAO {
                 user.setFirstname(rs.getString("firstname"));
                 user.setLastname(rs.getString("lastname"));
                 user.setBlocked(rs.getBoolean("blocked"));
+                user.setAvatarPicture(rs.getString("avatar_picture"));
                 return user;
             }
         } catch (SQLException e) {
@@ -225,6 +226,30 @@ public class UserDAO {
 
         } catch (SQLException e) {
             System.err.println("Error deactivating account of user: " + id);
+            e.printStackTrace();
+            return false;
+        } finally {
+            DBUtil.close(null, stmt, conn);
+        }
+    }
+
+    public static boolean updateAvatarUrl(long userId, String fileName) {
+        String sql = "UPDATE client SET avatar_picture = ? WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = DBUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, fileName);
+            stmt.setLong(2, userId);
+
+            int affectedRows = stmt.executeUpdate();
+
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         } finally {

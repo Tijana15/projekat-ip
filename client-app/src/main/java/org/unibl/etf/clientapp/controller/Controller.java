@@ -17,12 +17,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
+@MultipartConfig
 @WebServlet(name = "controller", value = "/Controller")
 public class Controller extends HttpServlet {
 
@@ -299,6 +298,34 @@ public class Controller extends HttpServlet {
             session.setAttribute("notification", "Ride finished! Total price: " + String.format("%.2f", finalPrice) + " $.");
             session.setAttribute("lastRentalId", rentalId);
             response.sendRedirect("Controller?action=home");
+        }
+        else if ("uploadAvatar".equals(action)) {
+            UserBean userBean = (UserBean) session.getAttribute("userBean");
+
+            String uploadPath = "C:\\Users\\PC\\Desktop\\4 GODINA\\IP\\urban-motion\\avatars";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) uploadDir.mkdirs();
+
+            try {
+                Part filePart = request.getPart("avatar");
+                long userId = userBean.getUser().getId();
+
+                String fileName = userId + ".png";
+                String filePath = uploadPath + File.separator + fileName;
+
+                filePart.write(filePath);
+
+                UserDAO.updateAvatarUrl(userId, fileName);
+
+                userBean.getUser().setAvatarPicture(fileName);
+                session.setAttribute("userBean", userBean);
+
+                session.setAttribute("profileMessage", "Avatar successfully updated!");
+            } catch (Exception e) {
+                e.printStackTrace();
+                session.setAttribute("profileMessage", "Error uploading avatar.");
+            }
+            response.sendRedirect("Controller?action=profile");
         }
     }
 
