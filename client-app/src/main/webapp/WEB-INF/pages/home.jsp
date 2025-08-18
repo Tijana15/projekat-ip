@@ -31,13 +31,21 @@
 
     <%
         String notification = (String) session.getAttribute("notification");
+        Long lastRentalId = (Long) session.getAttribute("lastRentalId");
         if (notification != null) {
     %>
     <div class="notification success">
         <%= notification %>
+        <% if (lastRentalId != null) { %>
+        <br>
+        <a href="Controller?action=download-invoice&rentalId=<%= lastRentalId %>" class="download-link">
+            Download Invoice (PDF)
+        </a>
+        <% } %>
     </div>
     <%
             session.removeAttribute("notification");
+            session.removeAttribute("lastRentalId");
         }
     %>
     <main class="main-content">

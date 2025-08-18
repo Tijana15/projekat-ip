@@ -1,12 +1,19 @@
 package org.unibl.etf.clientapp.controller;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
 import org.unibl.etf.clientapp.bean.UserBean;
 import org.unibl.etf.clientapp.bean.VehicleBean;
 import org.unibl.etf.clientapp.dao.*;
 import org.unibl.etf.clientapp.dto.*;
 
 import java.io.*;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -92,6 +99,18 @@ public class Controller extends HttpServlet {
                     request.getRequestDispatcher("/WEB-INF/pages/active-ride.jsp").forward(request, response);
                 } else {
                     response.sendRedirect("Controller?action=home");
+                }
+                break;
+            case "download-invoice":
+                try {
+                    long rentalId = Long.parseLong(request.getParameter("rentalId"));
+                    InvoiceData data = RentalDAO.getInvoiceData(rentalId);
+
+                    if (data != null) {
+                        generatePdfInvoice(data, response);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
 
@@ -274,6 +293,7 @@ public class Controller extends HttpServlet {
             VehicleDAO.setVehicleAvailabilityToAvailable(vehicleId);
             session.removeAttribute("activeRental");
             session.setAttribute("notification", "Ride finished! Total price: " + String.format("%.2f", finalPrice) + " $.");
+            session.setAttribute("lastRentalId", rentalId);
             response.sendRedirect("Controller?action=home");
         }
     }
@@ -328,4 +348,61 @@ public class Controller extends HttpServlet {
         return new double[]{randomLat, randomLon};
     }
 
+    private void generatePdfInvoice(InvoiceData data, HttpServletResponse response) throws IOException {
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=\"invoice_" + data.getRentalId() + ".pdf\"");
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PdfWriter writer = new PdfWriter(baos);
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+
+        document.add(new Paragraph("Urban Motion - Invoice").setBold().setFontSize(20).setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph("Invoice ID: " + data.getRentalId()).setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph("Date: " + data.getStartDateTime().toLocalDate().toString()).setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph("\n"));
+
+        Table table = new Table(2);
+        table.addCell(new Cell().add(new Paragraph("Client:").setBold()));
+        table.addCell(data.getClientFirstname() + " " + data.getClientLastname());
+
+        table.addCell(new Cell().add(new Paragraph("ID Document:").setBold()));
+        table.addCell(data.getClientIdDocument());
+
+        if ("car".equalsIgnoreCase(data.getVehicleType())) {
+            table.addCell(new Cell().add(new Paragraph("Driver's license:").setBold()));
+            table.addCell(data.getClientDriversLicence());
+        }
+
+        table.addCell(new Cell().add(new Paragraph("\nVehicle:").setBold()));
+        table.addCell(data.getVehicleModel());
+
+        table.addCell(new Cell().add(new Paragraph("Start time:").setBold()));
+        table.addCell(data.getStartDateTime().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+
+        table.addCell(new Cell().add(new Paragraph("Duration:").setBold()));
+        table.addCell(data.getDurationSeconds() + " seconds");
+
+        table.addCell(new Cell().add(new Paragraph("Start location (Lat, Lon):").setBold()));
+        table.addCell(String.format("%.4f, %.4f", data.getStartX(), data.getStartY()));
+
+        table.addCell(new Cell().add(new Paragraph("End location (Lat, Lon):").setBold()));
+        table.addCell(String.format("%.4f, %.4f", data.getEndX(), data.getEndY()));
+
+        Table priceTable = new Table(2).setMarginTop(20);
+        priceTable.addCell(new Cell(1, 2).add(new Paragraph("Total price").setBold().setFontSize(14).setTextAlignment(TextAlignment.CENTER)));
+        priceTable.addCell(new Cell().add(new Paragraph(String.format("%.2f $", data.getPrice())).setBold().setFontSize(16)));
+        priceTable.addCell(new Cell().add(new Paragraph("Thank you for using our services!").setTextAlignment(TextAlignment.RIGHT)));
+
+        document.add(table);
+        document.add(priceTable);
+
+        document.close();
+
+        response.setContentLength(baos.size());
+        OutputStream os = response.getOutputStream();
+        baos.writeTo(os);
+        os.flush();
+        os.close();
+    }
 }

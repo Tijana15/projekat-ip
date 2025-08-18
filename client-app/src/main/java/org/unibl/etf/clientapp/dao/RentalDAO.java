@@ -1,6 +1,7 @@
 package org.unibl.etf.clientapp.dao;
 
 import org.unibl.etf.clientapp.db_util.DBUtil;
+import org.unibl.etf.clientapp.dto.InvoiceData;
 import org.unibl.etf.clientapp.dto.Rental;
 
 import java.sql.*;
@@ -62,5 +63,70 @@ public class RentalDAO {
         } finally {
             DBUtil.close(null, stmt, conn);
         }
+    }
+
+    public static InvoiceData getInvoiceData(long rentalId) {
+        InvoiceData data = null;
+        String sql = "SELECT " +
+                "    r.id AS rental_id, r.date_time, r.duration_seconds, r.price, " +
+                "    r.startx, r.starty, r.endx, r.endy, r.vehicle_id, " +
+                "    u.firstname, u.lastname, " +
+                "    c.id_document, c.drivers_licence, " +
+                "    v.model, " +
+                "    m.name AS manufacturer_name " +
+                "FROM " +
+                "    rental r " +
+                "INNER JOIN client c ON r.client_id = c.id " +
+                "INNER JOIN user u ON c.id = u.id " +
+                "INNER JOIN vehicle v ON r.vehicle_id = v.id " +
+                "INNER JOIN manufacturer m ON v.manufacturer_id = m.id " +
+                "WHERE r.id = ?";
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBUtil.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, rentalId);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                data = new InvoiceData();
+
+                data.setRentalId(rs.getLong("rental_id"));
+                data.setStartDateTime(rs.getTimestamp("date_time").toLocalDateTime());
+                data.setDurationSeconds(rs.getInt("duration_seconds"));
+                data.setPrice(rs.getDouble("price"));
+                data.setStartX(rs.getDouble("startx"));
+                data.setStartY(rs.getDouble("starty"));
+                data.setEndX(rs.getDouble("endx"));
+                data.setEndY(rs.getDouble("endy"));
+
+                data.setClientFirstname(rs.getString("firstname"));
+                data.setClientLastname(rs.getString("lastname"));
+                data.setClientIdDocument(rs.getString("id_document"));
+                data.setClientDriversLicence(rs.getString("drivers_licence"));
+
+                String vehicleModel = rs.getString("manufacturer_name") + " " + rs.getString("model");
+                data.setVehicleModel(vehicleModel);
+
+                String vehicleId = rs.getString("vehicle_id");
+                if (vehicleId.startsWith("CAR")) {
+                    data.setVehicleType("car");
+                } else if (vehicleId.startsWith("EBIKE")) {
+                    data.setVehicleType("ebike");
+                } else if (vehicleId.startsWith("ESCOOTER")) {
+                    data.setVehicleType("escooter");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(rs, stmt, conn);
+        }
+
+        return data;
     }
 }

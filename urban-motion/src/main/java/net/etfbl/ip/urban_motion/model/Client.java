@@ -23,6 +23,7 @@ public class Client extends User{
     private String phone;
     private String avatarPicture;
     private boolean blocked;
+    private String driversLicence;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     @JsonIgnore

@@ -635,3 +635,10 @@ body::before {
         transform: translateY(0);
     }
 }
+.download-link {
+    font-weight: bold;
+    color: #059669;
+    text-decoration: underline;
+    margin-top: 0.5rem;
+    display: inline-block;
+}
