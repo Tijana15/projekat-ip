@@ -96,6 +96,7 @@ export class AddVehicleDialogComponent implements OnInit {
       model: ['', Validators.required],
       purchasePrice: ['', [Validators.required, Validators.min(0)]],
       picture: [''],
+      vehicleState: ['AVAILABLE', Validators.required],
     });
 
     if (this.vehicleType === 'car') {
@@ -127,6 +128,12 @@ export class AddVehicleDialogComponent implements OnInit {
       const formData = new FormData();
       const manufacturerId = formValue.manufacturer;
       formValue.manufacturer = { id: manufacturerId };
+      const centerLat = 44.7722;
+      const centerLng = 17.191;
+      const getRandomOffset = () => (Math.random() - 0.5) * 0.01;
+
+      const mapY = centerLng + getRandomOffset();
+      const mapX = centerLat + getRandomOffset();
 
       if (
         this.vehicleType === 'car' &&
@@ -138,11 +145,11 @@ export class AddVehicleDialogComponent implements OnInit {
       let vehicleToSave: Car | EScooter | EBike;
 
       if (this.vehicleType === 'car') {
-        vehicleToSave = formValue as Car;
+        vehicleToSave = { ...formValue, mapX: mapX, mapY: mapY } as Car;
       } else if (this.vehicleType === 'e-scooter') {
-        vehicleToSave = formValue as EScooter;
+        vehicleToSave = { ...formValue, mapX: mapX, mapY: mapY } as EScooter;
       } else if (this.vehicleType === 'e-bike') {
-        vehicleToSave = formValue as EBike;
+        vehicleToSave = { ...formValue, mapX: mapX, mapY: mapY } as EBike;
       } else {
         console.error('Unknown vehicle type:', this.vehicleType);
         return;
@@ -261,7 +268,7 @@ export class AddVehicleDialogComponent implements OnInit {
           manufacturer: { id: manufacturerId } as Manufacturer,
           model: row['model']?.trim(),
           purchasePrice: parseFloat(row['purchasePrice']),
-
+          vehicleState: 'AVAILABLE',
           picture: row['picture']?.trim() || '',
           maxRange: parseFloat(row['maxRange']),
           mapX: (
@@ -313,7 +320,7 @@ export class AddVehicleDialogComponent implements OnInit {
           manufacturer: { id: manufacturerId } as Manufacturer,
           model: row['model']?.trim(),
           purchasePrice: parseFloat(row['purchasePrice']),
-
+          vehicleState: 'AVAILABLE',
           picture: row['picture']?.trim() || '',
           purchaseDate: row['purchaseDate']?.trim(),
           description: row['description']?.trim() || '',
@@ -366,7 +373,7 @@ export class AddVehicleDialogComponent implements OnInit {
           manufacturer: { id: manufacturerId } as Manufacturer,
           model: row['model']?.trim(),
           purchasePrice: parseFloat(row['purchasePrice']),
-
+          vehicleState: 'AVAILABLE',
           picture: row['picture']?.trim() || '',
           maxSpeed: parseFloat(row['maxSpeed']),
           mapX: (

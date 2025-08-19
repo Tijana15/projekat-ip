@@ -31,18 +31,35 @@ public class EScooterService {
     }
 
     public EScooter updateEScooter(String id, EScooter eScooterDetails) {
-        EScooter eScooter = eScooterRepository.findById(id)
+        EScooter existingEScooter = eScooterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("EScooter not found with id: " + id));
 
-        eScooter.setManufacturer(eScooterDetails.getManufacturer());
-        eScooter.setModel(eScooterDetails.getModel());
-        eScooter.setPurchasePrice(eScooterDetails.getPurchasePrice());
-        eScooter.setVehicleState(eScooterDetails.getVehicleState());
-        eScooter.setPicture(eScooterDetails.getPicture());
+        if (eScooterDetails.getManufacturer() != null) {
+            existingEScooter.setManufacturer(eScooterDetails.getManufacturer());
+        }
+        if (eScooterDetails.getModel() != null) {
+            existingEScooter.setModel(eScooterDetails.getModel());
+        }
+        if (eScooterDetails.getPurchasePrice() != null) {
+            existingEScooter.setPurchasePrice(eScooterDetails.getPurchasePrice());
+        }
+        if (eScooterDetails.getVehicleState() != null) {
+            existingEScooter.setVehicleState(eScooterDetails.getVehicleState());
+        }
+        if (eScooterDetails.getPicture() != null) {
+            existingEScooter.setPicture(eScooterDetails.getPicture());
+        }
+        if (eScooterDetails.getMaxSpeed() != null) {
+            existingEScooter.setMaxSpeed(eScooterDetails.getMaxSpeed());
+        }
+        if (eScooterDetails.getMapX() != null) {
+            existingEScooter.setMapX(eScooterDetails.getMapX());
+        }
+        if (eScooterDetails.getMapY() != null) {
+            existingEScooter.setMapY(eScooterDetails.getMapY());
+        }
 
-        eScooter.setMaxSpeed(eScooterDetails.getMaxSpeed());
-
-        return eScooterRepository.save(eScooter);
+        return eScooterRepository.save(existingEScooter);
     }
 
     public List<EScooter> getEScootersByManufacturerId(Long manufacturerId) {

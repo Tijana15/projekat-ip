@@ -6,6 +6,7 @@ export interface Vehicle {
   picture?: String;
   mapX: number;
   mapY: number;
+  vehicleState: String;
 }
 
 export interface Car extends Vehicle {

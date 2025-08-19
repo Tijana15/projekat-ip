@@ -30,22 +30,39 @@ public class CarService {
         carRepository.deleteById(id);
     }
 
+
     public Car updateCar(String id, Car carDetails) {
-        Car car = carRepository.findById(id)
+        Car existingCar = carRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Car not found with id: " + id));
 
-        car.setManufacturer(carDetails.getManufacturer());
-        car.setModel(carDetails.getModel());
-        car.setPurchasePrice(carDetails.getPurchasePrice());
-        car.setVehicleState(carDetails.getVehicleState());
-        car.setPicture(carDetails.getPicture());
-
-        car.setPurchaseDate(carDetails.getPurchaseDate());
-        car.setDescription(carDetails.getDescription());
-        car.setMapY(car.getMapY());
-        car.setMapX(car.getMapX());
-
-        return carRepository.save(car);
+        if (carDetails.getManufacturer() != null) {
+            existingCar.setManufacturer(carDetails.getManufacturer());
+        }
+        if (carDetails.getModel() != null) {
+            existingCar.setModel(carDetails.getModel());
+        }
+        if (carDetails.getPurchasePrice() != null) {
+            existingCar.setPurchasePrice(carDetails.getPurchasePrice());
+        }
+        if (carDetails.getVehicleState() != null) {
+            existingCar.setVehicleState(carDetails.getVehicleState());
+        }
+        if (carDetails.getPicture() != null) {
+            existingCar.setPicture(carDetails.getPicture());
+        }
+        if (carDetails.getPurchaseDate() != null) {
+            existingCar.setPurchaseDate(carDetails.getPurchaseDate());
+        }
+        if (carDetails.getDescription() != null) {
+            existingCar.setDescription(carDetails.getDescription());
+        }
+        if (carDetails.getMapX() != null) {
+            existingCar.setMapX(carDetails.getMapX());
+        }
+        if (carDetails.getMapY() != null) {
+            existingCar.setMapY(carDetails.getMapY());
+        }
+        return carRepository.save(existingCar);
     }
 
     public List<Car> getCarsByManufacturerId(Long manufacturerId) {

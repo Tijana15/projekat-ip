@@ -45,20 +45,21 @@
             vehicle.purchasePrice | currency : "USD" : "symbol" : "1.2-2"
           }}</span>
         </div>
+        <div class="detail-item">
+          <strong>Status:</strong>
+          <span>{{ vehicle.vehicleState }}</span>
+        </div>
 
         @if (vehicle.picture) {
         <div class="detail-item full-width-item">
           <strong>Picture:</strong>
           <img
-            [src]="vehicle.picture"
+            [src]="'assets/images/' + vehicle.picture"
             alt="Vehicle Picture"
             class="vehicle-picture"
           />
         </div>
-        }
-
-        <!-- Specifični detalji za Car -->
-        @if (vehicleType === 'car') {
+        } @if (vehicleType === 'car') {
         <div class="detail-item">
           <strong>Purchase date:</strong>
           <span>{{ getCarData().purchaseDate | date : "medium" }}</span>
@@ -67,18 +68,12 @@
           <strong>Description:</strong>
           <span>{{ getCarData().description }}</span>
         </div>
-        }
-
-        <!-- Specifični detalji za E-Scooter -->
-        @if (vehicleType === 'e-scooter') {
+        } @if (vehicleType === 'e-scooter') {
         <div class="detail-item">
           <strong>Max speed:</strong>
           <span>{{ getEScooterData().maxSpeed }} km/h</span>
         </div>
-        }
-
-        <!-- Specifični detalji za E-Bike -->
-        @if (vehicleType === 'e-bike') {
+        } @if (vehicleType === 'e-bike') {
         <div class="detail-item">
           <strong>Max range:</strong>
           <span>{{ getEBikeData().maxRange }} km</span>
@@ -86,7 +81,6 @@
         }
       </div>
 
-      <!-- Tabela kvarova -->
       <mat-divider class="my-4"></mat-divider>
 
       <div class="faults-header">
@@ -116,13 +110,11 @@
           matSort
           class="full-width-table mat-elevation-z2"
         >
-          <!-- ID kolona -->
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
             <td mat-cell *matCellDef="let breakdown">{{ breakdown.id }}</td>
           </ng-container>
 
-          <!-- Datum/Vreme kolona -->
           <ng-container matColumnDef="breakdownDateTime">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Date/Time</th>
             <td mat-cell *matCellDef="let breakdown">
@@ -130,7 +122,6 @@
             </td>
           </ng-container>
 
-          <!-- Opis kolona -->
           <ng-container matColumnDef="description">
             <th mat-header-cell *matHeaderCellDef>Description</th>
             <td mat-cell *matCellDef="let breakdown" class="description-cell">
@@ -138,7 +129,6 @@
             </td>
           </ng-container>
 
-          <!-- Actions kolona -->
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let breakdown" class="actions-cell">
@@ -178,7 +168,6 @@
       </div>
       }
 
-      <!-- Tabela iznajmljivanja -->
       <mat-divider class="my-4"></mat-divider>
 
       <div class="rentals-header">
@@ -198,13 +187,11 @@
           matSort
           class="full-width-table mat-elevation-z2"
         >
-          <!-- ID kolona -->
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
             <td mat-cell *matCellDef="let rental">{{ rental.id }}</td>
           </ng-container>
 
-          <!-- Datum/Vreme kolona -->
           <ng-container matColumnDef="dateTime">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Date/Time</th>
             <td mat-cell *matCellDef="let rental">
@@ -212,13 +199,11 @@
             </td>
           </ng-container>
 
-          <!-- Ime klijenta kolona -->
           <ng-container matColumnDef="clientName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
             <td mat-cell *matCellDef="let rental">{{ rental.clientName }}</td>
           </ng-container>
 
-          <!-- Trajanje kolona -->
           <ng-container matColumnDef="durationSeconds">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Duration</th>
             <td mat-cell *matCellDef="let rental">
@@ -226,7 +211,6 @@
             </td>
           </ng-container>
 
-          <!-- Cena kolona -->
           <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
             <td mat-cell *matCellDef="let rental">
@@ -250,12 +234,11 @@
   </mat-card>
 </div>
 
-<!-- Dialog za dodavanje novog kvara -->
 @if (showAddBreakdownDialog) {
 <div class="dialog-overlay" (click)="closeAddBreakdownDialog()">
   <div class="add-breakdown-dialog" (click)="$event.stopPropagation()">
     <div class="dialog-header">
-      <h4>Add New Fault</h4>
+      <h4>Add new fault</h4>
       <button
         mat-icon-button
         (click)="closeAddBreakdownDialog()"

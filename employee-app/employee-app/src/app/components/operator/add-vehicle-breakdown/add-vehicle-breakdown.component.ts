@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -20,8 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { VehicleService } from '../../../service/vehicle.service';
 import { BreakdownService } from '../../../service/breakdown.service';
-import { Vehicle } from '../../../model/vehicle.model';
-
+import { Vehicle, Car, EBike, EScooter } from '../../../model/vehicle.model';
 
 export interface Breakdown {
   id: number;
@@ -36,7 +36,7 @@ export interface Breakdown {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule, // Dodano za ngModel
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -77,7 +77,6 @@ export class AddVehicleBreakdownComponent implements OnInit {
 
   setDefaultDateTime(): void {
     const now = new Date();
-    // Format za datetime-local input (YYYY-MM-DDTHH:MM)
     const year = now.getFullYear();
     const month = (now.getMonth() + 1).toString().padStart(2, '0');
     const day = now.getDate().toString().padStart(2, '0');
@@ -118,7 +117,6 @@ export class AddVehicleBreakdownComponent implements OnInit {
       this.isSubmitting = true;
 
       const formValue = this.breakdownForm.value;
-
       const dateTime = new Date(this.newBreakdownDateTime);
 
       const breakdownRequest: Breakdown = {
@@ -134,6 +132,49 @@ export class AddVehicleBreakdownComponent implements OnInit {
             duration: 3000,
             panelClass: ['success-snackbar'],
           });
+
+          const vehicleToUpdate = this.vehicles.find(
+            (v) => v.id === formValue.vehicleId
+          );
+
+          if (vehicleToUpdate && vehicleToUpdate.vehicleState !== 'BROKEN') {
+            const stateUpdatePayload = { vehicleState: 'BROKEN' };
+
+            let updateObservable: Observable<any>;
+            let vehicleType = '';
+
+            if (formValue.vehicleId.startsWith('CAR')) {
+              vehicleType = 'car';
+              updateObservable = this.vehicleService.updateCar(
+                formValue.vehicleId,
+                stateUpdatePayload as unknown as Car
+              );
+            } else if (formValue.vehicleId.startsWith('ESCOOTER')) {
+              vehicleType = 'e-scooter';
+              updateObservable = this.vehicleService.updateEScooter(
+                formValue.vehicleId,
+                stateUpdatePayload as unknown as EScooter
+              );
+            } else {
+              vehicleType = 'e-bike';
+              updateObservable = this.vehicleService.updateEBike(
+                formValue.vehicleId,
+                stateUpdatePayload as unknown as EBike
+              );
+            }
+
+            updateObservable.subscribe({
+              next: (updatedVehicle) => {
+                console.log(
+                  `Vehicle ${formValue.vehicleId} state updated to BROKEN.`
+                );
+                vehicleToUpdate.vehicleState = 'BROKEN';
+              },
+              error: (err) =>
+                console.error('Failed to update vehicle state:', err),
+            });
+          }
+
           this.resetForm();
           this.isSubmitting = false;
         },

@@ -185,13 +185,13 @@ export class AdminVehiclesManagemantComponent implements OnInit {
     console.log('Opening details dialog for ID:', id, 'Type:', type);
 
     const dialogRef = this.dialog.open(VehicleDetailsComponent, {
-      width: '95vw', // Povećana širina
-      maxWidth: '1000px', // Maksimalna širina
-      height: '90vh', // Visina
-      maxHeight: '800px', // Maksimalna visina
+      width: '95vw',
+      maxWidth: '1000px',
+      height: '90vh',
+      maxHeight: '800px',
       disableClose: false,
       data: { id: id, type: type } as VehicleDetailsDialogData,
-      panelClass: 'vehicle-details-dialog', // Dodajte custom CSS klasu
+      panelClass: 'vehicle-details-dialog', 
     });
   }
 }

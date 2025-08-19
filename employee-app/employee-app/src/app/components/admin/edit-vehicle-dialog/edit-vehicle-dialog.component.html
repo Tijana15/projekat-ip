@@ -36,7 +36,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Purchase Price</mat-label>
+          <mat-label>Purchase price</mat-label>
           <input
             matInput
             type="number"
@@ -45,35 +45,35 @@
           />
           @if (vehicleForm.get('purchasePrice')?.invalid &&
           vehicleForm.get('purchasePrice')?.touched) {
-          <mat-error>Purchase Price is required.</mat-error>
+          <mat-error>Purchase price is required.</mat-error>
           }
         </mat-form-field>
 
         <div class="file-upload-container">
-  <mat-label>Vehicle Picture</mat-label>
+          <mat-label>Vehicle Picture</mat-label>
 
-  <input
-    type="file"
-    #editFileInput
-    (change)="onPictureFileSelected($event)"
-    accept="image/png, image/jpeg"
-    style="display: none;"
-  >
+          <input
+            type="file"
+            #editFileInput
+            (change)="onPictureFileSelected($event)"
+            accept="image/png, image/jpeg"
+            style="display: none"
+          />
 
-  <button
-    mat-stroked-button
-    type="button"
-    (click)="editFileInput.click()"
-    class="file-upload-button"
-  >
-    <mat-icon>attach_file</mat-icon>
-    <span>Choose new file</span>
-  </button>
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="editFileInput.click()"
+            class="file-upload-button"
+          >
+            <mat-icon>attach_file</mat-icon>
+            <span>Choose new file</span>
+          </button>
 
-  @if (vehicleForm.get('picture')?.value) {
-    <span class="file-name">{{ vehicleForm.get("picture")?.value }}</span>
-  }
-</div>
+          @if (vehicleForm.get('picture')?.value) {
+          <span class="file-name">{{ vehicleForm.get("picture")?.value }}</span>
+          }
+        </div>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Vehicle State</mat-label>
@@ -118,7 +118,7 @@
         </mat-form-field>
         } @if (vehicleType === 'e-scooter') {
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Max Speed (km/h)</mat-label>
+          <mat-label>Max speed (km/h)</mat-label>
           <input
             matInput
             type="number"
@@ -127,12 +127,12 @@
           />
           @if (vehicleForm.get('maxSpeed')?.invalid &&
           vehicleForm.get('maxSpeed')?.touched) {
-          <mat-error>Max Speed is required and must be positive.</mat-error>
+          <mat-error>Max speed is required and must be positive.</mat-error>
           }
         </mat-form-field>
         } @if (vehicleType === 'e-bike') {
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Max Range (km)</mat-label>
+          <mat-label>Max range (km)</mat-label>
           <input
             matInput
             type="number"
@@ -141,7 +141,7 @@
           />
           @if (vehicleForm.get('maxRange')?.invalid &&
           vehicleForm.get('maxRange')?.touched) {
-          <mat-error>Max Range is required and must be positive.</mat-error>
+          <mat-error>Max range is required and must be positive.</mat-error>
           }
         </mat-form-field>
         }

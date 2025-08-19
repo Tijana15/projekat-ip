@@ -219,9 +219,9 @@ export class VehicleDetailsComponent implements OnInit {
     this.isAddingBreakdown = true;
 
     const newBreakdown: Breakdown = {
-      id: 0, // Backend će generisati ID
+      id: 0,
       description: this.newBreakdownDescription.trim(),
-      breakdownDateTime: this.newBreakdownDateTime.toISOString(),
+      breakdownDateTime: new Date(this.newBreakdownDateTime).toISOString(),
       vehicleId: this.vehicleId,
     };
 
@@ -237,6 +237,9 @@ export class VehicleDetailsComponent implements OnInit {
         });
 
         console.log('Breakdown added:', createdBreakdown);
+        if (this.vehicle?.vehicleState !== 'BROKEN') {
+          this.updateVehicleState('BROKEN');
+        }
       },
       error: (err) => {
         this.isAddingBreakdown = false;
@@ -273,6 +276,12 @@ export class VehicleDetailsComponent implements OnInit {
         });
 
         console.log('Breakdown deleted:', breakdownId);
+        if (
+          this.vehicleBreakdowns.length === 0 &&
+          this.vehicle?.vehicleState === 'BROKEN'
+        ) {
+          this.updateVehicleState('AVAILABLE');
+        }
       },
       error: (err) => {
         this.isDeletingBreakdown = false;
@@ -305,7 +314,7 @@ export class VehicleDetailsComponent implements OnInit {
   getEBikeData(): EBike {
     return this.vehicle as EBike;
   }
-  
+
   formatDuration(durationSeconds: number): string {
     const hours = Math.floor(durationSeconds / 3600);
     const minutes = Math.floor((durationSeconds % 3600) / 60);
@@ -318,5 +327,49 @@ export class VehicleDetailsComponent implements OnInit {
     } else {
       return `${seconds}s`;
     }
+  }
+
+  private updateVehicleState(newState: 'BROKEN' | 'AVAILABLE'): void {
+    if (!this.vehicle) {
+      return;
+    }
+
+    const vehicleUpdate = { ...this.vehicle, vehicleState: newState };
+
+    let updateObservable: Observable<any>;
+    if (this.vehicleType === 'car') {
+      updateObservable = this.vehicleService.updateCar(
+        this.vehicleId,
+        vehicleUpdate as Car
+      );
+    } else if (this.vehicleType === 'e-scooter') {
+      updateObservable = this.vehicleService.updateEScooter(
+        this.vehicleId,
+        vehicleUpdate as EScooter
+      );
+    } else {
+      updateObservable = this.vehicleService.updateEBike(
+        this.vehicleId,
+        vehicleUpdate as EBike
+      );
+    }
+
+    updateObservable.subscribe({
+      next: (updatedVehicle) => {
+        this.vehicle!.vehicleState = updatedVehicle.vehicleState;
+        this.snackBar.open(`Vehicle state updated to ${newState}`, 'Close', {
+          duration: 3000,
+          panelClass: ['success-snackbar'],
+        });
+        console.log('Vehicle state updated successfully:', updatedVehicle);
+      },
+      error: (err) => {
+        console.error('Failed to update vehicle state:', err);
+        this.snackBar.open('Error updating vehicle state', 'Close', {
+          duration: 3000,
+          panelClass: ['error-snackbar'],
+        });
+      },
+    });
   }
 }

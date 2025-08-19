@@ -17,13 +17,17 @@ export class VehicleMapComponent implements OnInit {
   constructor(private vehicleService: VehicleService) {}
 
   private availableIcon = L.icon({
-    iconUrl: 'https://picsum.photos/200/300',
-    iconSize: [150, 150],
+    iconUrl: 'assets/images/available-marker.png',
+    iconSize: [50, 50],
+    iconAnchor: [25, 50],
+    popupAnchor: [0, -50],
   });
 
   private unavailableIcon = L.icon({
-    iconUrl: 'assets/nonavailable-marker.jpeg',
+    iconUrl: 'assets/images/nonavailable-marker.png',
     iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -40],
   });
 
   options = {
@@ -47,7 +51,7 @@ export class VehicleMapComponent implements OnInit {
           const y = Number(vehicle.mapY ?? vehicle.positionY);
 
           if (!isNaN(x) && !isNaN(y)) {
-            const marker = L.marker([y, x], {
+            const marker = L.marker([x, y], {
               icon:
                 vehicle.vehicleState === 'AVAILABLE'
                   ? this.availableIcon

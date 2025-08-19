@@ -31,18 +31,35 @@ public class EBikeService {
     }
 
     public EBike updateEBike(String id, EBike eBikeDetails) {
-        EBike eBike = eBikeRepository.findById(id)
+        EBike existingEBike = eBikeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("EBike not found with id: " + id));
 
-        eBike.setManufacturer(eBikeDetails.getManufacturer());
-        eBike.setModel(eBikeDetails.getModel());
-        eBike.setPurchasePrice(eBikeDetails.getPurchasePrice());
-        eBike.setVehicleState(eBikeDetails.getVehicleState());
-        eBike.setPicture(eBikeDetails.getPicture());
+        if (eBikeDetails.getManufacturer() != null) {
+            existingEBike.setManufacturer(eBikeDetails.getManufacturer());
+        }
+        if (eBikeDetails.getModel() != null) {
+            existingEBike.setModel(eBikeDetails.getModel());
+        }
+        if (eBikeDetails.getPurchasePrice() != null) {
+            existingEBike.setPurchasePrice(eBikeDetails.getPurchasePrice());
+        }
+        if (eBikeDetails.getVehicleState() != null) {
+            existingEBike.setVehicleState(eBikeDetails.getVehicleState());
+        }
+        if (eBikeDetails.getPicture() != null) {
+            existingEBike.setPicture(eBikeDetails.getPicture());
+        }
+        if (eBikeDetails.getMaxRange() != null) {
+            existingEBike.setMaxRange(eBikeDetails.getMaxRange());
+        }
+        if (eBikeDetails.getMapX() != null) {
+            existingEBike.setMapX(eBikeDetails.getMapX());
+        }
+        if (eBikeDetails.getMapY() != null) {
+            existingEBike.setMapY(eBikeDetails.getMapY());
+        }
 
-        eBike.setMaxRange(eBikeDetails.getMaxRange());
-
-        return eBikeRepository.save(eBike);
+        return eBikeRepository.save(existingEBike);
     }
 
     public List<EBike> getEBikesByManufacturerId(Long manufacturerId) {
