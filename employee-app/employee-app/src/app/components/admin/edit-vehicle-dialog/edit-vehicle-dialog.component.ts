@@ -269,4 +269,12 @@ export class EditVehicleDialogComponent implements OnInit {
   onCancel(): void {
     this.dialogRef.close(false);
   }
+  onPictureFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const fileName = file.name;
+      this.vehicleForm.patchValue({ picture: fileName });
+    }
+  }
 }

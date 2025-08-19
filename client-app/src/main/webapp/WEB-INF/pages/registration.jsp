@@ -64,17 +64,16 @@
 
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <%-- PROMJENA: type="password" da sakrije unos --%>
                             <input type="password" name="password" id="password" placeholder="Enter password" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="firstname">First Name</label>
+                            <label for="firstname">Firstname</label>
                             <input type="text" name="firstname" id="firstname" placeholder="Enter first name" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="lastname">Last Name</label>
+                            <label for="lastname">Lastname</label>
                             <input type="text" name="lastname" id="lastname" placeholder="Enter last name" required>
                         </div>
 
@@ -84,13 +83,17 @@
                         </div>
 
                         <div class="form-group full-width">
-                            <label for="id_document">Identification Document</label>
+                            <label for="id_document">Identification document</label>
                             <input type="text" name="id_document" id="id_document" placeholder="Enter ID document number" required>
                         </div>
 
                         <div class="form-group full-width">
                             <label for="phone">Phone</label>
                             <input type="tel" name="phone" id="phone" placeholder="Enter phone number" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="drivers_licence">Drivers licence</label>
+                            <input type="text" name="drivers_licence" id="drivers_licence" placeholder="Enter drivers licence" required>
                         </div>
                     </div>
 

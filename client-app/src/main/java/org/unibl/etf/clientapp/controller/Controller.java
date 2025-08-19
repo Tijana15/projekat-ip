@@ -146,8 +146,9 @@ public class Controller extends HttpServlet {
             String firstname = request.getParameter("firstname");
             String lastname = request.getParameter("lastname");
             String id_document = request.getParameter("id_document");
+            String drivers_licence = request.getParameter("drivers_licence");
             if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()
-                    || email == null || email.trim().isEmpty() || firstname == null || firstname.trim().isEmpty()) {
+                    || email == null || email.trim().isEmpty() || firstname == null || firstname.trim().isEmpty() || drivers_licence==null || drivers_licence.trim().isEmpty()) {
                 errorMessage = "All fields are required.";
             } else if (UserDAO.existsByUsername(username)) {
                 errorMessage = "Username taken. Change and try again.";
@@ -156,7 +157,7 @@ public class Controller extends HttpServlet {
                 session.setAttribute("errorMessage", errorMessage);
                 response.sendRedirect(request.getContextPath() + "/Controller?action=register");
             } else {
-                User newUser = new User(firstname, lastname, username, password, "CLIENT", false, email, phone, id_document);
+                User newUser = new User(firstname, lastname, username, password, "CLIENT", false, email, phone, id_document,drivers_licence);
                 UserBean registrationBean = new UserBean();
                 boolean registrationSuccess = registrationBean.register(newUser);
                 if (registrationSuccess) {
@@ -298,8 +299,7 @@ public class Controller extends HttpServlet {
             session.setAttribute("notification", "Ride finished! Total price: " + String.format("%.2f", finalPrice) + " $.");
             session.setAttribute("lastRentalId", rentalId);
             response.sendRedirect("Controller?action=home");
-        }
-        else if ("uploadAvatar".equals(action)) {
+        } else if ("uploadAvatar".equals(action)) {
             UserBean userBean = (UserBean) session.getAttribute("userBean");
 
             String uploadPath = "C:\\Users\\PC\\Desktop\\4 GODINA\\IP\\urban-motion\\avatars";

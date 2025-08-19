@@ -31,7 +31,6 @@ body::before {
     flex-direction: column;
 }
 
-/* Full Width Header */
 .header {
     padding: 1.5rem 2rem;
     backdrop-filter: blur(15px);
@@ -104,7 +103,6 @@ nav {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Main Content */
 .list-main-content {
     flex: 1;
     padding: 3rem 2rem;
@@ -136,7 +134,6 @@ nav {
     animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
-/* Vehicle Grid */
 .vehicle-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -240,7 +237,6 @@ nav {
     transform: translateY(0);
 }
 
-/* No vehicles message */
 .no-vehicles-message {
     grid-column: 1 / -1;
     text-align: center;
@@ -254,7 +250,6 @@ nav {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Animations */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -266,7 +261,6 @@ nav {
     }
 }
 
-/* Floating Animation */
 @keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
@@ -276,7 +270,6 @@ nav {
     animation: float 6s ease-in-out infinite;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
     .list-main-content h1 {
         font-size: 2.5rem;
@@ -325,6 +318,11 @@ nav {
     .vehicle-card {
         padding: 1.5rem;
     }
+}
+.vehicle-image-placeholder .vehicle-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 @media (max-width: 480px) {

@@ -124,6 +124,7 @@ export class AddVehicleDialogComponent implements OnInit {
     if (this.vehicleForm.valid) {
       const formValue = this.vehicleForm.getRawValue();
 
+      const formData = new FormData();
       const manufacturerId = formValue.manufacturer;
       formValue.manufacturer = { id: manufacturerId };
 
@@ -220,12 +221,10 @@ export class AddVehicleDialogComponent implements OnInit {
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-      this.selectedFileName = this.selectedFile.name;
-      this.uploadMessage = '';
-    } else {
-      this.selectedFile = null;
-      this.selectedFileName = '';
+      const file = input.files[0];
+      const fileName = file.name;
+
+      this.vehicleForm.patchValue({ picture: fileName });
     }
   }
 
@@ -475,5 +474,16 @@ export class AddVehicleDialogComponent implements OnInit {
       }
     };
     reader.readAsText(this.selectedFile);
+  }
+  onManualPictureSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const fileName = file.name; // Uzimamo samo ime fajla kao string
+
+      this.vehicleForm.patchValue({ picture: fileName });
+
+      this.selectedFileName = fileName;
+    }
   }
 }

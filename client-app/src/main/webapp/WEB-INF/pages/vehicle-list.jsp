@@ -1,5 +1,7 @@
 <%@ page import="java.util.List" %>
-<%@ page import="org.unibl.etf.clientapp.dto.*" %>
+<%@ page import="org.unibl.etf.clientapp.dto.Car" %>
+<%@ page import="org.unibl.etf.clientapp.dto.EBike" %>
+<%@ page import="org.unibl.etf.clientapp.dto.EScooter" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -20,7 +22,7 @@
             <div class="brand-name">Urban Motion</div>
         </div>
         <nav>
-            <a href="Controller?action=home" class="back-link">← Back to Home</a>
+            <a href="Controller?action=home" class="back-link">← Back to home</a>
             <a href="Controller?action=logout" class="logout-link">Logout</a>
         </nav>
     </header>
@@ -42,20 +44,36 @@
             </div>
             <%
             } else {
-                int cardIndex = 1;
                 for (Object vehicleObj : vehicles) {
             %>
-            <div class="vehicle-card" style="--delay: <%= cardIndex * 0.1 %>s">
+            <div class="vehicle-card">
                 <div class="vehicle-image-placeholder">
                     <%
-                        String vehicleEmoji = "🚗";
-                        if (vehicleObj instanceof EBike) {
+                        String pictureFileName = null;
+                        String vehicleEmoji = "❓";
+
+                        if (vehicleObj instanceof Car) {
+                            pictureFileName = ((Car) vehicleObj).getPicture();
+                            vehicleEmoji = "🚗";
+                        } else if (vehicleObj instanceof EBike) {
+                            pictureFileName = ((EBike) vehicleObj).getPicture();
                             vehicleEmoji = "🚲";
                         } else if (vehicleObj instanceof EScooter) {
+                            pictureFileName = ((EScooter) vehicleObj).getPicture();
                             vehicleEmoji = "🛴";
                         }
+
+                        if (pictureFileName != null && !pictureFileName.isEmpty()) {
                     %>
-                    <%= vehicleEmoji %>
+                    <img src="${pageContext.request.contextPath}/images/<%= pictureFileName %>" alt="Vehicle image"
+                         class="vehicle-img">
+                    <%
+                    } else {
+                    %>
+                    <span class="vehicle-emoji"><%= vehicleEmoji %></span>
+                    <%
+                        }
+                    %>
                 </div>
 
                 <div class="vehicle-details">
@@ -90,11 +108,10 @@
         <a href="Controller?action=show-rental-form&vehicleId=<%= item.getId() %>&vehicleType=escooter" class="btn">Rent
             now</a>
             <%
-        }
-    %>
+                        }
+                    %>
 </div>
 <%
-            cardIndex++;
         }
     }
 %>

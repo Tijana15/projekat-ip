@@ -49,14 +49,31 @@
           }
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Picture URL (Optional)</mat-label>
-          <input
-            matInput
-            formControlName="picture"
-            placeholder="e.g., https://example.com/car.jpg"
-          />
-        </mat-form-field>
+        <div class="file-upload-container">
+  <mat-label>Vehicle Picture</mat-label>
+
+  <input
+    type="file"
+    #editFileInput
+    (change)="onPictureFileSelected($event)"
+    accept="image/png, image/jpeg"
+    style="display: none;"
+  >
+
+  <button
+    mat-stroked-button
+    type="button"
+    (click)="editFileInput.click()"
+    class="file-upload-button"
+  >
+    <mat-icon>attach_file</mat-icon>
+    <span>Choose new file</span>
+  </button>
+
+  @if (vehicleForm.get('picture')?.value) {
+    <span class="file-name">{{ vehicleForm.get("picture")?.value }}</span>
+  }
+</div>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Vehicle State</mat-label>

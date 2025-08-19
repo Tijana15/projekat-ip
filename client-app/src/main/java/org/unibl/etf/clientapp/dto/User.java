@@ -20,8 +20,9 @@ public class User {
     private String phone;
     private String id_document;
     private String avatarPicture;
+    private String drivers_licence;
 
-    public User(String firstname, String lastname, String username, String password, String role, boolean blocked, String email, String phone, String id_document) {
+    public User(String firstname, String lastname, String username, String password, String role, boolean blocked, String email, String phone, String id_document,String drivers_licence) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
@@ -31,5 +32,6 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.id_document = id_document;
+        this.drivers_licence = drivers_licence;
     }
 }

@@ -80,7 +80,7 @@ public class UserDAO {
         ResultSet generatedKeys = null;
 
         String sqlUser = "INSERT INTO user (firstname, lastname, password, role, username) VALUES (?, ?, ?, ?, ?)";
-        String sqlClient = "INSERT INTO client (id, email, id_document, phone, blocked) VALUES (?, ?, ?, ?, ?)";
+        String sqlClient = "INSERT INTO client (id, email, id_document, phone, blocked, drivers_licence) VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
             conn = DBUtil.getConnection();
@@ -97,7 +97,7 @@ public class UserDAO {
             int affectedRows = stmtUser.executeUpdate();
 
             if (affectedRows == 0) {
-                throw new SQLException("Kreiranje korisnika nije uspjelo, nijedan red nije dodat u tabelu 'user'.");
+                throw new SQLException("Creating user failed.");
             }
 
             generatedKeys = stmtUser.getGeneratedKeys();
@@ -110,6 +110,7 @@ public class UserDAO {
                 stmtClient.setString(3, user.getId_document());
                 stmtClient.setString(4, user.getPhone());
                 stmtClient.setBoolean(5, false);
+                stmtClient.setString(6, user.getDrivers_licence());
 
                 stmtClient.executeUpdate();
 
@@ -122,7 +123,7 @@ public class UserDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("Greška prilikom registracije korisnika. Poništavanje transakcije.");
+            System.err.println("Error occurred in registration new client.");
             e.printStackTrace();
             if (conn != null) {
                 try {
