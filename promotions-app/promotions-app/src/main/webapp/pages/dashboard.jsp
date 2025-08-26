@@ -452,7 +452,6 @@
         </form>
     </div>
 
-    <%-- Prikaz poruka --%>
     <% if (postBean.getMessage() != null) { %>
     <div class="alert <%= postBean.getMessage().toLowerCase().contains("successful") ? "alert-success" : "alert-danger" %>">
         <i class="fas <%= postBean.getMessage().toLowerCase().contains("successful") ? "fa-check-circle" : "fa-exclamation-circle" %>"></i> <%= postBean.getMessage() %>
@@ -469,9 +468,7 @@
         <button class="tab-button" onclick="openTab(event, 'promotions-tab')">Promotions</button>
     </div>
 
-    <%-- Tab sa objavama --%>
     <div id="posts-tab" class="tab-content active">
-        <%-- Forma za kreiranje posta --%>
         <div class="form-container">
             <h3>Create new post</h3>
             <form action="dashboard.jsp" method="POST">
@@ -490,7 +487,6 @@
             </form>
         </div>
 
-        <%-- Search posts --%>
         <div class="form-container">
             <form method="post" action="dashboard.jsp">
                 <input type="hidden" name="action" value="searchPosts">
@@ -506,7 +502,6 @@
             </form>
         </div>
 
-        <%-- Lista postojećih postova --%>
         <div class="card">
             <h3>Posts</h3>
             <%
@@ -552,9 +547,7 @@
         </div>
     </div>
 
-    <%-- Tab sa promocijama --%>
     <div id="promotions-tab" class="tab-content">
-        <%-- Forma za kreiranje promocije --%>
         <div class="form-container">
             <h3>Create new promotion</h3>
             <form action="dashboard.jsp" method="POST">
@@ -583,7 +576,6 @@
             </form>
         </div>
 
-        <%-- Search promotions --%>
         <div class="form-container">
             <form method="post" action="dashboard.jsp">
                 <input type="hidden" name="action" value="searchPromotions">
@@ -599,7 +591,6 @@
             </form>
         </div>
 
-        <%-- Lista postojećih promocija --%>
         <div class="card">
             <h3>Promotions</h3>
             <%
@@ -663,7 +654,6 @@
         evt.currentTarget.classList.add("active");
     }
 
-    // Set minimum dates for promotion creation
     window.onload = function() {
         var now = new Date();
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());

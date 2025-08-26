@@ -137,7 +137,8 @@ public class Controller extends HttpServlet {
                 session.setAttribute("notification", "Invalid credentials");
                 request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
             }
-        } else if (action.equals("register")) {
+        }
+        else if (action.equals("register")) {
             String errorMessage = null;
             String username = request.getParameter("username");
             String password = request.getParameter("password");
@@ -170,9 +171,11 @@ public class Controller extends HttpServlet {
 
                 }
             }
-        } else if ("logout".equals(action)) {
+        }
+        else if ("logout".equals(action)) {
             response.sendRedirect(request.getContextPath() + "/Controller?action=logout");
-        } else if ("changePassword".equals(action)) {
+        }
+        else if ("changePassword".equals(action)) {
             String oldPassword = request.getParameter("oldPassword");
             String newPassword = request.getParameter("newPassword");
             String confirmPassword = request.getParameter("confirmPassword");
@@ -198,7 +201,8 @@ public class Controller extends HttpServlet {
             }
             session.setAttribute("passwordChangeMessage", statusMessage);
             response.sendRedirect(request.getContextPath() + "/Controller?action=profile");
-        } else if ("deactivateAccount".equals(action)) {
+        }
+        else if ("deactivateAccount".equals(action)) {
             UserBean userBean = (UserBean) session.getAttribute("userBean");
             boolean success = userBean.deactivateAccount();
             if (success) {
@@ -210,7 +214,8 @@ public class Controller extends HttpServlet {
                 session.setAttribute("profileMessage", "Error: Account deactivation failed. Please try again.");
                 response.sendRedirect("Controller?action=profile");
             }
-        } else if ("start-ride".equals(action)) {
+        }
+        else if ("start-ride".equals(action)) {
             UserBean userBean = (UserBean) session.getAttribute("userBean");
             String vehicleIdStr = request.getParameter("vehicleId");
             String vehicleType = request.getParameter("vehicleType");
@@ -273,7 +278,8 @@ public class Controller extends HttpServlet {
                 response.sendRedirect("Controller?action=home");
             }
 
-        } else if ("end-ride".equals(action)) {
+        }
+        else if ("end-ride".equals(action)) {
             UserBean userBean = (UserBean) session.getAttribute("userBean");
             Rental activeRental = (Rental) session.getAttribute("activeRental");
 
@@ -299,7 +305,8 @@ public class Controller extends HttpServlet {
             session.setAttribute("notification", "Ride finished! Total price: " + String.format("%.2f", finalPrice) + " $.");
             session.setAttribute("lastRentalId", rentalId);
             response.sendRedirect("Controller?action=home");
-        } else if ("uploadAvatar".equals(action)) {
+        }
+        else if ("uploadAvatar".equals(action)) {
             UserBean userBean = (UserBean) session.getAttribute("userBean");
 
             String uploadPath = "C:\\Users\\PC\\Desktop\\4 GODINA\\IP\\urban-motion\\avatars";
