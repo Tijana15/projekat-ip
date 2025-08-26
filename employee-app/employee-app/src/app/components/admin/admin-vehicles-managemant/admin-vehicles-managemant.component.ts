@@ -191,7 +191,7 @@ export class AdminVehiclesManagemantComponent implements OnInit {
       maxHeight: '800px',
       disableClose: false,
       data: { id: id, type: type } as VehicleDetailsDialogData,
-      panelClass: 'vehicle-details-dialog', 
+      panelClass: 'vehicle-details-dialog',
     });
   }
 }

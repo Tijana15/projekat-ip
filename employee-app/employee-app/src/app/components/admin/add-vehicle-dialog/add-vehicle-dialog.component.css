@@ -168,3 +168,6 @@ mat-card-actions {
     width: 100%;
   }
 }
+::ng-deep .mat-select-panel {
+  background-color: white;
+}

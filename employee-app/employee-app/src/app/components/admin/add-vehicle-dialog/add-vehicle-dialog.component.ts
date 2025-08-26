@@ -230,6 +230,9 @@ export class AddVehicleDialogComponent implements OnInit {
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       const fileName = file.name;
+      this.selectedFile = file;
+
+      this.selectedFileName = file.name;
 
       this.vehicleForm.patchValue({ picture: fileName });
     }
@@ -311,7 +314,7 @@ export class AddVehicleDialogComponent implements OnInit {
       const row = parsedRows[0];
       const centerLat = 44.7722;
       const centerLng = 17.191;
-      const mapY = centerLat + this.getRandomOffset(); // latitude
+      const mapY = centerLat + this.getRandomOffset();
       const mapX = centerLng + this.getRandomOffset();
       try {
         const manufacturerId = parseInt(row['manufacturerId']?.trim(), 10);
@@ -486,7 +489,7 @@ export class AddVehicleDialogComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      const fileName = file.name; // Uzimamo samo ime fajla kao string
+      const fileName = file.name;
 
       this.vehicleForm.patchValue({ picture: fileName });
 
